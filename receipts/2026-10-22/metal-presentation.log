@@ -10,4 +10,3 @@ native custody: pending retry, fence readiness, retained frame, generation retir
 test metal_custody_pending_retry_and_cpu_transport ... ok
 
 test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
-

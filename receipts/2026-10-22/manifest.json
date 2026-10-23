@@ -44,9 +44,10 @@
     "core-wasm.log": "f5dcf0c9b3ced974cdb62fe39ef8c6d92eea9e51779e0ed894bfb6cc1b3d1f8a",
     "core-windows.log": "7912568312e3267d21475dc7832dc6884573ca7c018e984c89fe8db27b925a05",
     "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "genet-receiver.log": "8ad958abb640a78c2ed742355eacc65eeef7aff121245987772e81248ba13837",
-    "metal-presentation.log": "43f81da92a91391931fe977167cfdaceaa0d69adc1e306dae4e176d000f37261",
+    "genet-receiver.log": "d1685c76f9dea314ef98e2954b2ca2f1b565cb3478c3ebad08f9d9aa47696c6e",
+    "metal-presentation.log": "77769c37dfc5b235e1f5c3b60e00739bfa349dd8bd032c9817e59ea8d2541534",
     "wk-receiver.log": "2db662dcbd9a889e25f4dbf5855cdc250d93078ce70224cee76eeb5522c19340",
-    "workspace-tests.log": "af441e81c085b844f4efa0086ce54e147acb15c36d754cccf914a13d2bfc0b11"
-  }
+    "workspace-tests.log": "c33759492784544296739e66ae72b3769ff02497b86f3ae4ee1400c0bd162622"
+  },
+  "log_normalization": "Home paths redacted; trailing blank lines removed."
 }

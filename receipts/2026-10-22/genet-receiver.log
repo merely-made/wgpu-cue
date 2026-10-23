@@ -60,4 +60,3 @@ Genet alpha sample: [255, 0, 0, 128]
 test real_genet_receiver_lifecycle_ime_and_pixels ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.59s
-
