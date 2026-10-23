@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-22",
+  "native_platform": "macOS x86_64",
+  "native_adapter": "AMD Radeon Pro Vega 56 / Metal",
+  "native_toolchain": "Rust/Cargo 1.99.1",
+  "wasm_toolchain": "Rust/Cargo 1.99.0",
+  "desktop_cross_toolchain": "Rust/Cargo 1.99.1",
+  "checks": {
+    "workspace-tests": "passed; 9 core tests, 3 native tests ignored by default",
+    "explicit-metal-tests": "passed; 2 real Metal tests",
+    "explicit-genet-test": "passed; 1 live retained/GPU receiver, includes 128-request drain",
+    "wk-receiver": "passed; native private WKWebView with CPU snapshot",
+    "clippy": "passed; --workspace --all-targets --locked -- -D warnings",
+    "format": "passed; all four workspace packages",
+    "webcue-wasm-linux-windows": "passed; check only",
+    "renderer-free-tree": "passed; no wgpu/Naga/Netrender/Genet renderer"
+  },
+  "source_sha256": {
+    "Cargo.lock": "678dad15b2c962e4772427af5b474781aee540990e964885133ea8044d007807",
+    "Cargo.toml": "cfe3679f278dc2e833fadddc2ef663bcd31c063bfeda0d2bfe28d714e4b67bb0",
+    "adapters/genet/Cargo.toml": "a13092b2474491b7cee48734e239cf3f2119436dfcba18e9c28b7ff58a7f5fc9",
+    "adapters/genet/src/lib.rs": "38eb4cd658d4835de74d6e138636e4fd02aa83637322309f71e3beeef902e4a7",
+    "adapters/genet/tests/retained.rs": "b77433fa5e3a868c138adc4f40ce9e758cd229e325970c91a668ca42677b2860",
+    "adapters/scry/Cargo.toml": "81ddad97246ab660616bb145598286c232258c6e75598783219b1392f8971d2d",
+    "adapters/scry/examples/wk_receiver.rs": "8685de61837352c6f22e37a82a2b922d809c02ad2570a7af245ed70da0cbf62f",
+    "adapters/scry/src/lib.rs": "e3a9cf095bb2f78d6521760b77c50ad6d8fdb979735996d8d9e88b2a2ca19c82",
+    "adapters/scry/src/wk.rs": "e1751dafd32b0fbdf6efc41257db7527f99083559403978a135b8c5671b88b61",
+    "crates/webcue/Cargo.toml": "83a6f553ebb7dbf8fc443084c5ea4ebb73c765ce98eceafeaa61e3f2a756e7dc",
+    "crates/webcue/src/capabilities.rs": "60e8ca3b0fdd1da8ca32d4c3c24464a10738e02c1ef90c50b663f8e72dabc704",
+    "crates/webcue/src/frame.rs": "ce8487c2e186d2bd27f6915713530f9bdc8eaca8fa96083a5d1b88128eb1396e",
+    "crates/webcue/src/lib.rs": "0dc8e11f99d45fc19dc142021f810c31806a97c968c1f4efc7b9eea6ca4223f5",
+    "crates/webcue/src/protocol.rs": "b84da920d063f6f025b407a33ddd7594407fe71c5b0d0573a4861ae7e94e3c21",
+    "crates/webcue/tests/lifecycle.rs": "0da42d980d8a7ccd1c7b734d7e1a2c7cc399f636b77d605e3924743280f8a6a9",
+    "crates/wgpu-cue/Cargo.toml": "8cfd7fec15766cda5e478dcc7920fd2281520aa47dfa99420fc8fca7930c7a12",
+    "crates/wgpu-cue/src/lib.rs": "454b479114381a9b7d46c1dffb9dc90545b8434c34f0e811b15f437434542188",
+    "crates/wgpu-cue/src/metal.rs": "f8cff36314e382e9e938a574199310c7d77155ed9f2960301c566252d0310a02",
+    "crates/wgpu-cue/tests/presentation.rs": "3f4ed721c4e12a2bae8babe4335eb0b74c933708217b3c9bb42cebc62cca3c81",
+    "rust-toolchain.toml": "5e7517b95a2b4e810124f84091dd4a6e3f2192523fcac7b6d52abc7fc6aff91d"
+  },
+  "log_sha256": {
+    "clippy.log": "d8d3307af5ea995ad2be7091e73780148e37925b2365bfb6bc3ba1caba1258e8",
+    "core-dependencies.log": "28c066bcfe6a7c9a99d89bf020a344712c242b6327dabe00cef3f507e333fe20",
+    "core-linux.log": "164ccf8db47c31a2bda79565d76a10f06a1f3ab026da0a277d06a64e2e9ab6f8",
+    "core-wasm.log": "f5dcf0c9b3ced974cdb62fe39ef8c6d92eea9e51779e0ed894bfb6cc1b3d1f8a",
+    "core-windows.log": "7912568312e3267d21475dc7832dc6884573ca7c018e984c89fe8db27b925a05",
+    "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "genet-receiver.log": "8ad958abb640a78c2ed742355eacc65eeef7aff121245987772e81248ba13837",
+    "metal-presentation.log": "43f81da92a91391931fe977167cfdaceaa0d69adc1e306dae4e176d000f37261",
+    "wk-receiver.log": "2db662dcbd9a889e25f4dbf5855cdc250d93078ce70224cee76eeb5522c19340",
+    "workspace-tests.log": "af441e81c085b844f4efa0086ce54e147acb15c36d754cccf914a13d2bfc0b11"
+  }
+}

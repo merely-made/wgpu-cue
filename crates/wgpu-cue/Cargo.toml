@@ -1,0 +1,19 @@
+[package]
+name = "wgpu-cue"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Host-device presentation and owned native-frame integration for Webcue surfaces"
+[dependencies]
+webcue.workspace = true
+wgpu.workspace = true
+[dev-dependencies]
+pollster = "1"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+grafting = {version = "=0.6.0", default-features = false, features = ["wgpu-30"]}
+dpi = "0.1"
+objc2-metal = "0.3.2"

@@ -1,0 +1,13 @@
+[package]
+name = "webcue"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Renderer-free surface control, capabilities, ordered requests and semantic publications"
+[dependencies]
+grafting-frame.workspace = true
+accesskit.workspace = true
+document-session-api.workspace = true

@@ -1,0 +1,19 @@
+[package]
+name = "wgpu-cue-scry"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+[dependencies]
+webcue.workspace = true
+wgpu-cue = { path = "../../crates/wgpu-cue" }
+[target.'cfg(target_os = "macos")'.dependencies]
+scrying = {git = "https://github.com/merely-made/wgpu-scry.git", rev = "6100df6889c736917987cc6363a822f742cae97e"}
+dpi = "0.1"
+objc2 = "0.6.3"
+objc2-metal = "0.3.2"
+[target.'cfg(target_os = "macos")'.dev-dependencies]
+winit = "0.30"
+raw-window-handle = "0.6"
+objc2-foundation = "0.3.2"
+pollster = "1"

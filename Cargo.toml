@@ -1,0 +1,18 @@
+[workspace]
+resolver = "3"
+members = ["crates/webcue", "crates/wgpu-cue", "adapters/genet", "adapters/scry"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.97.1"
+license = "MPL-2.0"
+authors = ["Mark AB (markik)"]
+repository = "https://github.com/merely-made/wgpu-cue"
+
+[workspace.dependencies]
+webcue = { path = "crates/webcue" }
+grafting-frame = {git = "https://github.com/merely-made/wgpu-graft.git", rev = "3ffba747b2514396a37356609d33f3431d2afec6"}
+accesskit = { version = "=0.25.1", features = ["serde"] }
+document-session-api = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1" }
+wgpu = { version = "=30.0.1", default-features = false, features = ["std", "wgsl", "metal", "vulkan", "dx12"] }

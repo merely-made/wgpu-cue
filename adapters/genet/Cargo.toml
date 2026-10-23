@@ -1,0 +1,14 @@
+[package]
+name = "wgpu-cue-genet"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+[dependencies]
+webcue.workspace = true
+wgpu-cue = { path = "../../crates/wgpu-cue" }
+document-session-api.workspace = true
+genet-documents = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1", default-features = false, features = ["livery"] }
+genet-render-host = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1" }
+netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = "=0.1.2" }
+genet-host-api = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1" }

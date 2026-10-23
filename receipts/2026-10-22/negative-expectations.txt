@@ -1,0 +1,16 @@
+Transcribed excerpts of failed exploratory expectations; these are not full raw logs.
+
+WK receiver initial run (exit 101):
+WK receiver timed out; nav=true script=true focus=false frame=true
+Source inspection: the WK producer does not emit TextInputFocused/Changed/Blurred.
+Correction: final receiver verifies DOM focus acknowledgment and makes no caret claim.
+
+Genet translucent-pixel initial run (exit 101):
+Genet alpha sample: [255, 0, 0, 128]
+expected premultiplied red
+Correction: final adapter declares Straight and asserts the observed straight-alpha bytes.
+
+Initial wasm check against released grafting-frame 0.1.0 (exit 101):
+error[E0004]: non-exhaustive patterns: type `&OwnedNativeImage` is non-empty
+Correction: Graft PR #1 matches the empty value rather than its reference.
+Final wasm consumer check passed against the pinned fix.

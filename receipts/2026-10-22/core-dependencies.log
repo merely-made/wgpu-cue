@@ -1,0 +1,52 @@
+webcue v0.1.0 (<workspace>/crates/webcue)
+accesskit v0.25.1
+enumn v0.1.14 (proc-macro)
+proc-macro2 v1.0.107
+unicode-ident v1.0.27
+quote v1.0.47
+proc-macro2 v1.0.107 (*)
+syn v2.0.119
+proc-macro2 v1.0.107 (*)
+quote v1.0.47 (*)
+unicode-ident v1.0.27
+serde v1.0.229
+serde_core v1.0.229
+serde_derive v1.0.229 (proc-macro)
+proc-macro2 v1.0.107 (*)
+quote v1.0.47 (*)
+syn v3.0.9
+proc-macro2 v1.0.107 (*)
+quote v1.0.47 (*)
+unicode-ident v1.0.27
+uuid v1.28.0
+serde_core v1.0.229
+document-session-api v0.1.0 (https://github.com/merely-made/genet.git?rev=729414db135d5f60749841871a729a0e29ed6bb1#729414db)
+serde v1.0.229 (*)
+grafting-frame v0.1.0 (https://github.com/merely-made/wgpu-graft.git?rev=3ffba747b2514396a37356609d33f3431d2afec6#3ffba747)
+objc2 v0.6.5
+objc2-encode v4.1.0
+objc2-core-foundation v0.3.2
+bitflags v2.13.2
+block2 v0.6.2
+objc2 v0.6.5 (*)
+dispatch2 v0.3.1
+bitflags v2.13.2
+objc2 v0.6.5 (*)
+libc v0.2.191
+objc2 v0.6.5 (*)
+objc2-io-surface v0.3.2
+bitflags v2.13.2
+libc v0.2.191
+objc2 v0.6.5 (*)
+objc2-core-foundation v0.3.2 (*)
+objc2-foundation v0.3.2
+bitflags v2.13.2
+objc2 v0.6.5 (*)
+objc2-metal v0.3.2
+bitflags v2.13.2
+block2 v0.6.2 (*)
+dispatch2 v0.3.1 (*)
+objc2 v0.6.5 (*)
+objc2-core-foundation v0.3.2 (*)
+objc2-foundation v0.3.2 (*)
+objc2-io-surface v0.3.2 (*)

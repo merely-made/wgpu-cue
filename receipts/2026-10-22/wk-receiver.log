@@ -1,0 +1,5 @@
+   Compiling wgpu-cue-scry v0.1.0 (<workspace>/adapters/scry)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.90s
+     Running `target/debug/examples/wk_receiver`
+WK receiver GPU: AdapterInfo { name: "AMD Radeon Pro Vega 56", vendor: 0, device: 0, device_type: DiscreteGpu, device_pci_bus_id: "", driver: "", driver_info: "", backend: Metal, subgroup_min_size: 4, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }
+WK receiver PASS: ordered navigation, correlated script, DOM focus acknowledgment (no WK caret observation claimed), non-blocking CPU snapshot uploaded through the shared presenter; retirement settled accepted work
