@@ -1,0 +1,42 @@
+   Compiling libc v0.2.191
+   Compiling syn v3.0.9
+   Compiling block2 v0.6.2
+   Compiling objc2-foundation v0.3.2
+   Compiling syn v2.0.119
+   Compiling objc2-core-foundation v0.3.2
+   Compiling serde_derive v1.0.229
+   Compiling enumn v0.1.14
+   Compiling objc2-io-surface v0.3.2
+   Compiling serde v1.0.229
+   Compiling objc2-metal v0.3.2
+   Compiling document-session-api v0.1.0 (https://github.com/merely-made/genet.git?rev=729414db135d5f60749841871a729a0e29ed6bb1#729414db)
+   Compiling accesskit v0.25.1
+   Compiling grafting-frame v0.1.0 (https://github.com/merely-made/wgpu-graft.git?rev=3ffba747b2514396a37356609d33f3431d2afec6#3ffba747)
+   Compiling webcue v0.1.0 (<workspace>/crates/webcue)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.80s
+     Running unittests src/lib.rs (target/debug/deps/webcue-0bb88f9045432504)
+
+running 1 test
+test protocol::tests::sequence_exhaustion_cannot_steal_a_reserved_terminal_event ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/lifecycle.rs (target/debug/deps/lifecycle-3b17f093070c48af)
+
+running 8 tests
+test malformed_cpu_frames_and_nonfinite_viewports_are_refused ... ok
+test completions_cannot_overtake_observations_and_keep_caller_identity ... ok
+test old_generation_cannot_settle_an_identically_numbered_live_request ... ok
+test observations_cannot_use_reserved_completion_slots ... ok
+test semantic_actions_expire_without_waiting_for_another_frame ... ok
+test rejected_acceptance_has_no_completion_and_can_be_retried_after_drain ... ok
+test capability_report_refuses_missing_duplicate_and_unexplained_answers ... ok
+test semantics_must_name_their_actual_protocol ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests webcue
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

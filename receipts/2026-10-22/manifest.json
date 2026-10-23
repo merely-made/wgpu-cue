@@ -28,7 +28,7 @@
     "crates/webcue/Cargo.toml": "83a6f553ebb7dbf8fc443084c5ea4ebb73c765ce98eceafeaa61e3f2a756e7dc",
     "crates/webcue/src/capabilities.rs": "60e8ca3b0fdd1da8ca32d4c3c24464a10738e02c1ef90c50b663f8e72dabc704",
     "crates/webcue/src/frame.rs": "ce8487c2e186d2bd27f6915713530f9bdc8eaca8fa96083a5d1b88128eb1396e",
-    "crates/webcue/src/lib.rs": "0dc8e11f99d45fc19dc142021f810c31806a97c968c1f4efc7b9eea6ca4223f5",
+    "crates/webcue/src/lib.rs": "0b90ac7cdee27eaf01fd3010ed72331bc84fe7aac0fcc09b258551a566b2c165",
     "crates/webcue/src/protocol.rs": "b84da920d063f6f025b407a33ddd7594407fe71c5b0d0573a4861ae7e94e3c21",
     "crates/webcue/tests/lifecycle.rs": "0da42d980d8a7ccd1c7b734d7e1a2c7cc399f636b77d605e3924743280f8a6a9",
     "crates/wgpu-cue/Cargo.toml": "8cfd7fec15766cda5e478dcc7920fd2281520aa47dfa99420fc8fca7930c7a12",
@@ -38,11 +38,12 @@
     "rust-toolchain.toml": "5e7517b95a2b4e810124f84091dd4a6e3f2192523fcac7b6d52abc7fc6aff91d"
   },
   "log_sha256": {
-    "clippy.log": "d8d3307af5ea995ad2be7091e73780148e37925b2365bfb6bc3ba1caba1258e8",
+    "clippy.log": "8348c32d621f10d53277b9f40fc606ca35f970aae187150d0947989ff429c5d6",
     "core-dependencies.log": "28c066bcfe6a7c9a99d89bf020a344712c242b6327dabe00cef3f507e333fe20",
     "core-linux.log": "164ccf8db47c31a2bda79565d76a10f06a1f3ab026da0a277d06a64e2e9ab6f8",
     "core-wasm.log": "f5dcf0c9b3ced974cdb62fe39ef8c6d92eea9e51779e0ed894bfb6cc1b3d1f8a",
     "core-windows.log": "7912568312e3267d21475dc7832dc6884573ca7c018e984c89fe8db27b925a05",
+    "final-core-tests.log": "e5c089276e6a23a7e563830e4a99479cc67b70186eb43930726da2e530948168",
     "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "genet-receiver.log": "d1685c76f9dea314ef98e2954b2ca2f1b565cb3478c3ebad08f9d9aa47696c6e",
     "metal-presentation.log": "77769c37dfc5b235e1f5c3b60e00739bfa349dd8bd032c9817e59ea8d2541534",

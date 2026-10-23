@@ -8,6 +8,9 @@ mod frame;
 mod protocol;
 pub use accesskit;
 pub use capabilities::*;
+/// Full canonical document vocabulary, including types nested in input results,
+/// semantic actions, form submissions, find state and document reports.
+pub use document_session_api as document;
 pub use document_session_api::{
     DocumentA11yActionRequest, DocumentA11yProjection, DocumentCapabilities, DocumentFindState,
     DocumentZoomState, SessionButtonState, SessionFocusDirection, SessionFormSubmission,
