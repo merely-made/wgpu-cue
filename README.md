@@ -5,8 +5,21 @@ control plane is independent of the engine and the wgpu major. Presentation
 names both directions already present in the stack: a producer supplies an
 owned native frame, or renders on the receiving host's device.
 
-This is an unpublished implementation proof. `webcue`, `wgpu-cue`,
-`wgpu-cue-genet`, and `wgpu-cue-scry` have `publish = false`; their APIs may change.
+`webcue` and `wgpu-cue` form the initial **0.1.0** contract release. Their APIs
+may change within the 0.x series. The concrete adapters remain source packages
+with `publish = false`; their proof covers the cases recorded below.
+
+```toml
+[dependencies]
+wgpu-cue = "0.1.0"
+# Or, for renderer-free controls only:
+webcue = "0.1.0"
+```
+
+The published packages resolve their dependencies from crates.io. The development
+workspace retains an exact Genet Git source with a registry version fallback,
+so its unpublished adapter and the contract share one canonical document type
+identity. Cargo strips that Git source when packaging the public contract.
 
 | Package | Boundary |
 | --- | --- |

@@ -1321,8 +1321,9 @@ dependencies = [
 
 [[package]]
 name = "grafting-frame"
-version = "0.1.0"
-source = "git+https://github.com/merely-made/wgpu-graft.git?rev=3ffba747b2514396a37356609d33f3431d2afec6#3ffba747b2514396a37356609d33f3431d2afec6"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a9505a0e21129c2d28101fcdda1bdaf9026636f788886176d1845ce48462478"
 dependencies = [
  "objc2 0.6.5",
  "objc2-core-foundation",

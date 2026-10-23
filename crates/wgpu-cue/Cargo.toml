@@ -5,7 +5,8 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
-publish = false
+publish = true
+readme = "../../README.md"
 description = "Host-device presentation and owned native-frame integration for Webcue surfaces"
 [dependencies]
 webcue.workspace = true

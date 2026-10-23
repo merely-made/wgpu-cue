@@ -5,7 +5,8 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
-publish = false
+publish = true
+readme = "../../README.md"
 description = "Renderer-free surface control, capabilities, ordered requests and semantic publications"
 [dependencies]
 grafting-frame.workspace = true
