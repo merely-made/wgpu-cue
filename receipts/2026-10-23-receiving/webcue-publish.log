@@ -1,0 +1,12 @@
+    Updating crates.io index
+   Packaging webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+    Updating crates.io index
+    Packaged 11 files, 46.1KiB (13.4KiB compressed)
+   Verifying webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+   Compiling webcue v0.1.1 (/Users/markik/Code/target/package/webcue-0.1.1)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.33s
+   Uploading webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+    Uploaded webcue v0.1.1 to registry `crates-io`
+note: waiting for webcue v0.1.1 to be available at registry `crates-io`
+help: you may press ctrl-c to skip waiting; the crate should be available shortly
+   Published webcue v0.1.1 at registry `crates-io`

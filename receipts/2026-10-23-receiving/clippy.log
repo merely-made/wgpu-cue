@@ -1,0 +1,8 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+    Checking wgpu-cue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/wgpu-cue)
+    Checking wgpu-cue-netrender v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/adapters/netrender)
+    Checking wgpu-cue-genet v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/adapters/genet)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 17s

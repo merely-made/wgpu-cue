@@ -1,0 +1,10 @@
+    Updating crates.io index
+   Packaging webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+    Updating crates.io index
+    Packaged 11 files, 46.1KiB (13.4KiB compressed)
+   Verifying webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+   Compiling document-session-api v0.1.0
+   Compiling webcue v0.1.1 (/Users/markik/Code/target/package/webcue-0.1.1)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 19.72s
+   Uploading webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+warning: aborting upload due to dry run

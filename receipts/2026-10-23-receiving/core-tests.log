@@ -1,0 +1,31 @@
+   Compiling webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.97s
+     Running unittests src/lib.rs (/Users/markik/Code/target/debug/deps/webcue-235a030ac7f9362a)
+
+running 3 tests
+test protocol::tests::observation_batch_preflight_preserves_completion_reservations ... ok
+test protocol::tests::sequence_exhaustion_cannot_steal_a_reserved_terminal_event ... ok
+test document_input::tests::retained_navigation_has_one_dedicated_event_after_input_and_cursor ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/lifecycle.rs (/Users/markik/Code/target/debug/deps/lifecycle-5f3e75c4102899c5)
+
+running 8 tests
+test malformed_cpu_frames_and_nonfinite_viewports_are_refused ... ok
+test observations_cannot_use_reserved_completion_slots ... ok
+test completions_cannot_overtake_observations_and_keep_caller_identity ... ok
+test old_generation_cannot_settle_an_identically_numbered_live_request ... ok
+test rejected_acceptance_has_no_completion_and_can_be_retried_after_drain ... ok
+test semantic_actions_expire_without_waiting_for_another_frame ... ok
+test capability_report_refuses_missing_duplicate_and_unexplained_answers ... ok
+test semantics_must_name_their_actual_protocol ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests webcue
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

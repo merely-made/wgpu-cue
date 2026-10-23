@@ -1,0 +1,18 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling webcue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/webcue)
+   Compiling wgpu-cue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/wgpu-cue)
+   Compiling wgpu-cue-netrender v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/adapters/netrender)
+   Compiling wgpu-cue-genet v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/adapters/genet)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.99s
+     Running tests/retained.rs (/Users/markik/Code/target/debug/deps/retained-1f0f1837c6b26e3a)
+
+running 1 test
+ICU4X data error: No segmentation model for complex script: Chinese/Japanese
+Genet: qualified 320x200 GPU frame, 256000 bytes; retained IME commit and stale action refusal passed
+Genet alpha sample: [255, 0, 0, 128]
+test real_genet_receiver_lifecycle_ime_and_pixels has been running for over 60 seconds
+test real_genet_receiver_lifecycle_ime_and_pixels ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 79.25s
+

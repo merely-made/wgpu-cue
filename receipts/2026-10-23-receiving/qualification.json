@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-23T04:49:38.396777+00:00",
+  "source_commit": "94ba59574838a70c8283d3f5d3cf3ddbb838cfc5",
+  "registry_versions": {
+    "webcue": "0.1.1",
+    "wgpu-cue": "0.1.1"
+  },
+  "native_platform": "macOS, AMD Radeon Pro Vega 56, Metal, Rust 1.99.1",
+  "checks": {
+    "core_tests": 11,
+    "strict_clippy": "passed: webcue, wgpu-cue, wgpu-cue-netrender, wgpu-cue-genet; all targets",
+    "standalone_genet_metal": 1,
+    "fresh_registry_tests": 9,
+    "fresh_registry_metal": 2,
+    "archive_vcs_and_checksums": "verified",
+    "fresh_registry_wasm": "compile passed with Rust 1.99.1; not browser runtime qualification"
+  },
+  "receiving_owner": "mere/design_docs/inker_docs/implementation_strategy/2026-10-22_shared_surface_receiving_plan.md",
+  "limits": [
+    "retained Livery proof; no OS candidate-window or human AT claim",
+    "same-scope renderer rebind is not physical device loss qualification",
+    "concrete Servo/CEF/native-WebView frame bindings remain host/engine qualification",
+    "Genet fixture reports missing complex-script segmentation model; commit/value proof is not segmentation qualification"
+  ],
+  "files": {
+    "archive-verification.json": "78ddf4150027ac17402b29321148586ef60547bf4efb33a8c057070563775d1f",
+    "clippy.log": "88b975cf706058697d332cee31e6ede214ac062b8433708f69b62e9007f1681c",
+    "core-tests.log": "ecb67dbc3100e5c81596aa6747acd05ddd24679b8c953f051cc75658ca9cc7c6",
+    "genet-metal.log": "c5424e64dcd75ae42e621a00f77beb2ebdaf1632d04ea55c97796af91ff1dee2",
+    "registry-consumer/Cargo.lock": "754358b0c503296ccd06bb0451c061563c726fab733500f82e1617aaff634e9c",
+    "registry-consumer/Cargo.toml": "21b602f8469b3aa48b142ca72f790a4019a938352a7ca1db2709570a56a565f1",
+    "registry-consumer/src/lib.rs": "a9b21e357d592a7106e37b39d08ad14b01a6387e25a613dc8d5f2559ffd87966",
+    "registry-consumer/tests/lifecycle.rs": "6f28a17f547ba0c9e417ae5ba2a259136c348f546fe85907f7ef8f68fd0f5b58",
+    "registry-consumer/tests/registry_metal.rs": "3f4ed721c4e12a2bae8babe4335eb0b74c933708217b3c9bb42cebc62cca3c81",
+    "registry-metal.log": "0198f36f039cda452cd236f10e562c78bf25b6833897af30041fa816c077cc85",
+    "registry-tests.log": "202ee25f688e341a82e0204f861f256e1c5af57a582c3a3b41f544fb6080448f",
+    "registry-wasm.log": "d0d5986948785789fd39c84b0f79c77e95d1772ee9e99becd862ecfb66892800",
+    "webcue-0.1.1-normalized.toml": "a8e95459f75fe73ca069b0d634b471765acc81b4661e3a631d9178815380b427",
+    "webcue-dry-run.log": "743753018105b5966839e4aee5ae62d252d7673c9cdd4600d3afd0dfadcdab49",
+    "webcue-publish.log": "0a7be9466d19a1bec24efa516e18bb43549939c4d21be5ab3914df78917be73b",
+    "wgpu-cue-0.1.1-normalized.toml": "fa3937e525c9fb086caea39f29054837db8a96c6cf239da5ace029de6c1b85a8",
+    "wgpu-cue-dry-run.log": "734e7dd5ea65137eaced48d5612474be8d0872d56b1dc0986f494d97745de512",
+    "wgpu-cue-publish.log": "c9de5ec7151a75058008f21a2d0aa1cbebc186fa2219ad77d873105ec4ea4d57"
+  }
+}

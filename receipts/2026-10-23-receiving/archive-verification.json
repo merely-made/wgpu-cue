@@ -1,0 +1,26 @@
+[
+  {
+    "crate": "webcue",
+    "version": "0.1.1",
+    "checksum": "59f91bc9525830ea23caba8b6aa4c33d9cabe58e3a022461ba96aba233bad65c",
+    "vcs": {
+      "git": {
+        "sha1": "94ba59574838a70c8283d3f5d3cf3ddbb838cfc5"
+      },
+      "path_in_vcs": "crates/webcue"
+    },
+    "archive_bytes": 13716
+  },
+  {
+    "crate": "wgpu-cue",
+    "version": "0.1.1",
+    "checksum": "a60040979344afcd2f5137b4f40aa6996160d4ff84206d37c47956e880c47ea2",
+    "vcs": {
+      "git": {
+        "sha1": "94ba59574838a70c8283d3f5d3cf3ddbb838cfc5"
+      },
+      "path_in_vcs": "crates/wgpu-cue"
+    },
+    "archive_bytes": 19037
+  }
+]

@@ -1,0 +1,13 @@
+    Updating crates.io index
+   Packaging wgpu-cue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/wgpu-cue)
+    Updating crates.io index
+    Packaged 8 files, 67.5KiB (18.6KiB compressed)
+   Verifying wgpu-cue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/wgpu-cue)
+ Downloading crates ...
+  Downloaded webcue v0.1.1
+   Compiling document-session-api v0.1.0
+   Compiling webcue v0.1.1
+   Compiling wgpu-cue v0.1.1 (/Users/markik/Code/target/package/wgpu-cue-0.1.1)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 20.39s
+   Uploading wgpu-cue v0.1.1 (/Users/markik/Code/worktrees/cue-inker-20261022/crates/wgpu-cue)
+warning: aborting upload due to dry run
