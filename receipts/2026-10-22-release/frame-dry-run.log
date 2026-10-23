@@ -1,0 +1,14 @@
+    Updating crates.io index
+error: invalid type: boolean `true`, expected a map
+ --> ../../../.cargo/git/checkouts/servo-e53a6e7b994a25fe/aac43a3/python/tidy/tests/lints-configuration/no-workspace/Cargo.toml:8:7
+  |
+8 | foo = true
+  |       ^^^^
+   Packaging grafting-frame v0.1.1 (<code>/worktrees/graft-cue-publish-20261022/grafting-frame)
+    Updating crates.io index
+    Packaged 6 files, 23.3KiB (6.8KiB compressed)
+   Verifying grafting-frame v0.1.1 (<code>/worktrees/graft-cue-publish-20261022/grafting-frame)
+   Compiling grafting-frame v0.1.1 (<code>/worktrees/graft-cue-publish-20261022/target/build/package/grafting-frame-0.1.1)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.38s
+   Uploading grafting-frame v0.1.1 (<code>/worktrees/graft-cue-publish-20261022/grafting-frame)
+warning: aborting upload due to dry run

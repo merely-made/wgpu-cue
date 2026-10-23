@@ -1,0 +1,42 @@
+{
+  "webcue": {
+    "checksum": "c964985805af82646335510a8fc154d229df7ffd41e3ffb1c53baedffee2a440",
+    "vcs": {
+      "git": {
+        "sha1": "8b9b70efa46b634d8d8f17c3f489a22bc26ed8ec"
+      },
+      "path_in_vcs": "crates/webcue"
+    },
+    "normalized_manifest_git_free": true
+  },
+  "wgpu-cue": {
+    "checksum": "b5fc5c8d4c364f881b46f8206e14be9c3a77a0691e3eef302b077363012570cf",
+    "vcs": {
+      "git": {
+        "sha1": "8b9b70efa46b634d8d8f17c3f489a22bc26ed8ec"
+      },
+      "path_in_vcs": "crates/wgpu-cue"
+    },
+    "normalized_manifest_git_free": true
+  },
+  "grafting-frame": {
+    "checksum": "9a9505a0e21129c2d28101fcdda1bdaf9026636f788886176d1845ce48462478",
+    "vcs": {
+      "git": {
+        "sha1": "244fe063293d280ba7d0a3750bc30062aeeb9944"
+      },
+      "path_in_vcs": "grafting-frame"
+    },
+    "normalized_manifest_git_free": true
+  },
+  "document-session-api": {
+    "checksum": "bc593e5ae345133c8c11a82899164cf5776ee263716de36c2d3621d7d22c2a8f",
+    "vcs": {
+      "git": {
+        "sha1": "10a8c5b5d1b91aa86c74f89535ed932b0dfb2132"
+      },
+      "path_in_vcs": "components/shared/document-session-api"
+    },
+    "normalized_manifest_git_free": true
+  }
+}

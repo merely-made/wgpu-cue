@@ -1,0 +1,14 @@
+    Updating crates.io index
+   Packaging wgpu-cue v0.1.0 (<workspace>/crates/wgpu-cue)
+    Updating crates.io index
+    Packaged 8 files, 67.1KiB (18.4KiB compressed)
+   Verifying wgpu-cue v0.1.0 (<workspace>/crates/wgpu-cue)
+ Downloading crates ...
+  Downloaded webcue v0.1.0
+   Compiling document-session-api v0.1.0
+   Compiling grafting-frame v0.1.1
+   Compiling webcue v0.1.0
+   Compiling wgpu-cue v0.1.0 (<workspace>/target/package/wgpu-cue-0.1.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.14s
+   Uploading wgpu-cue v0.1.0 (<workspace>/crates/wgpu-cue)
+warning: aborting upload due to dry run

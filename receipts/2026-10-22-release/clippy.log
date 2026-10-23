@@ -1,0 +1,6 @@
+    Checking grafting-frame v0.1.1
+    Checking webcue v0.1.0 (<workspace>/crates/webcue)
+    Checking wgpu-cue v0.1.0 (<workspace>/crates/wgpu-cue)
+    Checking wgpu-cue-scry v0.1.0 (<workspace>/adapters/scry)
+    Checking wgpu-cue-genet v0.1.0 (<workspace>/adapters/genet)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.21s

@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.13s
+     Running tests/registry_metal.rs (target/debug/deps/registry_metal-4cfe8ab602b98cad)
+
+running 2 tests
+real presentation adapter: AdapterInfo { name: "AMD Radeon Pro Vega 56", vendor: 0, device: 0, device_type: DiscreteGpu, device_pci_bus_id: "", driver: "", driver_info: "", backend: Metal, subgroup_min_size: 4, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }
+real presentation adapter: AdapterInfo { name: "AMD Radeon Pro Vega 56", vendor: 0, device: 0, device_type: DiscreteGpu, device_pci_bus_id: "", driver: "", driver_info: "", backend: Metal, subgroup_min_size: 4, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }
+test host_device_refuses_unreusable_stale_and_wrong_device_frames ... ok
+native custody: pending retry, fence readiness, retained frame, generation retirement, CPU route and invalid replacement passed
+test metal_custody_pending_retry_and_cpu_transport ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s

@@ -1,0 +1,12 @@
+    Updating crates.io index
+   Packaging webcue v0.1.0 (<workspace>/crates/webcue)
+    Updating crates.io index
+    Packaged 10 files, 40.4KiB (11.9KiB compressed)
+   Verifying webcue v0.1.0 (<workspace>/crates/webcue)
+   Compiling webcue v0.1.0 (<workspace>/target/package/webcue-0.1.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.65s
+   Uploading webcue v0.1.0 (<workspace>/crates/webcue)
+    Uploaded webcue v0.1.0 to registry `crates-io`
+note: waiting for webcue v0.1.0 to be available at registry `crates-io`
+help: you may press ctrl-c to skip waiting; the crate should be available shortly
+   Published webcue v0.1.0 at registry `crates-io`

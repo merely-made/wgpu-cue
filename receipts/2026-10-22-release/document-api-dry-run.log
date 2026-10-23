@@ -1,0 +1,16 @@
+    Updating crates.io index
+   Packaging document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/components/shared/document-session-api)
+    Updating crates.io index
+    Packaged 11 files, 104.4KiB (29.0KiB compressed)
+   Verifying document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/components/shared/document-session-api)
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.27
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+   Compiling syn v3.0.9
+   Compiling serde_derive v1.0.229
+   Compiling document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/target/build/package/document-session-api-0.1.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.47s
+   Uploading document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/components/shared/document-session-api)
+warning: aborting upload due to dry run

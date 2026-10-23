@@ -1,0 +1,47 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+   Compiling syn v3.0.9
+   Compiling syn v2.0.119
+   Compiling enumn v0.1.14
+   Compiling uuid v1.28.0
+   Compiling serde_derive v1.0.229
+   Compiling accesskit v0.25.1
+   Compiling document-session-api v0.1.0 (<code>/output/wgpu-cue-release-20261022-8mgom0r6/document-session-api-0.1.0)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.30s
+     Running unittests src/lib.rs (<code>/output/wgpu-cue-release-20261022-8mgom0r6/document-session-api-0.1.0/target/build/debug/deps/document_session_api-80296157343e821a)
+
+running 23 tests
+test capabilities::tests::defaults_are_explicitly_unavailable ... ok
+test a11y::tests::partial_support_requires_a_specific_limitation ... ok
+test capabilities::tests::legacy_web_status_spelling_is_the_shared_type ... ok
+test a11y::tests::projection_carries_stable_local_ids_revision_and_semantics ... ok
+test page_capture::tests::viewport_facts_keep_unobserved_css_explicit ... ok
+test page_capture::tests::viewport_request_keeps_the_host_minted_id ... ok
+test session_engine::tests::document_session_accessibility_defaults_to_an_honest_absence ... ok
+test session_engine::tests::document_session_capture_defaults_to_unsupported ... ok
+test session_engine::tests::key_default_scroll_respects_effect_and_effective_editable_focus ... ok
+test session_engine::tests::downcast_reaches_lane_extras ... ok
+test session_engine::tests::kind_index_reports_flags_not_a_single_kind ... ok
+test session_engine::tests::neutral_pointer_dispatch_preserves_navigation_cursor_and_capture ... ok
+test session_engine::tests::page_zoom_is_a_named_absence_until_a_lane_wires_it ... ok
+test session_engine::tests::phase_c_t5_api_legacy_result_literal ... ok
+test session_engine::tests::pending_work_exposes_a_sleepable_timer_deadline ... ok
+test session_engine::tests::phase_c_t5_api_legacy_spawn_unicode_body ... ok
+test session_engine::tests::phase_c_t5_api_legacy_submission_literal ... ok
+test session_engine::tests::phase_c_t5_api_old_factory_rich_decline ... ok
+test session_engine::tests::phase_c_t5_api_old_session_accessor_none ... ok
+test session_engine::tests::phase_c_t5_api_old_session_current_address_none ... ok
+test session_engine::tests::registry_spawns_and_drives_a_session ... ok
+test session_engine::tests::unknown_engine_is_a_named_error ... ok
+test session_engine::tests::zoom_state_keeps_the_request_and_clamps_only_the_applied_value ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests document_session_api
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

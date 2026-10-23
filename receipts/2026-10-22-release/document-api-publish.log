@@ -1,0 +1,13 @@
+    Updating crates.io index
+   Packaging document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/components/shared/document-session-api)
+    Updating crates.io index
+    Packaged 11 files, 104.4KiB (29.0KiB compressed)
+   Verifying document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/components/shared/document-session-api)
+   Compiling document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/target/build/package/document-session-api-0.1.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.27s
+   Uploading document-session-api v0.1.0 (<code>/worktrees/genet-cue-publish-20261022/components/shared/document-session-api)
+    Uploaded document-session-api v0.1.0 to registry `crates-io`
+note: waiting for document-session-api v0.1.0 to be available at registry `crates-io`
+help: you may press ctrl-c to skip waiting; the crate should be available shortly
+    Blocking waiting for file lock on package cache
+   Published document-session-api v0.1.0 at registry `crates-io`

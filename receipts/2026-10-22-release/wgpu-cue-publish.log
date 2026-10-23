@@ -1,0 +1,16 @@
+    Updating crates.io index
+   Packaging wgpu-cue v0.1.0 (<workspace>/crates/wgpu-cue)
+    Blocking waiting for file lock on package cache
+    Updating crates.io index
+    Blocking waiting for file lock on package cache
+    Packaged 8 files, 67.1KiB (18.4KiB compressed)
+   Verifying wgpu-cue v0.1.0 (<workspace>/crates/wgpu-cue)
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling wgpu-cue v0.1.0 (<workspace>/target/package/wgpu-cue-0.1.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.92s
+   Uploading wgpu-cue v0.1.0 (<workspace>/crates/wgpu-cue)
+    Uploaded wgpu-cue v0.1.0 to registry `crates-io`
+note: waiting for wgpu-cue v0.1.0 to be available at registry `crates-io`
+help: you may press ctrl-c to skip waiting; the crate should be available shortly
+   Published wgpu-cue v0.1.0 at registry `crates-io`

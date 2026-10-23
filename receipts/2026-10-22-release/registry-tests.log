@@ -1,0 +1,36 @@
+   Compiling wgpu-cue v0.1.0
+   Compiling cue-registry-receiver-proof v0.0.0 (<code>/output/wgpu-cue-release-20261022-8mgom0r6/registry-consumer)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.04s
+     Running unittests src/lib.rs (target/debug/deps/cue_registry_receiver_proof-57edd544b1582bc9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/lifecycle.rs (target/debug/deps/lifecycle-f2fe375036032a12)
+
+running 8 tests
+test malformed_cpu_frames_and_nonfinite_viewports_are_refused ... ok
+test old_generation_cannot_settle_an_identically_numbered_live_request ... ok
+test completions_cannot_overtake_observations_and_keep_caller_identity ... ok
+test observations_cannot_use_reserved_completion_slots ... ok
+test semantic_actions_expire_without_waiting_for_another_frame ... ok
+test rejected_acceptance_has_no_completion_and_can_be_retried_after_drain ... ok
+test capability_report_refuses_missing_duplicate_and_unexplained_answers ... ok
+test semantics_must_name_their_actual_protocol ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/registry_metal.rs (target/debug/deps/registry_metal-4cfe8ab602b98cad)
+
+running 2 tests
+test host_device_refuses_unreusable_stale_and_wrong_device_frames ... ignored, requires native Metal; run explicitly
+test metal_custody_pending_retry_and_cpu_transport ... ignored, requires native Metal; run explicitly
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests cue_registry_receiver_proof
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

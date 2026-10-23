@@ -1,0 +1,50 @@
+{
+  "client_date": "2026-10-22",
+  "timezone": "America/New_York",
+  "release_source": "8b9b70efa46b634d8d8f17c3f489a22bc26ed8ec",
+  "checks": {
+    "all_published_checksums_match_verified_archives": true,
+    "normalized_manifests_git_free": true,
+    "registry_only_dependency_graph": true,
+    "fresh_consumer_lifecycle_tests": 8,
+    "fresh_consumer_explicit_metal_tests": 2,
+    "published_document_api_all_feature_tests": 23,
+    "core_cross_compile": [
+      "wasm32-unknown-unknown",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-pc-windows-gnu"
+    ]
+  },
+  "prs": {
+    "scry_2": "01896974e4481c34a40c8023da1fdeae0a9d3a73",
+    "graft_1": "22c59508721e59d3e6d38d4d6c8e8e304f58ec4c"
+  },
+  "log_normalization": "Home/worktree prefixes redacted; trailing blank lines removed.",
+  "files_sha256": {
+    "archive-verification.json": "7abc29c90a3899e944b4cb35ccbc5b3f6976d017b0b7ef6b1301a437174ba040",
+    "clippy.log": "2a858807043d7c5a8b6c12be499f1672e2c75005a53a0a0d85d754e938f93a68",
+    "document-api-dry-run.log": "8e42ee1ea7e346bf01864de18f075b64c567831da2e2190b4ed45447fba07d88",
+    "document-api-publish.log": "4ee8701b59241c3dab6386a4507a4d4609fa242b1a5ad2ab5ac2a5c3511bec66",
+    "document-api-tests.log": "3d9d3f31af7823faec7d8b02be970ee134ef690919cf33f29f26797d77ae478a",
+    "frame-dry-run.log": "c0bff18a064069abb45b6c9ce1816a0ec9726c0e1628f44fe85804561990b131",
+    "frame-publish.log": "db25e398d1caae61443fc7473d580254a21a1d6cd2b7cbd00d2704f0235d9aaf",
+    "frame-tests.log": "772f4d2e0b77da54e0040f8d8453bebc061090226cb8fdf405d18f0cc6a6b2ed",
+    "published-versions.json": "391d2681ff3860701e1982779121cca174152353e0550c58bc231cf1ef747902",
+    "registry-consumer/Cargo.lock": "d28cc3b24df41f2b73973a7a37ea4c4c74277b0d3ba874617cf6a4dab03787e0",
+    "registry-consumer/Cargo.toml": "9131527b5cfc38bd272a9b1c5c72c602ca9c41b92cef2fa148a200327e9cd273",
+    "registry-consumer/src/lib.rs": "a9b21e357d592a7106e37b39d08ad14b01a6387e25a613dc8d5f2559ffd87966",
+    "registry-consumer/tests/lifecycle.rs": "0da42d980d8a7ccd1c7b734d7e1a2c7cc399f636b77d605e3924743280f8a6a9",
+    "registry-consumer/tests/registry_metal.rs": "3f4ed721c4e12a2bae8babe4335eb0b74c933708217b3c9bb42cebc62cca3c81",
+    "registry-dependencies.json": "9368135db65222593eba00b81a756029e1435a002ba6c75e4d39136f4ee4e257",
+    "registry-linux.log": "653c4cebd697e460481aa5e6bc2e2f50c7b0d34d5d9b2de9c400aba10535c912",
+    "registry-metal.log": "b1ded0a391ccca43655886861dd73927871cb771411a868477feea06846896ca",
+    "registry-tests.log": "25815c053b2d5a80c172190892a5046add46e6ae7c9d3c09cf7f969b5a25f31b",
+    "registry-wasm.log": "4d20af2f2c2ec74955236a6447694e0230dbfbc3a9b54afc7d2d713a12ed483d",
+    "registry-windows.log": "caf714bdc37e5bba3738faa52177121b88b8db3b46cdfce0ccbad828645c6a63",
+    "webcue-dry-run.log": "a5153deba8a2eda25ab76d5c6002dbb261f271788e8bf307e05edc5562791179",
+    "webcue-publish.log": "cede5ae25833ba9e61eee7422ba221916a78bb8a9bc9dec19cd9aa24e0512b4a",
+    "wgpu-cue-dry-run.log": "0716eea79128974d7894fab5600cd7446532844da55b1cd5386e45d001c4eea2",
+    "wgpu-cue-publish.log": "e71e3d83f50ad81362cb558d6eb0bb169a9b31bd5b54acd4839198a1d5d0b7a9",
+    "workspace-tests.log": "5614726906fed43c79fcf1138308831ff972172c507c489984cdcefc4bfa773e"
+  }
+}

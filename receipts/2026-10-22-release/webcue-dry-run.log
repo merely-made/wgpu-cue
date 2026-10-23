@@ -1,0 +1,14 @@
+    Updating crates.io index
+   Packaging webcue v0.1.0 (<workspace>/crates/webcue)
+    Updating crates.io index
+    Packaged 10 files, 40.4KiB (11.9KiB compressed)
+   Verifying webcue v0.1.0 (<workspace>/crates/webcue)
+ Downloading crates ...
+  Downloaded grafting-frame v0.1.1
+  Downloaded document-session-api v0.1.0
+   Compiling document-session-api v0.1.0
+   Compiling grafting-frame v0.1.1
+   Compiling webcue v0.1.0 (<workspace>/target/package/webcue-0.1.0)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.71s
+   Uploading webcue v0.1.0 (<workspace>/crates/webcue)
+warning: aborting upload due to dry run
