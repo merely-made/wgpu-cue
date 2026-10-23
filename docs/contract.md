@@ -92,12 +92,16 @@ a replacement texture, while native imports preserve native resource custody.
 Genet submits to a fresh host-device target and polls deferred Classic quality
 results on later turns. It does not call `RenderCore`'s synchronous checked
 raster convenience method, which can wait five seconds. A pending texture is
-kept private until the quality observer reports no outstanding counters. This
-observer is shared with the renderer. The proof adapter requires exclusive
-drawing and quality polling on its RenderCore; multiple independently driven
-adapters sharing that renderer are not qualified. The host may still borrow
-its device/queue for composition and readback. The adapter is for native
-targets; an asynchronous
+kept private until the quality observer reports no outstanding counters. The
+`wgpu-cue-netrender` adapter owns a private renderer and quality observer on the
+host's existing device/queue. Other producers and the shell may draw and poll
+their own renderers independently. This uses separate renderer caches without
+booting another GPU device. Allocation epochs remain monotonic across private
+renderer reconstruction; receiving hosts retain content revisions with their
+session. GPU error scopes are popped immediately and their
+futures are polled on later turns; unresolved scopes keep the frame private.
+Viewport scale, output extent and device epoch must still match a pending
+frame. Native two-producer receiving is qualified in Mere; an asynchronous
 WebGPU renderer adapter remains a separate integration.
 
 ## Semantics and capabilities
@@ -130,3 +134,31 @@ Frame observation promotes the live report from constructed to observed, but
 that status does not claim every supported feature has been exercised. Per
 feature execution evidence belongs in a receipt, not in an inferred engine
 ranking.
+
+
+## Host adapter receiving (0.1.1)
+
+`dispatch_document_input` and `document_input_events` supply the canonical
+retained input dispatch and ordered result/cursor/navigation/form observations.
+Both Inker and the standalone Genet adapter use them. Unsupported native key
+fields, non-finite positions and unrepresentable scroll modifiers are refused.
+Hosts use the full DocumentInput result for capture/editability/admission and
+apply navigation/submission policy once from the dedicated events.
+
+`Protocol::ensure_observations` checks bounded observation capacity before an
+adapter mutates its receiver. The single owner emits the checked batch before
+accepting other work. It cannot consume slots or sequence numbers reserved for
+accepted request completions. `retirement_len` lets a receiving host reserve an
+old scope's final stream before a successful installation replacement.
+
+Inker's retained adapter owns the existing canonical session; Pelt keeps
+acquisition, history and resource delivery. Pelt's shared-content wrapper exposes
+`Source::Native` and `Source::HostDevice` through one control object. Browser
+platform bindings preserve their richer extensions and require the engine/host
+pair to supply an explicit non-blocking, owned frame conversion. The adapter
+refuses fields it cannot represent, including native composition state and
+independent key character/repeat fields. Unknown rich browser callbacks retain
+their serialized typed payload as a Message; they are not silently discarded.
+Legacy cursor callbacks have their own supplier queue and are sampled after
+the ordered browser callback stream; no cross-queue callback chronology is
+claimed. Native AT remains a platform extension for those bindings.

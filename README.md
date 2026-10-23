@@ -5,26 +5,28 @@ control plane is independent of the engine and the wgpu major. Presentation
 names both directions already present in the stack: a producer supplies an
 owned native frame, or renders on the receiving host's device.
 
-`webcue` and `wgpu-cue` form the initial **0.1.0** contract release. Their APIs
+`webcue` and `wgpu-cue` are at **0.1.1** (the initial contract shipped as 0.1.0). Their APIs
 may change within the 0.x series. The concrete adapters remain source packages
 with `publish = false`; their proof covers the cases recorded below.
 
 ```toml
 [dependencies]
-wgpu-cue = "0.1.0"
+wgpu-cue = "0.1.1"
 # Or, for renderer-free controls only:
-webcue = "0.1.0"
+webcue = "0.1.1"
 ```
 
-The published packages resolve their dependencies from crates.io. The development
-workspace retains an exact Genet Git source with a registry version fallback,
-so its unpublished adapter and the contract share one canonical document type
-identity. Cargo strips that Git source when packaging the public contract.
+The public packages resolve their dependencies from crates.io. The development
+workspace patches the canonical document API to the exact Genet source used by
+its unpublished adapter. A receiving workspace using Git Genet must apply its
+own root `document-session-api` registry patch to that same Git source; Cargo
+does not inherit dependency patch tables.
 
 | Package | Boundary |
 | --- | --- |
 | `webcue` | Controls, canonical retained input/IME, ordered events, correlated requests, semantic publications and actions, complete capability reports, owned native/CPU frame delivery. No wgpu or renderer dependency. |
 | `wgpu-cue` | Host-device rendering, retained presentation, CPU upload, and a non-blocking macOS Metal importer through Graft. |
+| `wgpu-cue-netrender` | Private retained renderer and deferred quality/error-scope polling on the host device; independent producers never consume one another's quality results. |
 | `wgpu-cue-genet` | Concrete retained Livery sessions, held resources, document semantics, logical input/IME, and deferred GPU quality checks. |
 | `wgpu-cue-scry` | Concrete macOS WKWebView adapter, asynchronous snapshots, native Metal handoff, navigation observations, script results, native keys, and typed editable-state forwarding where supplied. |
 
@@ -76,5 +78,7 @@ The first two execute real Metal work on macOS. The last creates a temporary
 private WKWebView window and exits after checking its receiving host. It uses
 asynchronous CPU snapshots and needs no screen-capture permission. Scry's
 native capture path is implemented but has not been qualified by that example.
-CEF, Servo, product migrations, native OS accessibility adapters, and native
-IME candidate-window placement remain outside this proof.
+The initial 0.1.0 proof excluded product receiving. Inker/Pelt/Graphshell
+receiving is recorded in Mere's `design_docs/inker_docs/implementation_strategy/2026-10-22_shared_surface_receiving_plan.md`. Native CEF/Servo
+receiving, OS accessibility adapters and IME candidate-window placement remain
+separate qualification gates.

@@ -1,0 +1,13 @@
+[package]
+name = "wgpu-cue-netrender"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+description = "Retained Netrender scenes on a Cue host device with private quality state"
+license.workspace = true
+publish = false
+[dependencies]
+webcue = "=0.1.1"
+wgpu-cue = "=0.1.1"
+netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = "=0.1.2" }

@@ -4257,7 +4257,7 @@ dependencies = [
 
 [[package]]
 name = "webcue"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "accesskit",
  "document-session-api",
@@ -4397,7 +4397,7 @@ dependencies = [
 
 [[package]]
 name = "wgpu-cue"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "dpi",
  "grafting",
@@ -4409,7 +4409,7 @@ dependencies = [
 
 [[package]]
 name = "wgpu-cue-genet"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "document-session-api",
  "genet-documents",
@@ -4418,11 +4418,21 @@ dependencies = [
  "netrender",
  "webcue",
  "wgpu-cue",
+ "wgpu-cue-netrender",
+]
+
+[[package]]
+name = "wgpu-cue-netrender"
+version = "0.1.1"
+dependencies = [
+ "netrender",
+ "webcue",
+ "wgpu-cue",
 ]
 
 [[package]]
 name = "wgpu-cue-scry"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "dpi",
  "objc2 0.6.5",

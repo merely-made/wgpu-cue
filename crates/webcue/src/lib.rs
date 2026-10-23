@@ -4,6 +4,8 @@
 //! `document-session-api` is renderer-free; its ownership remains with Genet.
 #![forbid(unsafe_code)]
 mod capabilities;
+mod document_input;
+pub use document_input::{dispatch_document_input, document_input_events};
 mod frame;
 mod protocol;
 pub use accesskit;
@@ -175,6 +177,8 @@ impl SemanticAction {
 }
 #[derive(Clone, Debug)]
 pub enum Event {
+    /// Exact retained result for admission/capture/editability. Navigation and
+    /// submission effects also get dedicated events; hosts apply policy once.
     DocumentInput(SessionInputResult),
     TextInput(Option<TextInputState>),
     NavigationStarted {

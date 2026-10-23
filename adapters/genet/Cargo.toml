@@ -5,6 +5,7 @@ edition.workspace = true
 license.workspace = true
 publish = false
 [dependencies]
+wgpu-cue-netrender = { path = "../netrender" }
 webcue.workspace = true
 wgpu-cue = { path = "../../crates/wgpu-cue" }
 document-session-api.workspace = true

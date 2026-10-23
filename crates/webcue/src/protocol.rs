@@ -74,6 +74,12 @@ impl Protocol {
             event,
         });
     }
+    /// Check room for an atomic batch of observations before changing producer state.
+    /// The single owner must emit that batch before accepting other work.
+    pub fn ensure_observations(&self, count: usize) -> Result<()> {
+        self.ensure_live()?;
+        self.reserve(count)
+    }
     pub fn emit(&mut self, event: Event) -> Result<()> {
         self.ensure_live()?;
         if matches!(event, Event::Completed { .. }) {
@@ -113,6 +119,10 @@ impl Protocol {
     }
     pub fn poll(&mut self) -> Option<Envelope> {
         self.events.pop_front()
+    }
+    /// Exact queued observations plus reserved terminal events on retirement.
+    pub fn retirement_len(&self) -> usize {
+        self.events.len() + self.pending.len()
     }
     pub fn pending(&self) -> usize {
         self.pending.len()
@@ -161,6 +171,27 @@ impl PublicationTracker {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn observation_batch_preflight_preserves_completion_reservations() {
+        let mut protocol = Protocol::new(
+            Scope {
+                owner: 1,
+                generation: 1,
+            },
+            3,
+        )
+        .unwrap();
+        let request = protocol.accept(RequestId(1)).unwrap();
+        assert!(protocol.ensure_observations(2).is_ok());
+        protocol.emit(Event::Message("first".into())).unwrap();
+        assert_eq!(protocol.ensure_observations(2), Err(Error::Backpressure));
+        assert_eq!(protocol.retirement_len(), 2);
+        protocol.retire().unwrap();
+        assert!(matches!(protocol.poll().unwrap().event, Event::Message(_)));
+        assert!(
+            matches!(protocol.poll().unwrap().event,Event::Completed{request:key,result:Err(Error::Retired)} if key==request)
+        );
+    }
     #[test]
     fn sequence_exhaustion_cannot_steal_a_reserved_terminal_event() {
         let mut protocol = Protocol::new(

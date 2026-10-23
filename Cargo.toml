@@ -1,9 +1,9 @@
 [workspace]
 resolver = "3"
-members = ["crates/webcue", "crates/wgpu-cue", "adapters/genet", "adapters/scry"]
+members = ["crates/webcue", "crates/wgpu-cue", "adapters/genet", "adapters/scry", "adapters/netrender"]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 rust-version = "1.97.1"
 license = "MPL-2.0"
@@ -11,8 +11,13 @@ authors = ["Mark AB (markik)"]
 repository = "https://github.com/merely-made/wgpu-cue"
 
 [workspace.dependencies]
-webcue = { version = "=0.1.0", path = "crates/webcue" }
+webcue = { version = "=0.1.1", path = "crates/webcue" }
 grafting-frame = "=0.1.1"
 accesskit = { version = "=0.25.1", features = ["serde"] }
-document-session-api = { version = "=0.1.0", git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1" }
+document-session-api = "=0.1.0"
 wgpu = { version = "=30.0.1", default-features = false, features = ["std", "wgsl", "metal", "vulkan", "dx12"] }
+
+[patch.crates-io]
+webcue = { path = "crates/webcue" }
+wgpu-cue = { path = "crates/wgpu-cue" }
+document-session-api = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1" }

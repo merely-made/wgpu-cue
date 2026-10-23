@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: MPL-2.0
 //! Native retained Genet content behind Webcue; no Pelt/Inker orchestration.
 use document_session_api::{
-    DocumentFindQuery, DocumentSession, SessionEffect, SessionEngine, SessionSpawnRequest,
+    DocumentFindQuery, DocumentSession, SessionEngine, SessionSpawnRequest,
 };
 use genet_documents::{LiverySessionEngine, ResourceFetcher};
 use genet_host_api::{ResourceFetchResponse, ResourceRequest};
 use genet_render_host::RenderCore;
 use netrender::Scene;
-use std::sync::atomic::{AtomicU64, Ordering};
 use std::{collections::VecDeque, sync::Arc, time::Duration};
 use webcue::*;
-use wgpu_cue::{RenderContext, Rendered, TextureFrame, TextureSource};
+use wgpu_cue::{RenderContext, Rendered, TextureSource};
 
 /// A finite host-held resource inventory. This adapter never performs network or file I/O.
 #[derive(Clone, Default)]
@@ -37,8 +36,7 @@ pub struct GenetSurface {
     revision: u64,
     scene: Option<Scene>,
     render_dirty: bool,
-    raster_key: u64,
-    pending_frame: Option<TextureFrame>,
+    rasterizer: wgpu_cue_netrender::SceneRasterizer,
     commands: VecDeque<(RequestKey, Command)>,
     outgoing: VecDeque<Event>,
     completion: Option<(RequestKey, Result<Reply>)>,
@@ -49,9 +47,8 @@ fn backend(e: impl std::fmt::Display) -> Error {
     Error::Backend(e.to_string())
 }
 impl GenetSurface {
-    /// The adapter must exclusively own drawing and quality polling on this
-    /// RenderCore. Hosts may borrow its device/queue and perform readback, but
-    /// must not consume the renderer's shared quality results independently.
+    /// Own private renderer/quality state on the core's existing device. The
+    /// host and other producers may draw and poll their own renderers freely.
     pub fn new(
         scope: Scope,
         viewport: Viewport,
@@ -61,16 +58,8 @@ impl GenetSurface {
         core: Arc<RenderCore>,
     ) -> Result<Self> {
         let viewport = viewport.validate()?;
-        static NEXT: AtomicU64 = AtomicU64::new(1);
-        #[allow(deprecated)] // fetch_update is the MSRV-compatible spelling.
-        let raster_key = NEXT
-            .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| x.checked_add(1))
-            .map_err(|_| Error::Exhausted)?;
-        if core.renderer().vello_curve_quality_status().is_none() {
-            return Err(Error::Invalid(
-                "Genet renderer requires Classic Vello and retained tiles".into(),
-            ));
-        }
+        let rasterizer =
+            wgpu_cue_netrender::SceneRasterizer::new(core.renderer().wgpu_device.core.clone())?;
         if html.len() > 1024 * 1024 {
             return Err(Error::Invalid(
                 "held HTML exceeds the 1 MiB initial adapter limit".into(),
@@ -123,8 +112,7 @@ impl GenetSurface {
             revision: 0,
             scene: None,
             render_dirty: true,
-            raster_key,
-            pending_frame: None,
+            rasterizer,
             commands: VecDeque::new(),
             outgoing: VecDeque::new(),
             completion: None,
@@ -154,7 +142,7 @@ impl GenetSurface {
         }
     }
     fn invalidate_publication(&mut self) {
-        self.pending_frame = None;
+        self.rasterizer.suspend();
         if let Some(key) = self.publications.retire() {
             self.outgoing.push_back(Event::SemanticsRetired(key));
         }
@@ -181,7 +169,7 @@ impl GenetSurface {
                 payload: SemanticPayload::Snapshot(projection),
             });
         }
-        self.pending_frame = None;
+        self.rasterizer.suspend();
         self.dirty = false;
         self.render_dirty = true;
         Ok(())
@@ -282,36 +270,10 @@ impl Surface for GenetSurface {
                 return Err(Error::Backpressure);
             }
         }
-        if let Input::Scroll { x, y, dx, dy, .. } = &input {
-            if ![x, y, dx, dy].iter().all(|v| v.is_finite()) {
-                return Err(Error::Invalid("non-finite scroll".into()));
-            }
-            self.session.scroll_at(*x, *y, *dx, *dy);
-            self.invalidate_publication();
-            self.dirty = true;
-            return Ok(());
-        }
-        let Input::Document(input) = input else {
-            return Err(Error::Unsupported(
-                "native key envelope is not mapped".into(),
-            ));
-        };
-        let result = self.session.input(input);
-        self.outgoing
-            .push_back(Event::DocumentInput(result.clone()));
+        let result = dispatch_document_input(self.session.as_mut(), input)?;
+        self.outgoing.extend(document_input_events(result));
         self.invalidate_publication();
         self.dirty = true;
-        if let Some(cursor) = result.cursor {
-            self.outgoing
-                .push_back(Event::CursorChanged(format!("{cursor:?}")));
-        }
-        match result.effect {
-            SessionEffect::Navigate(address) => self
-                .outgoing
-                .push_back(Event::NavigationRequested { address }),
-            SessionEffect::Submit(form) => self.outgoing.push_back(Event::FormSubmitted(form)),
-            _ => {}
-        }
         self.flush()
     }
     fn request(&mut self, id: RequestId, command: Command) -> Result<RequestKey> {
@@ -389,8 +351,7 @@ impl Surface for GenetSurface {
         self.outgoing.clear();
         self.publications.retire();
         self.scene = None;
-        self.pending_frame = None;
-        self.core.invalidate_surface(self.raster_key);
+        self.rasterizer.suspend();
         self.protocol.retire()
     }
 }
@@ -409,41 +370,21 @@ impl TextureSource for GenetSurface {
             return Err(Error::Invalid("host and producer viewports differ".into()));
         }
         if let Some(loss) = self.core.device_failure() {
-            self.pending_frame = None;
+            self.rasterizer.suspend();
             return Err(backend(format!("device lost: {loss:?}")));
         }
-        // Poll only. The checked RenderCore convenience API waits for quality;
-        // this adapter keeps the texture private until deferred counters resolve.
-        cx.device
-            .poll(wgpu_cue::wgpu::PollType::Poll)
-            .map_err(backend)?;
-        let quality = match self.core.renderer().poll_vello_curve_quality() {
-            Ok(quality) => quality,
-            Err(error) => {
-                self.pending_frame = None;
-                self.render_dirty = true;
-                return Err(backend(error));
-            }
-        };
-        match quality {
-            Some((0, 0)) => {}
-            Some(_) => return Ok(Rendered::Pending),
-            None => {
-                return Err(Error::Invalid(
-                    "Classic quality observer unavailable".into(),
-                ));
-            }
-        }
         if self.dirty {
-            self.pending_frame = None;
+            self.rasterizer.suspend();
         }
-        if let Some(frame) = self.pending_frame.take() {
-            if self.report.evidence != Evidence::Observed {
+        if let Some(rendered) = self.rasterizer.poll(cx)? {
+            if matches!(rendered, Rendered::Changed(_))
+                && self.report.evidence != Evidence::Observed
+            {
                 self.report.evidence = Evidence::Observed;
                 self.outgoing
                     .push_back(Event::CapabilitiesChanged(self.report.clone()));
             }
-            return Ok(Rendered::Changed(frame));
+            return Ok(rendered);
         }
         if !self.dirty && !self.render_dirty && !needs_frame {
             return Ok(Rendered::Unchanged);
@@ -453,54 +394,17 @@ impl TextureSource for GenetSurface {
             .scene
             .as_ref()
             .ok_or_else(|| Error::Invalid("no prepared scene".into()))?;
-        let texture = cx
-            .device
-            .create_texture(&wgpu_cue::wgpu::TextureDescriptor {
-                label: Some("wgpu-cue Genet target"),
-                size: wgpu_cue::wgpu::Extent3d {
-                    width: cx.viewport.width,
-                    height: cx.viewport.height,
-                    depth_or_array_layers: 1,
-                },
-                mip_level_count: 1,
-                sample_count: 1,
-                dimension: wgpu_cue::wgpu::TextureDimension::D2,
-                format: wgpu_cue::wgpu::TextureFormat::Rgba8Unorm,
-                usage: wgpu_cue::wgpu::TextureUsages::STORAGE_BINDING
-                    | wgpu_cue::wgpu::TextureUsages::TEXTURE_BINDING
-                    | wgpu_cue::wgpu::TextureUsages::COPY_SRC
-                    | wgpu_cue::wgpu::TextureUsages::RENDER_ATTACHMENT,
-                view_formats: &[],
-            });
-        let view = texture.create_view(&Default::default());
-        self.core
-            .renderer()
-            .render_vello_scaled_for_checked(
-                self.raster_key,
-                scene,
-                &view,
-                netrender::ColorLoad::Clear(wgpu_cue::wgpu::Color::TRANSPARENT),
-                cx.viewport.scale,
-            )
-            .map_err(backend)?;
         self.revision = self.revision.checked_add(1).ok_or(Error::Exhausted)?;
-        self.render_dirty = false;
-        self.pending_frame = Some(TextureFrame {
-            texture,
-            stamp: FrameStamp {
-                scope: self.scope(),
-                allocation_epoch: self.revision,
+        let rendered = self.rasterizer.render(
+            cx,
+            scene,
+            FrameStamp {
+                scope: self.protocol.scope(),
+                allocation_epoch: 0,
                 content_revision: self.revision,
             },
-            device_epoch: cx.device_epoch,
-            alpha: Alpha::Straight,
-            encoding: Encoding::Srgb,
-        });
-        Ok(Rendered::Pending)
-    }
-}
-impl Drop for GenetSurface {
-    fn drop(&mut self) {
-        self.core.invalidate_surface(self.raster_key);
+        )?;
+        self.render_dirty = false;
+        Ok(rendered)
     }
 }
