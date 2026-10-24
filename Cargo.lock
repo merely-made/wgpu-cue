@@ -459,6 +459,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f079e83a288787bcd14a6aea84cee5c87a67c5a3e660c30f557a3d24761b3527"
 
 [[package]]
+name = "cgl"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0ced0551234e87afee12411d535648dd89d2e7f34c78b753395567aff3d447ff"
+dependencies = [
+ "libc",
+]
+
+[[package]]
 name = "codespan-reporting"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -893,6 +902,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "fnv"
+version = "1.0.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
+
+[[package]]
 name = "foldhash"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1246,6 +1261,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "gleam"
+version = "0.15.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8647cc2e2ffde598ce5ca2809452e722dd8dc127885ab8aba2fa8b469cd3ed94"
+dependencies = [
+ "gl_generator",
+]
+
+[[package]]
 name = "glob"
 version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1300,18 +1324,24 @@ dependencies = [
 
 [[package]]
 name = "grafting"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "384d9d63669dd2b92a2433f2d0f36c7e8b775865b673deeb9ca34d7e631d4be1"
+checksum = "abf232561ba111ce565d554679edcc1a4f36f5350a99624bce688dede7b283ad"
 dependencies = [
  "ash",
  "dpi",
+ "euclid",
  "gl_generator",
+ "gleam",
+ "glow",
+ "grafting-frame",
+ "image",
  "libc",
  "objc2 0.6.5",
  "objc2-foundation 0.3.2",
  "objc2-io-surface",
  "objc2-metal 0.3.2",
+ "surfman",
  "thiserror 2.0.21",
  "wgpu",
  "wgpu-hal",
@@ -3692,6 +3722,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "surfman"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7fe194717def845ecb64e7aeda3e2108c4b3b1584a01aa6e545e702cedca2a00"
+dependencies = [
+ "bitflags 2.13.2",
+ "cfg_aliases",
+ "cgl",
+ "euclid",
+ "fnv",
+ "gl_generator",
+ "glow",
+ "libc",
+ "log",
+ "objc2 0.6.5",
+ "objc2-app-kit 0.3.2",
+ "objc2-core-foundation",
+ "objc2-core-video",
+ "objc2-foundation 0.3.2",
+ "objc2-io-surface",
+ "objc2-metal 0.3.2",
+ "objc2-quartz-core 0.3.2",
+ "raw-window-handle",
+ "wayland-sys",
+ "winapi",
+ "wio",
+]
+
+[[package]]
 name = "svg_fmt"
 version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4397,12 +4456,15 @@ dependencies = [
 
 [[package]]
 name = "wgpu-cue"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "dpi",
+ "euclid",
+ "glow",
  "grafting",
  "objc2-metal 0.3.2",
  "pollster",
+ "surfman",
  "webcue",
  "wgpu",
 ]

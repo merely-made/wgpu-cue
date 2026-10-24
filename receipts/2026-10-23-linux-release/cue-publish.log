@@ -1,0 +1,12 @@
+    Updating crates.io index
+   Packaging wgpu-cue v0.1.2 (/Users/markik/Code/worktrees/wgpu-cue-linux-20261023/crates/wgpu-cue)
+    Updating crates.io index
+    Packaged 10 files, 103.3KiB (27.5KiB compressed)
+   Verifying wgpu-cue v0.1.2 (/Users/markik/Code/worktrees/wgpu-cue-linux-20261023/crates/wgpu-cue)
+   Compiling wgpu-cue v0.1.2 (/Users/markik/Code/worktrees/wgpu-cue-linux-20261023/target/package/wgpu-cue-0.1.2)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.39s
+   Uploading wgpu-cue v0.1.2 (/Users/markik/Code/worktrees/wgpu-cue-linux-20261023/crates/wgpu-cue)
+    Uploaded wgpu-cue v0.1.2 to registry `crates-io`
+note: waiting for wgpu-cue v0.1.2 to be available at registry `crates-io`
+help: you may press ctrl-c to skip waiting; the crate should be available shortly
+   Published wgpu-cue v0.1.2 at registry `crates-io`
