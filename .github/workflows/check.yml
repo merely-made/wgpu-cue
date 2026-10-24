@@ -12,6 +12,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - name: Keep the Genet dependency checkout within Windows path limits
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          "CARGO_HOME=C:\c" >> $env:GITHUB_ENV
+          "CARGO_NET_GIT_FETCH_WITH_CLI=true" >> $env:GITHUB_ENV
+          git config --global core.longpaths true
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: 1.99.1
