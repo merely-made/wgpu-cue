@@ -1,0 +1,19 @@
+{
+  "source_sha256": {
+    "crates/wgpu-cue/Cargo.toml": "8183755bf330e07e32f4352b1d500c8093623847d97a320bcd7383c1071bb9c0",
+    "crates/wgpu-cue/src/lib.rs": "1085eef00bb9181a26056be804e16e12547a23273207d0d9d84435a0dd73ef3a",
+    "crates/wgpu-cue/src/vulkan.rs": "10d5fbfd698828f7822cfe757631b45451b49968468a39a29d0bd63285ffaacb",
+    "crates/wgpu-cue/tests/vulkan.rs": "ad7ea2881d207a126b00f15dfcb992b5416cdfed959791aa1020a12af38fe1fc",
+    "adapters/netrender/Cargo.toml": "f995253ec3c2db343fda4dcb7fee0e5b39f9be44cb6f8a21430c9f7f995ca528"
+  },
+  "grafting": "registry 0.6.1",
+  "webcue": "unchanged 0.1.1",
+  "command": "cargo +1.99.1 test -p webcue -p wgpu-cue --tests -j2 -- --include-ignored --nocapture --test-threads=1",
+  "environment": {
+    "VK_DRIVER_FILES": "/usr/share/vulkan/icd.d/radeon_icd.x86_64.json",
+    "VK_INSTANCE_LAYERS": "VK_LAYER_KHRONOS_validation",
+    "XDG_RUNTIME_DIR": "/run/user/1000"
+  },
+  "hardware": "ThinkPad RADV RENOIR, Mesa 26.2.5",
+  "outcome": "12 passed, 0 failed; real DMA-BUF pixels and descriptor refusal"
+}

@@ -1,0 +1,130 @@
+    Updating crates.io index
+     Locking 5 packages to highest Rust 1.97.1 compatible versions
+      Adding cgl v0.3.2
+      Adding fnv v1.0.7
+      Adding gleam v0.15.1
+    Updating grafting v0.6.0 -> v0.6.1
+      Adding surfman v0.14.0
+ Downloading crates ...
+  Downloaded grafting v0.6.1
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling libc v0.2.191
+   Compiling bitflags v2.13.2
+   Compiling objc2 v0.6.5
+   Compiling objc2-encode v4.1.0
+   Compiling cfg_aliases v0.2.2
+   Compiling autocfg v1.5.1
+   Compiling libm v0.2.16
+   Compiling foldhash v0.2.0
+   Compiling thiserror v2.0.21
+   Compiling log v0.4.34
+   Compiling syn v3.0.9
+   Compiling dispatch2 v0.3.1
+   Compiling block2 v0.6.2
+   Compiling syn v2.0.119
+   Compiling cfg-if v1.0.5
+   Compiling objc2-core-foundation v0.3.2
+   Compiling hashbrown v0.17.1
+   Compiling num-traits v0.2.19
+   Compiling equivalent v1.0.3
+   Compiling thiserror-impl v2.0.21
+   Compiling zerocopy v0.8.63
+   Compiling objc2-foundation v0.3.2
+   Compiling indexmap v2.14.2
+   Compiling zerocopy-derive v0.8.63
+   Compiling rustc-hash v1.1.0
+   Compiling serde_core v1.0.229
+   Compiling naga-types v30.0.1
+   Compiling bytemuck_derive v1.12.1
+   Compiling naga v30.0.1
+   Compiling unicode-width v0.2.2
+   Compiling parking_lot_core v0.9.12
+   Compiling bit-vec v0.9.1
+   Compiling bit-set v0.10.0
+   Compiling codespan-reporting v0.13.1
+   Compiling bytemuck v1.25.2
+   Compiling objc2-core-graphics v0.3.2
+   Compiling once_cell v1.21.4
+   Compiling raw-window-handle v0.6.2
+   Compiling smallvec v1.16.3
+   Compiling serde v1.0.229
+   Compiling scopeguard v1.2.0
+   Compiling half v2.7.1
+   Compiling static_assertions v1.1.0
+   Compiling arrayvec v0.7.8
+   Compiling wgpu-types v30.0.1
+   Compiling lock_api v0.4.14
+   Compiling serde_derive v1.0.229
+   Compiling wgpu-hal v30.0.1
+   Compiling khronos_api v3.1.0
+   Compiling parking_lot v0.12.5
+   Compiling libloading v0.8.9
+   Compiling profiling v1.0.18
+   Compiling uuid v1.28.0
+   Compiling enumn v0.1.14
+   Compiling wgpu-core v30.0.1
+   Compiling xml-rs v0.8.29
+   Compiling litrs v1.0.1
+   Compiling document-features v0.2.12
+   Compiling gl_generator v0.14.0
+   Compiling wgpu-naga-bridge v30.0.1
+   Compiling objc2-io-surface v0.3.2
+   Compiling accesskit v0.25.1
+   Compiling objc2-metal v0.3.2
+   Compiling document-session-api v0.1.0 (https://github.com/merely-made/genet.git?rev=729414db135d5f60749841871a729a0e29ed6bb1#729414db)
+   Compiling wgpu v30.0.1
+   Compiling grafting v0.6.1
+   Compiling dpi v0.1.2
+   Compiling pollster v1.0.1
+   Compiling objc2-quartz-core v0.3.2
+   Compiling grafting-frame v0.1.1
+   Compiling webcue v0.1.1 (/Users/markik/Code/worktrees/wgpu-cue-linux-20261023/crates/webcue)
+   Compiling raw-window-metal v1.1.0
+   Compiling wgpu-core-deps-apple v30.0.1
+   Compiling wgpu-cue v0.1.2 (/Users/markik/Code/worktrees/wgpu-cue-linux-20261023/crates/wgpu-cue)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 57.86s
+     Running unittests src/lib.rs (target/debug/deps/webcue-a1f31fc988c92c00)
+
+running 3 tests
+test document_input::tests::retained_navigation_has_one_dedicated_event_after_input_and_cursor ... ok
+test protocol::tests::observation_batch_preflight_preserves_completion_reservations ... ok
+test protocol::tests::sequence_exhaustion_cannot_steal_a_reserved_terminal_event ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/lifecycle.rs (target/debug/deps/lifecycle-46be2c3b683b9e41)
+
+running 8 tests
+test malformed_cpu_frames_and_nonfinite_viewports_are_refused ... ok
+test observations_cannot_use_reserved_completion_slots ... ok
+test completions_cannot_overtake_observations_and_keep_caller_identity ... ok
+test old_generation_cannot_settle_an_identically_numbered_live_request ... ok
+test rejected_acceptance_has_no_completion_and_can_be_retried_after_drain ... ok
+test semantic_actions_expire_without_waiting_for_another_frame ... ok
+test capability_report_refuses_missing_duplicate_and_unexplained_answers ... ok
+test semantics_must_name_their_actual_protocol ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/wgpu_cue-bd57448d55fac714)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/presentation.rs (target/debug/deps/presentation-9c8860705a5c766d)
+
+running 2 tests
+test host_device_refuses_unreusable_stale_and_wrong_device_frames ... ignored, requires native Metal; run explicitly
+test metal_custody_pending_retry_and_cpu_transport ... ignored, requires native Metal; run explicitly
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/vulkan.rs (target/debug/deps/vulkan-88414d36d4f4ef43)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,53 @@
+    Updating crates.io index
+     Locking 2 packages to highest Rust 1.97.1 compatible versions
+      Adding grafting v0.6.1
+      Adding grafting-frame v0.1.1
+ Downloading crates ...
+  Downloaded grafting v0.6.1
+   Compiling grafting v0.6.1
+   Compiling webcue v0.1.1 (/home/markik/Code/worktrees/wgpu-cue-native-20261023/crates/webcue)
+   Compiling wgpu-cue v0.1.2 (/home/markik/Code/worktrees/wgpu-cue-native-20261023/crates/wgpu-cue)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.49s
+     Running unittests src/lib.rs (/home/markik/Code/repos/wgpu-graft/target/build/debug/deps/webcue-8e898b29c3dcd6ff)
+
+running 3 tests
+test document_input::tests::retained_navigation_has_one_dedicated_event_after_input_and_cursor ... ok
+test protocol::tests::observation_batch_preflight_preserves_completion_reservations ... ok
+test protocol::tests::sequence_exhaustion_cannot_steal_a_reserved_terminal_event ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/lifecycle.rs (/home/markik/Code/repos/wgpu-graft/target/build/debug/deps/lifecycle-3e2bf4afba6c35b5)
+
+running 8 tests
+test capability_report_refuses_missing_duplicate_and_unexplained_answers ... ok
+test completions_cannot_overtake_observations_and_keep_caller_identity ... ok
+test malformed_cpu_frames_and_nonfinite_viewports_are_refused ... ok
+test observations_cannot_use_reserved_completion_slots ... ok
+test old_generation_cannot_settle_an_identically_numbered_live_request ... ok
+test rejected_acceptance_has_no_completion_and_can_be_retried_after_drain ... ok
+test semantic_actions_expire_without_waiting_for_another_frame ... ok
+test semantics_must_name_their_actual_protocol ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/home/markik/Code/repos/wgpu-graft/target/build/debug/deps/wgpu_cue-40f39b1342580392)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/presentation.rs (/home/markik/Code/repos/wgpu-graft/target/build/debug/deps/presentation-9911a525b9652ffa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/vulkan.rs (/home/markik/Code/repos/wgpu-graft/target/build/debug/deps/vulkan-5cb606118ddae625)
+
+running 1 test
+test vulkan_owned_frame_pixels_and_refusals ... actual adapter: AdapterInfo { name: "AMD Radeon Graphics (RADV RENOIR)", vendor: 4098, device: 5686, device_type: IntegratedGpu, device_pci_bus_id: "0000:06:00.0", driver: "radv", driver_info: "Mesa 26.2.5", backend: Vulkan, subgroup_min_size: 64, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+

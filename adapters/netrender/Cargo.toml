@@ -9,5 +9,5 @@ license.workspace = true
 publish = false
 [dependencies]
 webcue = "=0.1.1"
-wgpu-cue = "=0.1.1"
+wgpu-cue = "=0.1.2"
 netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = "=0.1.2" }

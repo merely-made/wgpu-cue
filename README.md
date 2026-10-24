@@ -5,13 +5,14 @@ control plane is independent of the engine and the wgpu major. Presentation
 names both directions already present in the stack: a producer supplies an
 owned native frame, or renders on the receiving host's device.
 
-`webcue` and `wgpu-cue` are at **0.1.1** (the initial contract shipped as 0.1.0). Their APIs
+`wgpu-cue` is at **0.1.2**, with renderer-free `webcue` unchanged at **0.1.1**
+(the initial contract shipped as 0.1.0). Their APIs
 may change within the 0.x series. The concrete adapters remain source packages
 with `publish = false`; their proof covers the cases recorded below.
 
 ```toml
 [dependencies]
-wgpu-cue = "0.1.1"
+wgpu-cue = "0.1.2"
 # Or, for renderer-free controls only:
 webcue = "0.1.1"
 ```
@@ -25,7 +26,7 @@ does not inherit dependency patch tables.
 | Package | Boundary |
 | --- | --- |
 | `webcue` | Controls, canonical retained input/IME, ordered events, correlated requests, semantic publications and actions, complete capability reports, owned native/CPU frame delivery. No wgpu or renderer dependency. |
-| `wgpu-cue` | Host-device rendering, retained presentation, CPU upload, and a non-blocking macOS Metal importer through Graft. |
+| `wgpu-cue` | Host-device rendering, retained presentation, CPU upload, and non-blocking macOS Metal / Linux Vulkan DMA-BUF importers through Graft. |
 | `wgpu-cue-netrender` | Private retained renderer and deferred quality/error-scope polling on the host device; independent producers never consume one another's quality results. |
 | `wgpu-cue-genet` | Concrete retained Livery sessions, held resources, document semantics, logical input/IME, and deferred GPU quality checks. |
 | `wgpu-cue-scry` | Concrete macOS WKWebView adapter, asynchronous snapshots, native Metal handoff, navigation observations, script results, native keys, and typed editable-state forwarding where supplied. |
@@ -72,6 +73,8 @@ The native checks are explicit because a missing GPU or desktop is not a pass:
 cargo test -p wgpu-cue --test presentation --locked -- --ignored --nocapture
 cargo test -p wgpu-cue-genet --test retained --locked -- --ignored --nocapture
 cargo run -p wgpu-cue-scry --example wk_receiver --locked
+# Linux: hardware Vulkan, EGL DMA-BUF import and GBM are required.
+cargo test -p wgpu-cue --test vulkan --locked -- --ignored --nocapture
 ```
 
 The first two execute real Metal work on macOS. The last creates a temporary
@@ -79,6 +82,11 @@ private WKWebView window and exits after checking its receiving host. It uses
 asynchronous CPU snapshots and needs no screen-capture permission. Scry's
 native capture path is implemented but has not been qualified by that example.
 The initial 0.1.0 proof excluded product receiving. Inker/Pelt/Graphshell
-receiving is recorded in Mere's `design_docs/inker_docs/implementation_strategy/2026-10-22_shared_surface_receiving_plan.md`. Native CEF/Servo
-receiving, OS accessibility adapters and IME candidate-window placement remain
-separate qualification gates.
+receiving is recorded in Mere's `design_docs/inker_docs/implementation_strategy/2026-10-22_shared_surface_receiving_plan.md`. Servo/Metal product receiving and retained Vulkan/Wayland receiving are
+recorded in `turnstone/design_docs/2026-08-25_browser_surface_implementation_plan.md`.
+The Linux native producer/import pass is tracked in
+`wgpu-graft/design_docs/2026-10-23_linux_native_cue_plan.md`; its shared importer
+accepts move-owned, producer-complete RGBA/BGRA DMA-BUFs with explicit layouts.
+Unsupported semaphore synchronization is refused, not treated as a sync file.
+Concrete CEF/Scry shared-native receiving, OS accessibility adapters and IME
+candidate-window placement retain separate qualification gates.
