@@ -41,6 +41,12 @@ Executed on macOS with Rust 1.99.0:
 - The Webcue package dry run verifies against the published registry version
   of `document-session-api`, without requiring a development Git patch.
 
+`cargo clippy --workspace --all-targets --offline --locked -j2 -- -D warnings`
+also passes. The renderer-free Webcue core checks for
+`wasm32-unknown-unknown` on Rust 1.99.1. `document-session-api` 0.1.1,
+`webcue` 0.1.2 and `wgpu-cue` 0.1.3 are published; each package completed
+registry dependency verification before upload.
+
 The new observation and the existing physical Typing Booster receipt establish
 different boundaries. These programmatic checks do not requalify an OS candidate
 popup, human accessibility operation, or physical keyboard input. Pelt and
