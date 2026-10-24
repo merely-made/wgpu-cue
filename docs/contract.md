@@ -162,3 +162,25 @@ their serialized typed payload as a Message; they are not silently discarded.
 Legacy cursor callbacks have their own supplier queue and are sampled after
 the ordered browser callback stream; no cross-queue callback chronology is
 claimed. Native AT remains a platform extension for those bindings.
+
+
+## Text-input observations
+
+`Event::TextInput(Some(state))` describes a focused writable editor using the
+canonical `document-session-api` types, reexported as `TextInputState` and
+`LogicalRect`. Producer coordinates are logical viewport coordinates after page
+zoom and scroll. Host window placement and device scale are applied once by the
+receiver. Selection offsets are UTF-16 code units of the editing value; preedit
+selection remains independent UTF-8 byte offsets. Values and native identities
+are excluded.
+
+Genet observes completed current layout without triggering layout from the
+getter. Its adapters publish after preparation even when semantic publication
+is disabled. Edits and viewport changes revoke previous geometry until another
+frame is prepared. Hide, blur, replacement and retirement clear the observation.
+Unchanged observations are deduplicated. A live editor reserves one mailbox slot
+and sequence number for its eventual clearing event. Publication backpressure
+preserves the previous successfully published state; ordinary input admission
+and completion reservations remain in force. `Protocol::text_input_state()`
+returns that same successfully published observation for a single-owner broker
+that must inspect it without consuming the event stream twice.

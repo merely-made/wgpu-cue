@@ -238,24 +238,8 @@ pub trait Surface {
     fn retire(&mut self) -> Result<()>;
 }
 
-/// Focused editable geometry in logical pixels. Selection indices are UTF-16
-/// code units, matching system webviews; IME preedit selection stays in the
-/// canonical SessionIme coordinate system.
-#[derive(Clone, Debug, PartialEq)]
-pub struct TextInputState {
-    pub element_kind: String,
-    pub input_type: String,
-    pub input_mode: String,
-    pub autocomplete: String,
-    pub multiline: bool,
-    pub password: bool,
-    pub selection_utf16: (u32, u32),
-    pub caret: LogicalRect,
-}
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct LogicalRect {
-    pub x: f64,
-    pub y: f64,
-    pub width: f64,
-    pub height: f64,
-}
+/// Canonical renderer-free native editor observations. Existing Webcue paths
+/// retain their spelling while sharing the exact engine-contract types.
+pub use document_session_api::{
+    SessionTextInputRect as LogicalRect, SessionTextInputState as TextInputState,
+};

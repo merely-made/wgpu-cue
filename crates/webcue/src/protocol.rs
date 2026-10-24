@@ -12,6 +12,7 @@ pub struct Protocol {
     pending: VecDeque<RequestId>,
     events: VecDeque<Envelope>,
     retired: bool,
+    text_input: Option<TextInputState>,
 }
 impl Protocol {
     pub fn new(scope: Scope, capacity: usize) -> Result<Self> {
@@ -26,10 +27,16 @@ impl Protocol {
             pending: VecDeque::new(),
             events: VecDeque::new(),
             retired: false,
+            text_input: None,
         })
     }
     pub fn scope(&self) -> Scope {
         self.scope
+    }
+    /// Latest successfully published editor observation. This is the same
+    /// authority as TextInput events, including their clearing reservation.
+    pub fn text_input_state(&self) -> Option<&TextInputState> {
+        self.text_input.as_ref()
     }
     pub fn ensure_live(&self) -> Result<()> {
         if self.retired {
@@ -52,14 +59,16 @@ impl Protocol {
         })
     }
     fn reserve(&self, extra: usize) -> Result<()> {
-        let used = self.events.len() + self.pending.len();
+        let used = self.events.len() + self.pending.len() + usize::from(self.text_input.is_some());
         if used.saturating_add(extra) > self.capacity {
             return Err(Error::Backpressure);
         }
         // Reserve sequence numbers as well as storage for all completions.
         if self
             .sequence
-            .checked_add((self.pending.len() + extra) as u64)
+            .checked_add(
+                (self.pending.len() + usize::from(self.text_input.is_some()) + extra) as u64,
+            )
             .is_none()
         {
             return Err(Error::Exhausted);
@@ -82,6 +91,9 @@ impl Protocol {
     }
     pub fn emit(&mut self, event: Event) -> Result<()> {
         self.ensure_live()?;
+        if let Event::TextInput(state) = event {
+            return self.publish_text_input(state);
+        }
         if matches!(event, Event::Completed { .. }) {
             return Err(Error::Invalid("complete requests through settle".into()));
         }
@@ -89,6 +101,35 @@ impl Protocol {
         self.push(event);
         Ok(())
     }
+    /// Publish a changed editor observation. A live editor reserves one extra
+    /// slot for its eventual clearing event, so hide/retirement cannot strand
+    /// host geometry behind a full mailbox or pending request completions.
+    pub fn publish_text_input(&mut self, state: Option<TextInputState>) -> Result<()> {
+        self.ensure_live()?;
+        if state == self.text_input {
+            return Ok(());
+        }
+        if let Some(value) = &state {
+            let r = value.caret;
+            if ![r.x, r.y, r.width, r.height]
+                .into_iter()
+                .all(f64::is_finite)
+                || r.width < 0.0
+                || r.height < 0.0
+            {
+                return Err(Error::Invalid(
+                    "text-input geometry must be finite and nonnegative in extent".into(),
+                ));
+            }
+            self.reserve(if self.text_input.is_some() { 1 } else { 2 })?;
+        }
+        // None consumes the clearing slot already reserved by Some. Updating
+        // only after reservation preserves the old observation on backpressure.
+        self.text_input = state.clone();
+        self.push(Event::TextInput(state));
+        Ok(())
+    }
+
     pub fn settle(&mut self, request: RequestKey, result: Result<Reply>) -> Result<()> {
         if request.scope != self.scope {
             return Err(Error::Stale);
@@ -103,6 +144,9 @@ impl Protocol {
     pub fn retire(&mut self) -> Result<()> {
         if self.retired {
             return Ok(());
+        }
+        if self.text_input.take().is_some() {
+            self.push(Event::TextInput(None));
         }
         self.retired = true;
         while let Some(id) = self.pending.pop_front() {
@@ -122,7 +166,7 @@ impl Protocol {
     }
     /// Exact queued observations plus reserved terminal events on retirement.
     pub fn retirement_len(&self) -> usize {
-        self.events.len() + self.pending.len()
+        self.events.len() + self.pending.len() + usize::from(self.text_input.is_some())
     }
     pub fn pending(&self) -> usize {
         self.pending.len()
@@ -219,5 +263,97 @@ mod tests {
         assert!(
             matches!(final_event.event,Event::Completed {request:actual,result:Err(Error::Retired)} if actual==request)
         );
+    }
+}
+
+#[cfg(test)]
+mod text_input_tests {
+    use super::*;
+    fn scope() -> Scope {
+        Scope {
+            owner: 91,
+            generation: 1,
+        }
+    }
+    fn state(x: f64) -> TextInputState {
+        TextInputState {
+            element_kind: "input".into(),
+            input_type: "text".into(),
+            input_mode: String::new(),
+            autocomplete: String::new(),
+            multiline: false,
+            password: false,
+            selection_utf16: (3, 3),
+            caret: LogicalRect {
+                x,
+                y: 12.0,
+                width: 1.0,
+                height: 18.0,
+            },
+        }
+    }
+    #[test]
+    fn text_input_clear_and_completion_survive_a_full_mailbox() {
+        let mut protocol = Protocol::new(scope(), 3).unwrap();
+        protocol.emit(Event::TextInput(Some(state(4.0)))).unwrap();
+        let request = protocol.accept(RequestId(1)).unwrap();
+        assert!(matches!(
+            protocol.emit(Event::Message("full".into())),
+            Err(Error::Backpressure)
+        ));
+        assert_eq!(protocol.retirement_len(), 3);
+        protocol.retire().unwrap();
+        assert!(matches!(
+            protocol.poll().unwrap().event,
+            Event::TextInput(Some(_))
+        ));
+        assert!(matches!(
+            protocol.poll().unwrap().event,
+            Event::TextInput(None)
+        ));
+        assert!(matches!(protocol.poll().unwrap().event,
+            Event::Completed { request: key, result: Err(Error::Retired) } if key == request));
+        assert!(protocol.poll().is_none());
+    }
+    #[test]
+    fn text_input_backpressure_preserves_the_last_publication_and_sequence() {
+        let mut protocol = Protocol::new(scope(), 4).unwrap();
+        protocol.emit(Event::TextInput(Some(state(4.0)))).unwrap();
+        protocol.emit(Event::Message("queued".into())).unwrap();
+        protocol.accept(RequestId(1)).unwrap();
+        protocol.emit(Event::TextInput(Some(state(4.0)))).unwrap(); // unchanged; no slot
+        assert!(matches!(
+            protocol.emit(Event::TextInput(Some(state(8.0)))),
+            Err(Error::Backpressure)
+        ));
+        assert_eq!(protocol.poll().unwrap().sequence, 1);
+        protocol.emit(Event::TextInput(Some(state(8.0)))).unwrap();
+        assert_eq!(protocol.poll().unwrap().sequence, 2);
+        let update = protocol.poll().unwrap();
+        assert_eq!(update.sequence, 3);
+        assert!(matches!(update.event, Event::TextInput(Some(value)) if value.caret.x == 8.0));
+        protocol.retire().unwrap();
+        assert!(matches!(
+            protocol.poll().unwrap().event,
+            Event::TextInput(None)
+        ));
+    }
+    #[test]
+    fn text_input_rejects_nonfinite_geometry_without_changing_admission() {
+        let mut protocol = Protocol::new(scope(), 2).unwrap();
+        assert!(matches!(
+            protocol.emit(Event::TextInput(Some(state(f64::NAN)))),
+            Err(Error::Invalid(_))
+        ));
+        protocol.emit(Event::TextInput(Some(state(4.0)))).unwrap();
+        protocol.emit(Event::TextInput(None)).unwrap();
+        assert!(matches!(
+            protocol.poll().unwrap().event,
+            Event::TextInput(Some(_))
+        ));
+        assert!(matches!(
+            protocol.poll().unwrap().event,
+            Event::TextInput(None)
+        ));
     }
 }

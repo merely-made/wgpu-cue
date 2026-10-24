@@ -5,16 +5,16 @@ control plane is independent of the engine and the wgpu major. Presentation
 names both directions already present in the stack: a producer supplies an
 owned native frame, or renders on the receiving host's device.
 
-`wgpu-cue` is at **0.1.2**, with renderer-free `webcue` unchanged at **0.1.1**
+`wgpu-cue` is at **0.1.3**, with renderer-free `webcue` at **0.1.2**
 (the initial contract shipped as 0.1.0). Their APIs
 may change within the 0.x series. The concrete adapters remain source packages
 with `publish = false`; their proof covers the cases recorded below.
 
 ```toml
 [dependencies]
-wgpu-cue = "0.1.2"
+wgpu-cue = "0.1.3"
 # Or, for renderer-free controls only:
-webcue = "0.1.1"
+webcue = "0.1.2"
 ```
 
 The public packages resolve their dependencies from crates.io. The development
@@ -39,7 +39,12 @@ usable texture while a producer or a native fence is pending. There is no
 blocking default frame acquisition.
 
 Canonical document input, IME and retained semantics are re-exported from
-Genet's renderer-free `document-session-api`. Native resource custody remains
+Genet's renderer-free `document-session-api`. Text-input state and caret
+rectangles share that API too: logical viewport coordinates include page zoom
+and scroll; the host adds placement and applies device scale once. Selection
+uses UTF-16 offsets, while preedit retains its independent UTF-8 offsets.
+Publishing a live editor reserves an ordered clearing event so a full mailbox
+cannot strand geometry at hide or retirement. Native resource custody remains
 `grafting-frame`; imports remain Graft's job. `webcue` adds lifecycle and host
 protocol, rather than copying these types. The exact dependency revisions and
 limits of the executed proof are in [the receipt](docs/2026-10-22-proof.md).

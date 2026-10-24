@@ -9,7 +9,7 @@ wgpu-cue-netrender = { path = "../netrender" }
 webcue.workspace = true
 wgpu-cue = { path = "../../crates/wgpu-cue" }
 document-session-api.workspace = true
-genet-documents = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1", default-features = false, features = ["livery"] }
-genet-render-host = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1" }
+genet-documents = { git = "https://github.com/merely-made/genet.git", rev = "4532fe03755bdb61eee7847ebeb8ad47bda37d96", default-features = false, features = ["livery"] }
+genet-render-host = { git = "https://github.com/merely-made/genet.git", rev = "4532fe03755bdb61eee7847ebeb8ad47bda37d96" }
 netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = "=0.1.2" }
-genet-host-api = { git = "https://github.com/merely-made/genet.git", rev = "729414db135d5f60749841871a729a0e29ed6bb1" }
+genet-host-api = { git = "https://github.com/merely-made/genet.git", rev = "4532fe03755bdb61eee7847ebeb8ad47bda37d96" }

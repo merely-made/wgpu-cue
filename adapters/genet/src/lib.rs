@@ -81,7 +81,7 @@ impl GenetSurface {
             Feature::InlineHtml|Feature::Reload|Feature::Mouse|Feature::Scroll|Feature::Keyboard|Feature::Text|Feature::Focus|Feature::Zoom=>Support::Supported,
             Feature::Find=>Support::Partial("new forward queries; reverse/step controls are not exposed".into()),
             Feature::Navigation=>Support::Partial("navigation requests are handed to the host; replacement content is supplied through LoadHtml".into()),
-            Feature::Ime=>Support::Partial("retained preedit/commit; native candidate-window positioning remains the host's responsibility".into()),
+            Feature::Ime=>Support::Partial("retained preedit/commit and logical text-control geometry; the host applies placement and device scale".into()),
             Feature::Semantics|Feature::SemanticActions=>Support::Partial("retained document projection and its advertised actions; no native OS bridge in this adapter".into()),
             Feature::History|Feature::Stop=>Support::Unsupported("host owns acquisition and browsing history".into()),
             Feature::NativeKeyboard=>Support::Unsupported("send canonical logical keys and independent text/IME".into()),
@@ -142,6 +142,11 @@ impl GenetSurface {
         }
     }
     fn invalidate_publication(&mut self) {
+        // An unflushed observation belongs to the old layout. The protocol
+        // retains its own reserved clearing slot for any published editor.
+        self.outgoing
+            .retain(|event| !matches!(event, Event::TextInput(_)));
+        let _ = self.protocol.emit(Event::TextInput(None));
         self.rasterizer.suspend();
         if let Some(key) = self.publications.retire() {
             self.outgoing.push_back(Event::SemanticsRetired(key));
@@ -169,6 +174,11 @@ impl GenetSurface {
                 payload: SemanticPayload::Snapshot(projection),
             });
         }
+        self.outgoing.push_back(Event::TextInput(
+            self.visible
+                .then(|| self.session.text_input_state())
+                .flatten(),
+        ));
         self.rasterizer.suspend();
         self.dirty = false;
         self.render_dirty = true;
@@ -251,14 +261,23 @@ impl Surface for GenetSurface {
     }
     fn set_viewport(&mut self, v: Viewport) -> Result<()> {
         self.admit_controls()?;
-        self.viewport = v.validate()?;
+        let v = v.validate()?;
+        if v == self.viewport {
+            return Ok(());
+        }
+        self.viewport = v;
         self.invalidate_publication();
         self.dirty = true;
         Ok(())
     }
     fn set_visible(&mut self, visible: bool) -> Result<()> {
         self.protocol.ensure_live()?;
+        if self.visible == visible {
+            return Ok(());
+        }
+        self.invalidate_publication();
         self.visible = visible;
+        self.dirty = true;
         self.session.set_hidden(!visible);
         Ok(())
     }
