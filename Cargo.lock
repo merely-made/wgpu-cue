@@ -644,6 +644,45 @@ dependencies = [
 ]
 
 [[package]]
+name = "cue-genet"
+version = "0.1.2"
+dependencies = [
+ "cue-netrender",
+ "document-session-api",
+ "genet-documents",
+ "genet-host-api",
+ "genet-render-host",
+ "netrender",
+ "webcue",
+ "wgpu-cue",
+]
+
+[[package]]
+name = "cue-netrender"
+version = "0.1.2"
+dependencies = [
+ "netrender",
+ "webcue",
+ "wgpu-cue",
+]
+
+[[package]]
+name = "cue-scry"
+version = "0.1.2"
+dependencies = [
+ "dpi",
+ "objc2 0.6.5",
+ "objc2-foundation 0.3.2",
+ "objc2-metal 0.3.2",
+ "pollster",
+ "raw-window-handle",
+ "scrying",
+ "webcue",
+ "wgpu-cue",
+ "winit",
+]
+
+[[package]]
 name = "cursor-icon"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4467,45 +4506,6 @@ dependencies = [
  "surfman",
  "webcue",
  "wgpu",
-]
-
-[[package]]
-name = "wgpu-cue-genet"
-version = "0.1.2"
-dependencies = [
- "document-session-api",
- "genet-documents",
- "genet-host-api",
- "genet-render-host",
- "netrender",
- "webcue",
- "wgpu-cue",
- "wgpu-cue-netrender",
-]
-
-[[package]]
-name = "wgpu-cue-netrender"
-version = "0.1.2"
-dependencies = [
- "netrender",
- "webcue",
- "wgpu-cue",
-]
-
-[[package]]
-name = "wgpu-cue-scry"
-version = "0.1.2"
-dependencies = [
- "dpi",
- "objc2 0.6.5",
- "objc2-foundation 0.3.2",
- "objc2-metal 0.3.2",
- "pollster",
- "raw-window-handle",
- "scrying",
- "webcue",
- "wgpu-cue",
- "winit",
 ]
 
 [[package]]

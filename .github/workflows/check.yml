@@ -43,4 +43,4 @@ jobs:
           components: rustfmt, clippy
       - run: cargo test --workspace --locked
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
-      - run: cargo fmt --check -p webcue -p wgpu-cue -p wgpu-cue-genet -p wgpu-cue-scry
+      - run: cargo fmt --check -p webcue -p wgpu-cue -p cue-genet -p cue-scry

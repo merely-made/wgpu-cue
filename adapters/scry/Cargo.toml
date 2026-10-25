@@ -1,9 +1,13 @@
 [package]
-name = "wgpu-cue-scry"
+name = "cue-scry"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 publish = false
+
+[lib]
+name = "wgpu_cue_scry"
+
 [dependencies]
 webcue.workspace = true
 wgpu-cue = { path = "../../crates/wgpu-cue" }

@@ -1,5 +1,5 @@
 [package]
-name = "wgpu-cue-netrender"
+name = "cue-netrender"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -7,6 +7,10 @@ repository.workspace = true
 description = "Retained Netrender scenes on a Cue host device with private quality state"
 license.workspace = true
 publish = false
+
+[lib]
+name = "wgpu_cue_netrender"
+
 [dependencies]
 webcue = "=0.1.2"
 wgpu-cue = "=0.1.3"

@@ -1,11 +1,15 @@
 [package]
-name = "wgpu-cue-genet"
+name = "cue-genet"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 publish = false
+
+[lib]
+name = "wgpu_cue_genet"
+
 [dependencies]
-wgpu-cue-netrender = { path = "../netrender" }
+cue-netrender = { path = "../netrender" }
 webcue.workspace = true
 wgpu-cue = { path = "../../crates/wgpu-cue" }
 document-session-api.workspace = true

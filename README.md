@@ -27,9 +27,9 @@ does not inherit dependency patch tables.
 | --- | --- |
 | `webcue` | Controls, canonical retained input/IME, ordered events, correlated requests, semantic publications and actions, complete capability reports, owned native/CPU frame delivery. No wgpu or renderer dependency. |
 | `wgpu-cue` | Host-device rendering, retained presentation, CPU upload, and non-blocking macOS Metal / Linux Vulkan DMA-BUF importers through Graft. |
-| `wgpu-cue-netrender` | Private retained renderer and deferred quality/error-scope polling on the host device; independent producers never consume one another's quality results. |
-| `wgpu-cue-genet` | Concrete retained Livery sessions, held resources, document semantics, logical input/IME, and deferred GPU quality checks. |
-| `wgpu-cue-scry` | Concrete macOS WKWebView adapter, asynchronous snapshots, native Metal handoff, navigation observations, script results, native keys, and typed editable-state forwarding where supplied. |
+| `cue-netrender` | Private retained renderer and deferred quality/error-scope polling on the host device; independent producers never consume one another's quality results. |
+| `cue-genet` | Concrete retained Livery sessions, held resources, document semantics, logical input/IME, and deferred GPU quality checks. |
+| `cue-scry` | Concrete macOS WKWebView adapter, asynchronous snapshots, native Metal handoff, navigation observations, script results, native keys, and typed editable-state forwarding where supplied. |
 
 `Surface` owns the common control protocol. `FrameSource: Surface` supplies a
 move-owned frame. `TextureSource: Surface` borrows the host device and queue.
@@ -69,15 +69,15 @@ and an inspector; routing policy remains with the host.
 ```sh
 cargo test --workspace --locked
 cargo clippy --workspace --all-targets --locked -- -D warnings
-cargo fmt --check -p webcue -p wgpu-cue -p wgpu-cue-genet -p wgpu-cue-scry
+cargo fmt --check -p webcue -p wgpu-cue -p cue-genet -p cue-scry
 ```
 
 The native checks are explicit because a missing GPU or desktop is not a pass:
 
 ```sh
 cargo test -p wgpu-cue --test presentation --locked -- --ignored --nocapture
-cargo test -p wgpu-cue-genet --test retained --locked -- --ignored --nocapture
-cargo run -p wgpu-cue-scry --example wk_receiver --locked
+cargo test -p cue-genet --test retained --locked -- --ignored --nocapture
+cargo run -p cue-scry --example wk_receiver --locked
 # Linux: hardware Vulkan, EGL DMA-BUF import and GBM are required.
 cargo test -p wgpu-cue --test vulkan --locked -- --ignored --nocapture
 ```
