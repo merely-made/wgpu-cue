@@ -20,4 +20,4 @@ wgpu = { version = "=30.0.1", default-features = false, features = ["std", "wgsl
 [patch.crates-io]
 webcue = { path = "crates/webcue" }
 wgpu-cue = { path = "crates/wgpu-cue" }
-document-session-api = { git = "https://github.com/merely-made/genet.git", rev = "4532fe03755bdb61eee7847ebeb8ad47bda37d96" }
+document-session-api = { git = "https://github.com/merely-made/genet.git", rev = "ea18315d2274ebf3b4bc13475b7b2f2582d616ea" }
