@@ -5,8 +5,16 @@ edition.workspace = true
 license.workspace = true
 publish = false
 
+[features]
+cpu-raster = ["dep:cue-netrender"]
+
 [dependencies]
 cue-genet = { path = "../../adapters/genet" }
 webcue.workspace = true
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = "=1.0.154"
+cue-netrender = { path = "../../adapters/netrender", features = ["cpu"], optional = true }
+
+[dev-dependencies]
+wgpu-cue = { path = "../../crates/wgpu-cue" }
+genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "565458ea3ab816940484079330eb165a878a22e0" }

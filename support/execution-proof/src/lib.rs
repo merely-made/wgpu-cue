@@ -7,6 +7,8 @@ use wgpu_cue_genet::{GenetDocument, HeldResources};
 mod local;
 pub use local::Local;
 pub mod process;
+#[cfg(feature = "cpu-raster")]
+pub mod raster;
 
 pub const MAX_FRAME: usize = 2 * 1024 * 1024;
 const VERSION: u32 = 1;
@@ -263,16 +265,19 @@ impl Executor {
     }
 }
 
-struct Limited(Vec<u8>);
+struct Limited {
+    bytes: Vec<u8>,
+    limit: usize,
+}
 impl Write for Limited {
     fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
-        if bytes.len() > MAX_FRAME.saturating_sub(self.0.len()) {
+        if bytes.len() > self.limit.saturating_sub(self.bytes.len()) {
             return Err(io::Error::new(
                 io::ErrorKind::InvalidData,
                 "oversized proof frame",
             ));
         }
-        self.0.extend_from_slice(bytes);
+        self.bytes.extend_from_slice(bytes);
         Ok(bytes.len())
     }
     fn flush(&mut self) -> io::Result<()> {
@@ -280,12 +285,21 @@ impl Write for Limited {
     }
 }
 pub fn encode<T: Serialize>(value: &T) -> io::Result<Vec<u8>> {
-    let mut out = Limited(Vec::new());
+    encode_with_limit(value, MAX_FRAME)
+}
+pub fn encode_with_limit<T: Serialize>(value: &T, limit: usize) -> io::Result<Vec<u8>> {
+    let mut out = Limited {
+        bytes: Vec::new(),
+        limit,
+    };
     serde_json::to_writer(&mut out, value).map_err(io::Error::other)?;
-    Ok(out.0)
+    Ok(out.bytes)
 }
 pub fn write_frame(out: &mut impl Write, bytes: &[u8]) -> io::Result<()> {
-    if bytes.len() > MAX_FRAME {
+    write_frame_with_limit(out, bytes, MAX_FRAME)
+}
+pub fn write_frame_with_limit(out: &mut impl Write, bytes: &[u8], limit: usize) -> io::Result<()> {
+    if bytes.len() > limit || bytes.len() > u32::MAX as usize {
         return Err(io::Error::new(
             io::ErrorKind::InvalidData,
             "oversized proof frame",
@@ -296,13 +310,19 @@ pub fn write_frame(out: &mut impl Write, bytes: &[u8]) -> io::Result<()> {
     out.flush()
 }
 pub fn read_frame<T: DeserializeOwned>(input: &mut impl Read) -> io::Result<Option<T>> {
+    read_frame_with_limit(input, MAX_FRAME)
+}
+pub fn read_frame_with_limit<T: DeserializeOwned>(
+    input: &mut impl Read,
+    limit: usize,
+) -> io::Result<Option<T>> {
     let mut length = [0; 4];
     if input.read(&mut length[..1])? == 0 {
         return Ok(None);
     }
     input.read_exact(&mut length[1..])?;
     let length = u32::from_be_bytes(length) as usize;
-    if length > MAX_FRAME {
+    if length > limit {
         return Err(io::Error::new(
             io::ErrorKind::InvalidData,
             "oversized proof frame",

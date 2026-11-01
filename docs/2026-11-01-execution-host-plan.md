@@ -56,8 +56,9 @@ could instead feed a local renderer.
 Execution stop is not GPU completion or exported-frame release. Renderer adapters
 retain their resource/fence obligations separately. Hybrid's encode/submit ordering
 and CPU's premultiplied output are explicit constraints in the Vello review. The
-current Cue rasterizer remains Classic-only; this prototype does not enable new
-renderer features or change dependency pins.
+command slice keeps the existing Classic rasterizer. The
+[CPU followup](2026-11-01-cpu-render-jobs.md) adds opt-in owned scene jobs and CPU
+frames using the same supplier revisions.
 
 The native proof is trusted static HTML with held resources, not an OS sandbox or
 a compliant browser. Its bounded framing and subprocess ownership are fixture
@@ -123,7 +124,8 @@ No document canvas behavior or supplier pin changed. An existing ICU4X diagnosti
 about missing CJK segmentation data remains in the native log; passing the IME
 assertion does not qualify CJK segmentation generally.
 
-The Vello CPU/Hybrid adapters, remote input and frame acquisition, platform-native
-handle transfer, BrowserEngineKit integration and OS sandboxing remain outside
-this command slice. The Vello review records their ownership constraints and
-qualification boundaries; these native Classic checks do not qualify those paths.
+The CPU adapter and worker/helper scene proof are qualified separately in the
+followup receipt. Hybrid, remote input, platform-native handle transfer,
+BrowserEngineKit integration and OS sandboxing remain outside this command slice.
+The Vello review records their ownership constraints and qualification boundaries;
+these native Classic checks do not qualify those additional paths.

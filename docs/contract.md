@@ -69,6 +69,14 @@ endpoint does not accept opaque scenes. Executor termination does not establish
 GPU completion, native-frame release or permission to reuse exported memory.
 Those obligations remain with the presentation and resource owner.
 
+The opt-in `cue-netrender::scene_job` contract carries complete owned scene
+snapshots independently of document commands. Its `cpu` adapter schedules no work
+inside frame acquisition: the host runs an explicit raster job and publishes the
+result into a one-frame `CpuSceneSource`. Matching installation, allocation and
+scene-publication stamps prevent late results from replacing current pixels.
+The [CPU contract](2026-11-01-cpu-render-jobs.md) records resource limits, scale-one
+admission and the separate worker/process and native receiving evidence.
+
 ## Commands and events
 
 A `Scope` is a host-chosen owner plus installation generation. The host must

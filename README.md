@@ -66,6 +66,14 @@ records the boundary and validation status. `support/execution-proof` contains a
 private worker-thread/process Genet document-command fixture; it is not a sandbox or a
 supported IPC protocol.
 
+`cue-netrender` offers an opt-in `scene-jobs` feature for complete owned scene
+snapshots and a `cpu` feature for Vello CPU jobs and a nonblocking `CpuFrame`
+inbox. Hosts supply scheduling; document controls keep their existing owner.
+The [CPU render-job contract](docs/2026-11-01-cpu-render-jobs.md) describes byte
+budgets, process-local resource identities, premultiplied pixels and stale-job
+refusal. The private proof's `cpu-raster` feature compares worker/helper pixels
+from an actual Genet text scene and exercises host receiving on Metal.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

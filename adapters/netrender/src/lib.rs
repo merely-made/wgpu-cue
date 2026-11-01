@@ -2,9 +2,14 @@
 //! A private retained renderer on the embedding host's existing GPU device.
 //! Quality counters belong to this renderer, never to the host's renderer or
 //! another producer. Polling does not wait for GPU work or mapping callbacks.
-//! This adapter uses Vello Classic. CPU and GPU/Hybrid sessions need their own
-//! adapters and admission; choosing a frame transport does not select a backend.
+//! `SceneRasterizer` uses Vello Classic. The optional `cpu` module accepts owned
+//! scene jobs and returns CPU frames. GPU/Hybrid needs a separate host-device
+//! adapter; choosing a frame transport does not select a backend.
 pub use netrender::{Scene, WgpuHandles};
+#[cfg(feature = "cpu")]
+pub mod cpu;
+#[cfg(feature = "scene-jobs")]
+pub mod scene_job;
 use std::{
     future::Future,
     pin::Pin,

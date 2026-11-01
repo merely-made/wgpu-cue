@@ -1,7 +1,7 @@
 # Vello execution placement behind Cue
 
 **Date:** 2026-11-01
-**Status:** Source-grounded design constraints; additional renderer adapters unimplemented
+**Status:** Classic and the opt-in CPU path qualified; GPU/Hybrid and native transfer remain design constraints
 
 ## Renderer choice and placement
 
@@ -16,11 +16,12 @@ sparse GPU implementation, not another renderer family requiring another process
 | --- | --- | --- | --- |
 | Classic | Registry-bearing `Renderer`, device/queue, retained resources and deferred quality observations | Keep renderer and GPU resources with the device owner. Content can prepare a source scene elsewhere. | Existing `TextureSource` on the host device; a remote GPU owner needs owned native-frame transfer. |
 | GPU / Hybrid | `HybridSession` owns CPU sources/caches, GPU textures and renderer resources on one supplied device/queue | Keep the current session intact with the GPU owner. CPU preparation is a possible future worker boundary, not an existing process-transfer contract. | A future host-device adapter, or native-frame transfer from a remote GPU owner. |
-| CPU | `CpuSession` owns source/derived resources and produces a fresh CPU pixmap without a GPU | A local worker or helper process can own the raster session. Provider-internal parallelism still needs a shared CPU budget. | A future `FrameSource` returning `CpuFrame`; the host may upload those pixels. |
+| CPU | `CpuSession` owns source/derived resources and produces a fresh CPU pixmap without a GPU | A local worker or helper process can own the raster session. Provider-internal parallelism still needs a shared CPU budget. | Opt-in `CpuSceneSource` returns owned premultiplied `CpuFrame`; the host may upload those pixels. |
 
-The current `cue-netrender::SceneRasterizer` implements Classic only. Cue's lock
-includes Classic and does not enable the optional sparse CPU/GPU packages.
-Choosing a presentation mode does not construct or qualify those adapters.
+`cue-netrender::SceneRasterizer` implements Classic. The opt-in `cpu` feature adds
+the CPU path and its locked supplier closure. `scene-jobs` exposes the shared owned
+scene boundary without enabling CPU. The default feature set remains empty;
+choosing a presentation mode does not construct or qualify another adapter.
 
 ## Common input belongs above backend-specific preparation
 
@@ -45,11 +46,16 @@ resolved bounded source snapshot. Caller-shaped text and its font palette must
 stay coherent. Resolve resource authority before raster admission; a content ID
 is not a resource grant.
 
-The current execution draft carries `Command` and `Event`. It is a document-command
+The command execution interface carries `Command` and `Event`. It is a document-command
 endpoint, not a generic renderer service. Renderer jobs need their own typed
 scene/resource interface near Netrender, sharing lifecycle rules where useful.
 Do not smuggle scenes through `Command::Script`, `Event::Message` or opaque strings,
 and do not add Vello types to renderer-free `webcue`.
+
+The [CPU followup](2026-11-01-cpu-render-jobs.md) now implements `SceneSnapshot`
+and `RenderJob` near Netrender, plus a CPU raster operation and a nonblocking frame
+inbox. Full snapshots carry font/image bytes; received Blob IDs are reminted before
+renderer caches can use them. Resource grants remain with the embedding host.
 
 ## Scheduling and completion constraints
 
@@ -116,9 +122,11 @@ selection and grants stay with their existing owner.
    backend's admission path. Record supported subsets and typed refusals before
    routing. The current fixture compares document commands and produces CPU scenes;
    it does not rasterize them with Vello CPU.
-2. Add a CPU `FrameSource` adapter with explicit premultiplication, encoding and byte
-   budgets. Compare local/helper pixels and host receiving, including stale-frame
-   rejection. Optional dependencies must retain the coherent supplier revision.
+2. The CPU `FrameSource` slice is implemented with explicit premultiplication,
+   encoding and byte budgets. A Genet text scene produced identical local/helper
+   pixels, host upload/readback preserved them, and stale jobs were refused.
+   Qualification currently covers scale-one scenes and the recorded fixture;
+   the optional dependencies retain the coherent supplier revision.
 3. Add a Hybrid host-device adapter with encode/submit ordering and nonblocking
    readiness. Check same-device validation, refused operations, alpha/encoding and
    renderer reconstruction independently of Classic.
@@ -126,8 +134,8 @@ selection and grants stay with their existing owner.
    texture or serialized scene does not prove OS handle transfer, synchronization,
    BrowserEngineKit integration or security isolation.
 
-These extend the accepted plan. This review changes no renderer feature, supplier
-pin, automatic selection policy or fallback route.
+The CPU followup extends the accepted plan with opt-in features. Supplier revisions
+remain unchanged. Backend selection and fallback continue to require host policy.
 
 ## Source basis
 
@@ -143,9 +151,9 @@ pin, automatic selection policy or fallback route.
 - [Source registry and ID scope](https://github.com/merely-made/netrender/blob/66b2f72e9e0785819139739cc4503bf1e8766de9/netrender/src/vello_backends/fragments.rs)
 - [Current Cue rasterizer](../adapters/netrender/src/lib.rs)
 
-Renderer placement and the CPU/Hybrid paths remain source-reviewed design.
-The command proof and existing Classic path now have executed native evidence:
-33 command/lifecycle tests and four Metal tests passed, including separate opaque
-document-canvas and transparent-rasterizer fixtures. See the
-[qualification receipt](../receipts/2026-11-01-execution-host/README.md).
-These checks do not establish CPU/Hybrid parity or cross-process frame transport.
+The initial [command qualification](../receipts/2026-11-01-execution-host/README.md)
+covered 33 tests and four Metal fixtures. The
+[CPU qualification](../receipts/2026-11-01-cpu-render/README.md) adds owned-scene
+worker/helper rasterization and host receiving. GPU/Hybrid admission and native
+frame transport remain separate boundaries; the recorded CPU/Classic scene
+comparison does not establish general backend parity.
