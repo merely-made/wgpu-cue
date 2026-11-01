@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/webcue", "crates/wgpu-cue", "adapters/genet", "adapters/scry", "adapters/netrender"]
+members = ["crates/webcue", "crates/wgpu-cue", "adapters/genet", "adapters/scry", "adapters/netrender", "support/execution-proof"]
 
 [workspace.package]
 version = "0.1.2"

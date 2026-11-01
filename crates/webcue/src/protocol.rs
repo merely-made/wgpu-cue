@@ -142,6 +142,13 @@ impl Protocol {
         Ok(())
     }
     pub fn retire(&mut self) -> Result<()> {
+        self.close(Error::Retired)
+    }
+    /// Close admission after executor loss while retaining terminal slots.
+    pub fn execution_lost(&mut self, reason: String) -> Result<()> {
+        self.close(Error::ExecutionLost(reason))
+    }
+    fn close(&mut self, outcome: Error) -> Result<()> {
         if self.retired {
             return Ok(());
         }
@@ -156,7 +163,7 @@ impl Protocol {
             };
             self.push(Event::Completed {
                 request,
-                result: Err(Error::Retired),
+                result: Err(outcome.clone()),
             });
         }
         Ok(())

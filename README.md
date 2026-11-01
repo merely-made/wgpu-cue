@@ -56,6 +56,16 @@ if retirement occurs while observation events have filled the queue. Hosts
 must drain the final queue after `retire()` and retire their presenter when
 removing an installation. See [the protocol](docs/contract.md).
 
+`webcue::execution` provides host-owned accounting for commands sent to a
+host-supplied executor. It retains accepted work through transport backpressure,
+reports execution loss without replay, and distinguishes installation retirement
+from observed executor termination. The initial interface covers commands and
+ordered observations; full remote `Surface` controls and native frame transfer
+remain separate. The [execution-host plan](docs/2026-11-01-execution-host-plan.md)
+records the boundary and validation status. `support/execution-proof` contains a
+private worker-thread/process Genet document-command fixture; it is not a sandbox or a
+supported IPC protocol.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

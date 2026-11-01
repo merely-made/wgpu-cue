@@ -1,36 +1,19 @@
 // SPDX-License-Identifier: MPL-2.0
 //! Native retained Genet content behind Webcue; no Pelt/Inker orchestration.
-use document_session_api::{
-    DocumentFindQuery, DocumentSession, SessionEngine, SessionSpawnRequest,
-};
-use genet_documents::{LiverySessionEngine, ResourceFetcher};
-use genet_host_api::{ResourceFetchResponse, ResourceRequest};
+mod document;
+pub use document::{DocumentCommandResult, GenetDocument, HeldResources};
 use genet_render_host::RenderCore;
 use netrender::Scene;
 use std::{collections::VecDeque, sync::Arc, time::Duration};
 use webcue::*;
 use wgpu_cue::{RenderContext, Rendered, TextureSource};
 
-/// A finite host-held resource inventory. This adapter never performs network or file I/O.
-#[derive(Clone, Default)]
-pub struct HeldResources(pub std::collections::BTreeMap<String, Vec<u8>>);
-impl ResourceFetcher for HeldResources {
-    fn fetch(&self, url: &str) -> Option<Vec<u8>> {
-        self.0.get(url).cloned()
-    }
-    fn fetch_request(&self, _: &ResourceRequest) -> Option<ResourceFetchResponse> {
-        None
-    }
-}
 pub struct GenetSurface {
     protocol: Protocol,
     report: CapabilityReport,
     viewport: Viewport,
-    engine: LiverySessionEngine<HeldResources>,
-    session: Box<dyn DocumentSession<Scene>>,
+    document: GenetDocument,
     core: Arc<RenderCore>,
-    address: String,
-    html: String,
     dirty: bool,
     visible: bool,
     revision: u64,
@@ -60,17 +43,7 @@ impl GenetSurface {
         let viewport = viewport.validate()?;
         let rasterizer =
             wgpu_cue_netrender::SceneRasterizer::new(core.renderer().wgpu_device.core.clone())?;
-        if html.len() > 1024 * 1024 {
-            return Err(Error::Invalid(
-                "held HTML exceeds the 1 MiB initial adapter limit".into(),
-            ));
-        }
-        let engine = LiverySessionEngine::new(resources);
-        let request = SessionSpawnRequest::new(&address)
-            .with_body(&html)
-            .with_content_type("text/html")
-            .with_viewport(viewport.width, viewport.height);
-        let session = engine.spawn(&request).map_err(backend)?;
+        let document = GenetDocument::new(viewport, address, html, resources)?;
         let identity = BackendIdentity {
             engine: "genet.livery".into(),
             version: Some("729414db135".into()),
@@ -102,11 +75,8 @@ impl GenetSurface {
             protocol: Protocol::new(scope, 256)?,
             report,
             viewport,
-            engine,
-            session,
+            document,
             core,
-            address,
-            html,
             dirty: true,
             visible: true,
             revision: 0,
@@ -156,17 +126,10 @@ impl GenetSurface {
         if !self.dirty {
             return Ok(());
         }
-        self.scene = Some(
-            self.session
-                .try_frame(
-                    (self.viewport.width as f32 / self.viewport.scale).ceil() as u32,
-                    (self.viewport.height as f32 / self.viewport.scale).ceil() as u32,
-                )
-                .map_err(backend)?,
-        );
+        self.scene = Some(self.document.prepare(self.viewport)?);
         self.revision = self.revision.checked_add(1).ok_or(Error::Exhausted)?;
         if self.semantics
-            && let Some(projection) = self.session.accessibility_projection()
+            && let Some(projection) = self.document.session.accessibility_projection()
         {
             let publication = self.publications.publish(self.revision)?;
             self.outgoing.push_back(Event::Semantics {
@@ -176,7 +139,7 @@ impl GenetSurface {
         }
         self.outgoing.push_back(Event::TextInput(
             self.visible
-                .then(|| self.session.text_input_state())
+                .then(|| self.document.session.text_input_state())
                 .flatten(),
         ));
         self.rasterizer.suspend();
@@ -185,73 +148,24 @@ impl GenetSurface {
         Ok(())
     }
     fn execute(&mut self, command: Command) -> Result<Reply> {
-        match command {
-            Command::Navigate { address } => {
-                self.outgoing
-                    .push_back(Event::NavigationRequested { address });
-                Ok(Reply::Done)
-            }
-            Command::LoadHtml { address, html } => self.replace(address, html),
-            Command::Reload => self.replace(self.address.clone(), self.html.clone()),
-            Command::SetSemantics(enabled) => {
-                self.invalidate_publication();
-                self.semantics = enabled;
-                self.dirty = true;
-                self.prepare()?;
-                Ok(Reply::Done)
-            }
-            Command::Find { text, backwards } => {
-                if backwards {
-                    return Err(Error::Unsupported(
-                        "reverse find stepping is not exposed in this initial adapter".into(),
-                    ));
-                }
-                let state = self
-                    .session
-                    .document_find(&DocumentFindQuery::new(text))
-                    .map_err(backend)?;
-                self.invalidate_publication();
-                self.dirty = true;
-                Ok(Reply::Find(state))
-            }
-            Command::Zoom(factor) => {
-                let state = self.session.set_page_zoom(factor).map_err(backend)?;
-                self.invalidate_publication();
-                self.dirty = true;
-                Ok(Reply::Zoom(state))
-            }
-            _ => Err(Error::Unsupported("operation is not exposed".into())),
+        if let Command::SetSemantics(enabled) = command {
+            self.invalidate_publication();
+            self.semantics = enabled;
+            self.dirty = true;
+            self.prepare()?;
+            return Ok(Reply::Done);
         }
-    }
-    fn replace(&mut self, address: String, html: String) -> Result<Reply> {
-        if html.len() > 1024 * 1024 {
-            return Err(Error::Invalid("held HTML exceeds 1 MiB".into()));
+        let changes_document = !matches!(&command, Command::Navigate { .. });
+        let result = self.document.execute(command, self.viewport)?;
+        if changes_document {
+            self.invalidate_publication();
+            self.dirty = true;
         }
-        let request = SessionSpawnRequest::new(&address)
-            .with_body(&html)
-            .with_content_type("text/html")
-            .with_viewport(self.viewport.width, self.viewport.height);
-        let session = self.engine.spawn(&request).map_err(backend)?;
-        self.invalidate_publication();
-        self.session = session;
-        self.address = address.clone();
-        self.html = html;
-        self.dirty = true;
-        self.outgoing.push_back(Event::NavigationStarted {
-            address: address.clone(),
-        });
-        self.outgoing
-            .push_back(Event::AddressChanged(address.clone()));
-        if let Some(title) = self.session.inspect().and_then(|r| r.title) {
-            self.outgoing.push_back(Event::TitleChanged(title));
-        }
-        self.outgoing.push_back(Event::NavigationFinished {
-            address,
-            success: true,
-        });
-        Ok(Reply::Done)
+        self.outgoing.extend(result.observations);
+        Ok(result.reply)
     }
 }
+
 impl Surface for GenetSurface {
     fn scope(&self) -> Scope {
         self.protocol.scope()
@@ -278,7 +192,7 @@ impl Surface for GenetSurface {
         self.invalidate_publication();
         self.visible = visible;
         self.dirty = true;
-        self.session.set_hidden(!visible);
+        self.document.session.set_hidden(!visible);
         Ok(())
     }
     fn input(&mut self, input: Input) -> Result<()> {
@@ -289,7 +203,7 @@ impl Surface for GenetSurface {
                 return Err(Error::Backpressure);
             }
         }
-        let result = dispatch_document_input(self.session.as_mut(), input)?;
+        let result = dispatch_document_input(self.document.session.as_mut(), input)?;
         self.outgoing.extend(document_input_events(result));
         self.invalidate_publication();
         self.dirty = true;
@@ -330,7 +244,7 @@ impl Surface for GenetSurface {
                 "this producer exposes retained document semantics".into(),
             ));
         };
-        if !self.session.dispatch_accessibility_action(&action) {
+        if !self.document.session.dispatch_accessibility_action(&action) {
             return Err(Error::Stale);
         }
         self.invalidate_publication();

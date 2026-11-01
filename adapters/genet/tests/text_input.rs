@@ -248,7 +248,9 @@ fn shared_genet_password_caret_matches_masked_glyphs() {
     assert!(
         pixels
             .rgba
-            .chunks_exact(4)
+            .as_chunks::<4>()
+            .0
+            .iter()
             .any(|p| p[3] > 0 && p[0] < 100 && p[1] < 100 && p[2] < 100),
         "native password/reference frame must contain rendered foreground pixels"
     );

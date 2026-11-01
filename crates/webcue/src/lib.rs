@@ -6,6 +6,7 @@
 mod capabilities;
 mod document_input;
 pub use document_input::{dispatch_document_input, document_input_events};
+pub mod execution;
 mod frame;
 mod protocol;
 pub use accesskit;
@@ -47,6 +48,9 @@ pub enum Error {
     NotPending,
     Exhausted,
     Backend(String),
+    /// Contact with an executor was lost. An accepted operation may already
+    /// have taken effect; this outcome never authorizes automatic replay.
+    ExecutionLost(String),
 }
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

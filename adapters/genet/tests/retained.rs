@@ -176,11 +176,18 @@ fn real_genet_receiver_lifecycle_ime_and_pixels() {
         std::thread::sleep(Duration::from_millis(2));
     };
     let sample = &alpha_pixels.rgba[(50 * 320 + 50) * 4..(50 * 320 + 50) * 4 + 4];
-    eprintln!("Genet alpha sample: {sample:?}");
+    // The pinned Livery session paints an opaque top-level Canvas behind
+    // transparent author backgrounds. Rasterizer alpha is checked separately.
+    eprintln!("Genet top-level canvas sample: {sample:?}");
     assert!(
-        sample[0] == 255 && sample[1] == 0 && sample[2] == 0 && sample[3].abs_diff(128) < 3,
-        "expected straight-alpha red"
+        sample[0] == 255
+            && sample[1].abs_diff(127) < 3
+            && sample[2].abs_diff(127) < 3
+            && sample[3] == 255,
+        "expected translucent red over the top-level white Canvas"
     );
+    let uncovered = &alpha_pixels.rgba[(150 * 320 + 200) * 4..][..4];
+    assert_eq!(uncovered, [255, 255, 255, 255]);
     s.request(RequestId(3), Command::Reload).unwrap();
     s.retire().unwrap();
     assert!(drain(&mut s).iter().any(|e| matches!(
@@ -238,4 +245,61 @@ fn real_genet_receiver_lifecycle_ime_and_pixels() {
         "accepted navigation work deadlocked behind observation reservations"
     );
     flood.retire().unwrap();
+}
+
+#[test]
+#[ignore = "requires a real native wgpu adapter; run explicitly"]
+fn scene_rasterizer_preserves_straight_alpha_and_transparent_clear() {
+    let core = genet_render_host::RenderCore::boot(netrender::NetrenderOptions {
+        enable_vello: true,
+        tile_cache_size: Some(32),
+        ..Default::default()
+    })
+    .unwrap();
+    let host = GpuHost::new(core.device().clone(), core.queue().clone()).unwrap();
+    let viewport = Viewport {
+        width: 64,
+        height: 64,
+        scale: 1.0,
+    };
+    let context = host.context(viewport).unwrap();
+    let mut rasterizer =
+        wgpu_cue_netrender::SceneRasterizer::new(core.renderer().wgpu_device.core.clone()).unwrap();
+    let mut scene = netrender::Scene::new(64, 64);
+    scene.push_rect(0.0, 0.0, 32.0, 32.0, [1.0, 0.0, 0.0, 0.5]);
+    let stamp = FrameStamp {
+        scope: Scope {
+            owner: 71,
+            generation: 1,
+        },
+        allocation_epoch: 0,
+        content_revision: 1,
+    };
+    let deadline = Instant::now() + Duration::from_secs(30);
+    let frame = loop {
+        if let Rendered::Changed(frame) = rasterizer.render(&context, &scene, stamp).unwrap() {
+            break frame;
+        }
+        assert!(
+            Instant::now() < deadline,
+            "rasterizer did not publish a frame"
+        );
+        std::thread::sleep(Duration::from_millis(2));
+    };
+    assert_eq!(frame.alpha, Alpha::Straight);
+    assert_eq!(frame.encoding, Encoding::Srgb);
+    let mut readback = core.start_rgba8_readback(&frame.texture, 64, 64).unwrap();
+    let pixels = loop {
+        core.device().poll(wgpu::PollType::Poll).unwrap();
+        if let Some(result) = readback.poll() {
+            break result.unwrap();
+        }
+        assert!(Instant::now() < deadline, "readback did not complete");
+        std::thread::sleep(Duration::from_millis(2));
+    };
+    let red = &pixels.rgba[(16 * 64 + 16) * 4..][..4];
+    let clear = &pixels.rgba[(48 * 64 + 48) * 4..][..4];
+    eprintln!("Classic straight-alpha sample: {red:?}; transparent clear: {clear:?}");
+    assert!(red[0] == 255 && red[1] == 0 && red[2] == 0 && red[3].abs_diff(128) < 3);
+    assert_eq!(clear, [0, 0, 0, 0]);
 }

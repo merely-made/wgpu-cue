@@ -2,6 +2,8 @@
 //! A private retained renderer on the embedding host's existing GPU device.
 //! Quality counters belong to this renderer, never to the host's renderer or
 //! another producer. Polling does not wait for GPU work or mapping callbacks.
+//! This adapter uses Vello Classic. CPU and GPU/Hybrid sessions need their own
+//! adapters and admission; choosing a frame transport does not select a backend.
 pub use netrender::{Scene, WgpuHandles};
 use std::{
     future::Future,

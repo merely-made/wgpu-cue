@@ -13,6 +13,62 @@ history and acquisition policy, native input clients, OS accessibility adapters,
 card/site selection and fallback decisions. No central engine registry or
 factory is required by the contract.
 
+## Host-owned execution sessions
+
+`webcue::execution::ExecutionSession` adds a command endpoint behind this host
+boundary. Its request ledger and reserved terminal events stay with the host.
+Acceptance is local and precedes transmission. A transport may return `Busy`
+only if it accepted no work; accepted transmissions are never retried. A remote
+operation rejection is an ordinary terminal result. A send/receive failure or
+invalid update closes the installation and settles remaining requests with
+`Error::ExecutionLost`: an operation may already have taken effect.
+
+`ExecutionId` combines installation scope with a host-chosen execution incarnation.
+It is not an OS process identifier or an authorization grant. Updates must match
+the expected execution, inner request/publication scopes and a consecutive
+sequence beginning at one. The host assigns its own ordered output sequence.
+Duplicate/unknown completions and completions for work not yet transmitted fail
+the execution without overwriting prior results. A backpressured observation stays
+ahead of later updates; the host must
+drain events or explicitly decide that the execution is lost. One `advance` turn
+admits at most 64 sends and consumes at most 64 updates.
+
+Retirement settles the installation and requests executor shutdown. Neither
+retirement nor channel loss establishes that execution stopped. The host continues
+polling until `stopped()` contains an executor termination observation, or retains
+the unresolved supervision failure. An adapter that cannot force termination is
+refused when the host requires it. That declaration comes from the trusted host;
+this library does not certify sandboxes or enforce browser resource authority.
+The transport owns cleanup if it is dropped, including on construction failure.
+
+The mailbox requires at least three slots: one accepted completion, an editor
+publication, and its reserved clearing event. It caps pending requests at half
+its capacity and leaves room for observations. Queued observations, accepted
+completions and text-input clearing
+survive execution loss. Transport implementations must additionally bound encoded
+bytes and their own queues. The host ledger is in memory: surviving a helper's
+death is covered, persistence across host death is not. `ExecutionLost` is a new
+error variant and exhaustive downstream matches must account for it.
+
+This command interface intentionally does not implement `Surface`: remote input,
+visibility, semantic actions, time advancement and frames need their own admission
+and lifecycle contracts. Genet's canonical document semantics remain in
+`document-session-api`; native handle custody and synchronization remain with Graft.
+The extracted `cue-genet::GenetDocument` owns the same static commands used by the
+local surface, with CPU layout preparation separated from GPU presentation.
+The private proof's local transport constructs and runs that component on its
+owning worker thread. Admission and stop requests use bounded channels and do
+not wait for initialization or execution. Cooperative shutdown still requires
+the current command to yield. The fixture's destructor joins finite trusted work;
+it is not a forced-termination mechanism or a production worker pool.
+
+The [Vello placement review](2026-11-01-vello-execution-placement.md) distinguishes
+Classic, GPU/Hybrid and CPU execution. Renderer selection does not determine process
+placement. A renderer endpoint needs a typed scene/resource contract; this command
+endpoint does not accept opaque scenes. Executor termination does not establish
+GPU completion, native-frame release or permission to reuse exported memory.
+Those obligations remain with the presentation and resource owner.
+
 ## Commands and events
 
 A `Scope` is a host-chosen owner plus installation generation. The host must

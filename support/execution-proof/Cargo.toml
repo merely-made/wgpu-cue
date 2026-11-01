@@ -1,0 +1,12 @@
+[package]
+name = "cue-execution-proof"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+cue-genet = { path = "../../adapters/genet" }
+webcue.workspace = true
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"

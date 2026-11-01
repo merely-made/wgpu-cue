@@ -636,6 +636,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "cue-execution-proof"
+version = "0.1.0"
+dependencies = [
+ "cue-genet",
+ "serde",
+ "serde_json",
+ "webcue",
+]
+
+[[package]]
 name = "cue-genet"
 version = "0.1.2"
 dependencies = [
