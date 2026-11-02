@@ -74,6 +74,12 @@ budgets, process-local resource identities, premultiplied pixels and stale-job
 refusal. The private proof's `cpu-raster` feature compares worker/helper pixels
 from an actual Genet text scene and exercises host receiving on Metal.
 
+The opt-in `hybrid` feature adds `HybridSceneSource` on a host device. Submission
+owns its encoder and queue ordering; frame polling only observes readiness.
+The [Hybrid contract](docs/2026-11-01-hybrid-render-jobs.md) covers single-flight
+backpressure, GPU error scopes, invalidation, cleanup fences and reconstruction.
+The proof's `hybrid-raster` feature enables native qualification independently of CPU.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

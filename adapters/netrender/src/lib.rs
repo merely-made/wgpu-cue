@@ -3,11 +3,14 @@
 //! Quality counters belong to this renderer, never to the host's renderer or
 //! another producer. Polling does not wait for GPU work or mapping callbacks.
 //! `SceneRasterizer` uses Vello Classic. The optional `cpu` module accepts owned
-//! scene jobs and returns CPU frames. GPU/Hybrid needs a separate host-device
-//! adapter; choosing a frame transport does not select a backend.
+//! scene jobs and returns CPU frames. The optional `hybrid` module submits owned
+//! scenes on a host device; choosing a frame transport does not select a backend.
+pub use netrender;
 pub use netrender::{Scene, WgpuHandles};
 #[cfg(feature = "cpu")]
 pub mod cpu;
+#[cfg(feature = "hybrid")]
+pub mod hybrid;
 #[cfg(feature = "scene-jobs")]
 pub mod scene_job;
 use std::{

@@ -1,7 +1,7 @@
 # Vello execution placement behind Cue
 
 **Date:** 2026-11-01
-**Status:** Classic and the opt-in CPU path qualified; GPU/Hybrid and native transfer remain design constraints
+**Status:** Classic, CPU and GPU/Hybrid have bounded native qualification; native frame transfer remains separate
 
 ## Renderer choice and placement
 
@@ -15,13 +15,14 @@ sparse GPU implementation, not another renderer family requiring another process
 | Renderer | Current Netrender ownership | Useful placement | Cue receiving path |
 | --- | --- | --- | --- |
 | Classic | Registry-bearing `Renderer`, device/queue, retained resources and deferred quality observations | Keep renderer and GPU resources with the device owner. Content can prepare a source scene elsewhere. | Existing `TextureSource` on the host device; a remote GPU owner needs owned native-frame transfer. |
-| GPU / Hybrid | `HybridSession` owns CPU sources/caches, GPU textures and renderer resources on one supplied device/queue | Keep the current session intact with the GPU owner. CPU preparation is a possible future worker boundary, not an existing process-transfer contract. | A future host-device adapter, or native-frame transfer from a remote GPU owner. |
+| GPU / Hybrid | `HybridSession` owns CPU sources/caches, GPU textures and renderer resources on one supplied device/queue | `HybridSceneSource` keeps the session intact with the GPU owner and explicitly submits before polling readiness. CPU preparation is a possible future worker boundary, not an existing process-transfer contract. | Opt-in host-device adapter; a remote GPU owner still needs native-frame transfer. |
 | CPU | `CpuSession` owns source/derived resources and produces a fresh CPU pixmap without a GPU | A local worker or helper process can own the raster session. Provider-internal parallelism still needs a shared CPU budget. | Opt-in `CpuSceneSource` returns owned premultiplied `CpuFrame`; the host may upload those pixels. |
 
 `cue-netrender::SceneRasterizer` implements Classic. The opt-in `cpu` feature adds
 the CPU path and its locked supplier closure. `scene-jobs` exposes the shared owned
 scene boundary without enabling CPU. The default feature set remains empty;
 choosing a presentation mode does not construct or qualify another adapter.
+The opt-in `hybrid` feature similarly reuses `scene-jobs` without enabling CPU.
 
 ## Common input belongs above backend-specific preparation
 
@@ -118,23 +119,25 @@ selection and grants stay with their existing owner.
 
 ## Qualification after the command slice
 
-1. Feed the same actual Genet-prepared scene and resource inventory to each local
-   backend's admission path. Record supported subsets and typed refusals before
-   routing. The current fixture compares document commands and produces CPU scenes;
-   it does not rasterize them with Vello CPU.
+1. The same Genet-prepared text snapshot has now rendered through Classic, CPU
+   and Hybrid on the recorded host. Native fixtures assert canvas/text presence
+   and record pixel differences. This bounded scene and typed-refusal evidence
+   does not establish general parity or authorize automatic routing/fallback.
 2. The CPU `FrameSource` slice is implemented with explicit premultiplication,
    encoding and byte budgets. A Genet text scene produced identical local/helper
    pixels, host upload/readback preserved them, and stale jobs were refused.
    Qualification currently covers scale-one scenes and the recorded fixture;
    the optional dependencies retain the coherent supplier revision.
-3. Add a Hybrid host-device adapter with encode/submit ordering and nonblocking
-   readiness. Check same-device validation, refused operations, alpha/encoding and
-   renderer reconstruction independently of Classic.
+3. The [Hybrid adapter](2026-11-01-hybrid-render-jobs.md) now owns encode/submit
+   ordering and nonblocking readiness. Native tests cover device/queue/epoch
+   identity, premultiplied geometry and images, typed sampling refusal, stale
+   targets and renderer reconstruction. Physical device loss and driver reset
+   remain separate qualification boundaries.
 4. Qualify native frame transport for a separate GPU owner independently. A local
    texture or serialized scene does not prove OS handle transfer, synchronization,
    BrowserEngineKit integration or security isolation.
 
-The CPU followup extends the accepted plan with opt-in features. Supplier revisions
+The CPU and Hybrid followups extend the accepted plan with opt-in features. Supplier revisions
 remain unchanged. Backend selection and fallback continue to require host policy.
 
 ## Source basis
@@ -157,3 +160,5 @@ covered 33 tests and four Metal fixtures. The
 worker/helper rasterization and host receiving. GPU/Hybrid admission and native
 frame transport remain separate boundaries; the recorded CPU/Classic scene
 comparison does not establish general backend parity.
+The [Hybrid qualification](../receipts/2026-11-01-hybrid-render/README.md) adds the
+same-snapshot three-backend comparison and local GPU-owner lifecycle evidence.

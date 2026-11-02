@@ -124,8 +124,8 @@ No document canvas behavior or supplier pin changed. An existing ICU4X diagnosti
 about missing CJK segmentation data remains in the native log; passing the IME
 assertion does not qualify CJK segmentation generally.
 
-The CPU adapter and worker/helper scene proof are qualified separately in the
-followup receipt. Hybrid, remote input, platform-native handle transfer,
+The CPU adapter, worker/helper scene proof and Hybrid GPU-owner adapter are
+qualified separately in their followup receipts. Remote input, platform-native handle transfer,
 BrowserEngineKit integration and OS sandboxing remain outside this command slice.
 The Vello review records their ownership constraints and qualification boundaries;
 these native Classic checks do not qualify those additional paths.

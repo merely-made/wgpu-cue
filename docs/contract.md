@@ -77,6 +77,13 @@ scene-publication stamps prevent late results from replacing current pixels.
 The [CPU contract](2026-11-01-cpu-render-jobs.md) records resource limits, scale-one
 admission and the separate worker/process and native receiving evidence.
 
+The opt-in `cue-netrender::hybrid::HybridSceneSource` consumes the same owned scene
+boundary on a host device. Explicit submission encodes and submits before another
+job is admitted. Texture polling waits for neither I/O nor GPU completion; it
+publishes only after the completion callback and error scopes resolve. Invalidation
+suppresses delivery while retaining the pending submission for host observation.
+The [Hybrid contract](2026-11-01-hybrid-render-jobs.md) covers the GPU-owner boundary.
+
 ## Commands and events
 
 A `Scope` is a host-chosen owner plus installation generation. The host must

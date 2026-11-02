@@ -15,6 +15,7 @@ name = "wgpu_cue_netrender"
 default = []
 scene-jobs = ["netrender/serde", "dep:serde_json"]
 cpu = ["scene-jobs", "netrender/vello-cpu"]
+hybrid = ["scene-jobs", "netrender/vello-hybrid"]
 
 [dependencies]
 webcue = "=0.1.2"

@@ -92,8 +92,9 @@ readback, Classic rendering of the identical scene, stale-frame rejection, owned
 images, and resource limits. The proof protocol names the exact Netrender schema
 and bounds encoded frames independently of the command proof.
 
-Hybrid can reuse the owned scene boundary while keeping its current CPU/GPU
-session and encode/submit ordering with the GPU owner. Its adapter and native
-frame-handle transfer remain separate qualification boundaries in the
+The [Hybrid adapter](2026-11-01-hybrid-render-jobs.md) reuses the owned scene
+boundary while keeping its CPU/GPU session and encode/submit ordering with the
+GPU owner. Its qualification and native frame-handle transfer are separate from
+this CPU slice, as recorded in the
 [Vello placement review](2026-11-01-vello-execution-placement.md). These CPU jobs
 establish neither general CPU/Classic parity nor BrowserEngineKit/OS isolation.

@@ -28,12 +28,12 @@ pub enum RenderError {
     Snapshot(String),
     UnresolvedResource(&'static str),
     Budget(&'static str),
-    #[cfg(feature = "cpu")]
+    #[cfg(any(feature = "cpu", feature = "hybrid"))]
     Raster(netrender::vello_backends::SparseSessionError),
 }
 impl std::fmt::Display for RenderError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "CPU render: {self:?}")
+        write!(f, "scene render: {self:?}")
     }
 }
 impl std::error::Error for RenderError {}
