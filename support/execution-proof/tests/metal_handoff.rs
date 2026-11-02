@@ -389,3 +389,241 @@ fn native_metadata_and_device_generations_are_checked() {
     ));
     assert_eq!(importer.in_flight(), 0);
 }
+
+#[test]
+#[ignore = "requires native Metal and two local processes; run explicitly"]
+fn persistent_renderer_changes_resizes_and_restarts_while_old_frame_is_held() {
+    use webcue::execution::ExecutionId;
+    use wgpu_cue_netrender::render_session::*;
+    fn wait(session: &mut RenderSession<MetalProcess>) -> NativeFrame {
+        let deadline = Instant::now() + Duration::from_secs(30);
+        loop {
+            session.advance().unwrap();
+            if let Some(reply) = session.poll_reply() {
+                return reply.result.unwrap();
+            }
+            assert!(Instant::now() < deadline);
+            std::thread::sleep(Duration::from_millis(1));
+        }
+    }
+    fn pixels(core: &genet_render_host::RenderCore, texture: &wgpu::Texture) -> Vec<u8> {
+        let mut read = core
+            .start_rgba8_readback(texture, texture.width(), texture.height())
+            .unwrap();
+        let deadline = Instant::now() + Duration::from_secs(30);
+        loop {
+            core.device().poll(wgpu::PollType::Poll).unwrap();
+            if let Some(result) = read.poll() {
+                return result.unwrap().rgba;
+            }
+            assert!(Instant::now() < deadline);
+            std::thread::sleep(Duration::from_millis(1));
+        }
+    }
+    fn snapshot(doc: &mut GenetDocument, v: Viewport) -> SceneSnapshot {
+        SceneSnapshot::capture(&doc.prepare(v).unwrap(), RenderLimits::default()).unwrap()
+    }
+    fn local_pixels(
+        core: &genet_render_host::RenderCore,
+        host: &GpuHost,
+        job: &RenderJob,
+    ) -> Vec<u8> {
+        let size = job.snapshot.size();
+        let v = Viewport {
+            width: size.width,
+            height: size.height,
+            scale: 1.0,
+        };
+        let cx = host.context(v).unwrap();
+        let mut source = HybridSceneSource::new(scope(80), &cx, RenderLimits::default()).unwrap();
+        let deadline = Instant::now() + Duration::from_secs(30);
+        while !source.poll_idle().unwrap() {
+            assert!(Instant::now() < deadline);
+        }
+        source
+            .submit(&cx, job.stamp.content_revision, &job.snapshot)
+            .unwrap();
+        loop {
+            if let Rendered::Changed(frame) = source.render(&cx, true).unwrap() {
+                return pixels(core, &frame.texture);
+            }
+            assert!(Instant::now() < deadline);
+            std::thread::sleep(Duration::from_millis(1));
+        }
+    }
+    fn ready(
+        importer: &mut GraftIoSurfaceImporter,
+        cx: &RenderContext<'_>,
+        frame: NativeFrame,
+    ) -> TextureFrame {
+        match importer.try_import(cx, frame).unwrap() {
+            Imported::Ready(frame) => frame,
+            _ => panic!("observed producer completion"),
+        }
+    }
+    let core = core();
+    let host = GpuHost::new(core.device().clone(), core.queue().clone()).unwrap();
+    let cx = host.context(viewport()).unwrap();
+    let scope = scope(71);
+    let id = ExecutionId {
+        scope,
+        incarnation: 1,
+    };
+    let mut clock = RenderClock::new(scope);
+    let html = |color: &str, text: &str| {
+        format!(
+            "<!doctype html><style>body{{margin:0;background:{color};color:white;font:16px Arial}}p{{margin:8px}}</style><p>{text}</p>"
+        )
+    };
+    let mut doc = GenetDocument::new(
+        viewport(),
+        "https://fixture.invalid/live".into(),
+        html("#204080", "Alpha"),
+        HeldResources::default(),
+    )
+    .unwrap();
+    let first = clock.job(1, snapshot(&mut doc, viewport())).unwrap();
+    let process = MetalProcess::spawn_execution(
+        Path::new(env!("CARGO_BIN_EXE_cue-execution-proof")),
+        id,
+        &first.snapshot,
+    )
+    .unwrap();
+    let old_pid = process.pid();
+    let mut session =
+        RenderSession::new(id, process, 2, 32 * 1024 * 1024, RenderLimits::default()).unwrap();
+    let mut importer = GraftIoSurfaceImporter::new(scope, host.epoch());
+    session.submit(first.clone()).unwrap();
+    let native = wait(&mut session);
+    let first_frame = ready(&mut importer, &cx, native);
+    let original = pixels(&core, &first_frame.texture);
+    assert_eq!(original, local_pixels(&core, &host, &first));
+    let view = first_frame.texture.create_view(&Default::default());
+    doc.execute(
+        Command::LoadHtml {
+            address: "https://fixture.invalid/live".into(),
+            html: html("#802040", "Beta"),
+        },
+        viewport(),
+    )
+    .unwrap();
+    let second = clock.job(2, snapshot(&mut doc, viewport())).unwrap();
+    session.submit(second.clone()).unwrap();
+    let native = wait(&mut session);
+    let second_frame = ready(&mut importer, &cx, native);
+    let second_pixels = pixels(&core, &second_frame.texture);
+    assert_eq!(second_pixels, local_pixels(&core, &host, &second));
+    assert_ne!(original, second_pixels);
+    let resized = Viewport {
+        width: 192,
+        height: 112,
+        ..viewport()
+    };
+    let third = clock.job(3, snapshot(&mut doc, resized)).unwrap();
+    session.submit(third.clone()).unwrap();
+    for _ in 0..5 {
+        session.advance().unwrap();
+        assert!(
+            session.poll_reply().is_none(),
+            "both leased slots remain occupied"
+        );
+        std::thread::sleep(Duration::from_millis(1));
+    }
+    importer.seal_use(second_frame.stamp).unwrap();
+    let second_stamp = second_frame.stamp;
+    drop(second_frame);
+    assert_eq!(released(&mut importer), [second_stamp]);
+    session.transport_mut().release(second_stamp).unwrap();
+    let native = wait(&mut session);
+    let resized_cx = host.context(resized).unwrap();
+    let third_frame = ready(&mut importer, &resized_cx, native);
+    assert_eq!(third_frame.texture.width(), 192);
+    assert_eq!(
+        pixels(&core, &third_frame.texture),
+        local_pixels(&core, &host, &third)
+    );
+    assert_eq!(
+        pixels(&core, &first_frame.texture),
+        original,
+        "resize must preserve the held allocation"
+    );
+    importer.seal_use(third_frame.stamp).unwrap();
+    let third_stamp = third_frame.stamp;
+    drop(third_frame);
+    assert_eq!(released(&mut importer), [third_stamp]);
+    session.transport_mut().release(third_stamp).unwrap();
+    session.retire().unwrap();
+    drop(session);
+    doc.execute(
+        Command::LoadHtml {
+            address: "https://fixture.invalid/live".into(),
+            html: html("#208040", "Gamma"),
+        },
+        viewport(),
+    )
+    .unwrap();
+    let fourth = clock.job(4, snapshot(&mut doc, viewport())).unwrap();
+    let next_id = ExecutionId {
+        scope,
+        incarnation: 2,
+    };
+    let next = MetalProcess::spawn_execution(
+        Path::new(env!("CARGO_BIN_EXE_cue-execution-proof")),
+        next_id,
+        &fourth.snapshot,
+    )
+    .unwrap();
+    assert_ne!(next.pid(), old_pid);
+    let mut next =
+        RenderSession::new(next_id, next, 2, 32 * 1024 * 1024, RenderLimits::default()).unwrap();
+    next.submit(fourth.clone()).unwrap();
+    let native = wait(&mut next);
+    let fourth_frame = ready(&mut importer, &cx, native);
+    assert_eq!(
+        pixels(&core, &fourth_frame.texture),
+        local_pixels(&core, &host, &fourth)
+    );
+    assert!(fourth_frame.stamp.allocation_epoch > third_stamp.allocation_epoch);
+    assert_eq!(fourth_frame.stamp.scope, first_frame.stamp.scope);
+    assert_eq!(
+        pixels(&core, &first_frame.texture),
+        original,
+        "old imported storage survives renderer restart"
+    );
+    let first_stamp = first_frame.stamp;
+    importer.seal_use(first_stamp).unwrap();
+    drop(first_frame);
+    assert!(
+        importer.poll_releases().unwrap().is_empty(),
+        "retained view still owns the old frame"
+    );
+    drop(view);
+    assert_eq!(released(&mut importer), [first_stamp]);
+    assert!(
+        next.transport_mut().release(first_stamp).is_err(),
+        "old release cannot free a new renderer's slot"
+    );
+    importer.seal_use(fourth_frame.stamp).unwrap();
+    let fourth_stamp = fourth_frame.stamp;
+    drop(fourth_frame);
+    assert_eq!(released(&mut importer), [fourth_stamp]);
+    next.transport_mut().release(fourth_stamp).unwrap();
+    assert_eq!(importer.in_flight(), 0);
+    next.retire().unwrap();
+    let report = doc
+        .execute(
+            Command::Find {
+                text: "Gamma".into(),
+                backwards: false,
+            },
+            viewport(),
+        )
+        .unwrap();
+    let Reply::Find(found) = report.reply else {
+        panic!("document still owns its state")
+    };
+    assert_eq!(found.count, 1);
+    eprintln!(
+        "persistent Metal: four distinct jobs, resize, same-scope new incarnation, held old storage and stale-release rejection passed"
+    );
+}

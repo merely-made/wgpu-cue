@@ -86,6 +86,14 @@ release. `webcue::frame_slots` bounds reuse; `GraftIoSurfaceImporter` waits for
 both final texture custody and a sealed queue fence. The proof's `metal-handoff`
 feature runs the same Genet Hybrid scene in a helper with two exportable slots.
 
+[Persistent render sessions](docs/2026-11-02-persistent-render-sessions.md) add
+host-owned job admission, reserved terminal outcomes, byte budgets and renderer
+incarnations. A document-owned publication clock survives renderer replacement.
+The CPU proof supports persistent local/process endpoints; the Metal proof renders
+changing scenes, resizes held-slot storage safely and replaces its renderer while
+an older imported frame remains retained. Classic and Hybrid local outputs share
+the same typed session vocabulary. Platform-native transfer remains with Graft.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

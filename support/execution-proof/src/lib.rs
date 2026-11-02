@@ -350,3 +350,11 @@ mod tests {
 
 #[cfg(all(feature = "metal-handoff", target_os = "macos"))]
 pub mod metal_handoff;
+
+#[cfg(feature = "cpu-raster")]
+pub mod render_stream;
+#[cfg(any(
+    feature = "cpu-raster",
+    all(feature = "metal-handoff", target_os = "macos")
+))]
+mod render_wire;

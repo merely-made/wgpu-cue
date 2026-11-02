@@ -3,7 +3,9 @@
 //! control protocol carries leases. Ready follows a producer GPU completion
 //! callback. Release follows the consumer importer's final-use fence and drop.
 //! This is not a public wire format, a sandbox, or BrowserEngineKit integration.
-use crate::{encode_with_limit, read_frame_with_limit, write_frame_with_limit};
+use crate::{
+    encode_with_limit, read_frame_with_limit, render_wire::WireExecutionJob, write_frame_with_limit,
+};
 use grafting::metal_surface::{MachSendRight, SharedMetalSurface, lookup_surface};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -12,12 +14,15 @@ use std::{
     io,
     path::Path,
     process::{Child, Command, Stdio},
+    sync::mpsc::{self, SyncSender, TrySendError},
     sync::{
         Arc,
         atomic::{AtomicBool, Ordering},
     },
+    thread::JoinHandle,
     time::{Duration, Instant},
 };
+use webcue::execution::{ExecutionId, SendStatus, StopOutcome};
 use webcue::{
     frame_slots::{FrameSlotPool, SlotLease},
     grafting_frame::{FrameMetadata, FrameSync, OwnedNativeImage},
@@ -26,11 +31,12 @@ use webcue::{
 use wgpu_cue::{wgpu, *};
 use wgpu_cue_netrender::{
     hybrid::HybridSceneSource,
-    scene_job::{RenderLimits, SceneSnapshot},
+    render_session::{RenderReply, RenderRequest, RenderTransport},
+    scene_job::{RenderJob, RenderLimits, SceneSnapshot},
 };
 const LIMIT: usize = 128 * 1024 * 1024;
 const TIMEOUT: Duration = Duration::from_secs(30);
-const SCHEMA: &str = "cue-metal-iosurface-v1";
+const SCHEMA: &str = "cue-metal-iosurface-v2";
 unsafe extern "C" {
     fn cue_receive_port(out: *mut u32) -> i32;
     fn cue_register(name: *const std::ffi::c_char, port: u32) -> i32;
@@ -135,6 +141,7 @@ pub struct Lease {
     pub slot: u32,
     pub epoch: u64,
     pub revision: u64,
+    pub allocation: u64,
 }
 impl Lease {
     fn slot(self, scope: Scope) -> SlotLease {
@@ -147,12 +154,15 @@ impl Lease {
     pub fn stamp(self, scope: Scope) -> FrameStamp {
         FrameStamp {
             scope,
-            allocation_epoch: self.epoch,
+            allocation_epoch: self.allocation,
             content_revision: self.revision,
         }
     }
     fn matches(self, other: Self) -> bool {
-        self.slot == other.slot && self.epoch == other.epoch && self.revision == other.revision
+        self.slot == other.slot
+            && self.epoch == other.epoch
+            && self.revision == other.revision
+            && self.allocation == other.allocation
     }
 }
 #[derive(Debug, Serialize, Deserialize)]
@@ -181,27 +191,36 @@ enum Message {
 }
 #[derive(Debug, Serialize, Deserialize)]
 struct Wire {
+    incarnation: u64,
     nonce: u128,
     owner: u128,
     generation: u64,
     message: Message,
 }
-fn wire(nonce: u128, scope: Scope, message: Message) -> Wire {
+fn wire(nonce: u128, execution: ExecutionId, message: Message) -> Wire {
+    let scope = execution.scope;
     Wire {
+        incarnation: execution.incarnation,
         nonce,
         owner: scope.owner,
         generation: scope.generation,
         message,
     }
 }
-fn check(w: &Wire, nonce: u128, scope: Scope) -> io::Result<()> {
-    if w.nonce != nonce || w.owner != scope.owner || w.generation != scope.generation {
+fn check(w: &Wire, nonce: u128, execution: ExecutionId) -> io::Result<()> {
+    let scope = execution.scope;
+    if w.nonce != nonce
+        || w.owner != scope.owner
+        || w.generation != scope.generation
+        || w.incarnation != execution.incarnation
+    {
         return Err(io::Error::other("stale Metal session"));
     }
     Ok(())
 }
 #[derive(Serialize, Deserialize)]
 struct Init {
+    incarnation: u64,
     schema: String,
     endpoint: String,
     nonce: u128,
@@ -211,6 +230,7 @@ struct Init {
     scene: String,
 }
 struct Offer {
+    size: FrameSize,
     lease: Lease,
     right: Option<MachSendRight>,
     ready: bool,
@@ -224,7 +244,12 @@ pub struct MetalProcess {
     reply: Option<MachSendRight>,
     nonce: u128,
     scope: Scope,
-    size: FrameSize,
+    incarnation: u64,
+    writer: Option<JoinHandle<()>>,
+    tx: Option<SyncSender<Vec<u8>>>,
+    submitted: BTreeMap<u64, (FrameStamp, FrameSize)>,
+    stopping: bool,
+    forced: bool,
     last_revision: u64,
     offers: BTreeMap<u64, Offer>,
     responses: Vec<Message>,
@@ -232,6 +257,21 @@ pub struct MetalProcess {
 }
 impl MetalProcess {
     pub fn spawn(executable: &Path, scope: Scope, snapshot: &SceneSnapshot) -> io::Result<Self> {
+        Self::spawn_execution(
+            executable,
+            ExecutionId {
+                scope,
+                incarnation: 1,
+            },
+            snapshot,
+        )
+    }
+    pub fn spawn_execution(
+        executable: &Path,
+        execution: ExecutionId,
+        snapshot: &SceneSnapshot,
+    ) -> io::Result<Self> {
+        let scope = execution.scope;
         if !executable.is_absolute() {
             return Err(io::Error::other("helper path must be absolute"));
         }
@@ -253,13 +293,19 @@ impl MetalProcess {
             reply: None,
             nonce,
             scope,
-            size: snapshot.size(),
+            incarnation: execution.incarnation,
+            writer: None,
+            tx: None,
+            submitted: BTreeMap::new(),
+            stopping: false,
+            forced: false,
             last_revision: 0,
             offers: BTreeMap::new(),
             responses: Vec::new(),
             lost: false,
         };
         let init = Init {
+            incarnation: execution.incarnation,
             schema: SCHEMA.into(),
             endpoint,
             nonce,
@@ -273,7 +319,24 @@ impl MetalProcess {
             &encode_with_limit(&init, LIMIT)?,
             LIMIT,
         )?;
-        process.child.stdin.take();
+        let mut input = process
+            .child
+            .stdin
+            .take()
+            .ok_or_else(|| io::Error::other("helper stdin"))?;
+        let (tx, jobs) = mpsc::sync_channel::<Vec<u8>>(2);
+        process.tx = Some(tx);
+        process.writer = Some(
+            std::thread::Builder::new()
+                .name("cue-metal-input".into())
+                .spawn(move || {
+                    while let Ok(bytes) = jobs.recv() {
+                        if write_frame_with_limit(&mut input, &bytes, LIMIT).is_err() {
+                            break;
+                        }
+                    }
+                })?,
+        );
         process.wait(|p| p.reply.is_some())?;
         Ok(process)
     }
@@ -285,7 +348,7 @@ impl MetalProcess {
         let deadline = Instant::now() + TIMEOUT;
         loop {
             if let Some((packet, right, pid)) = self.inbox.receive()? {
-                check(&packet, self.nonce, self.scope)?;
+                check(&packet, self.nonce, self.execution())?;
                 if pid != self.child.id()
                     || right.is_some()
                     || !matches!(packet.message, Message::Bye)
@@ -314,6 +377,12 @@ impl MetalProcess {
             std::thread::sleep(Duration::from_millis(1));
         }
     }
+    pub fn execution(&self) -> ExecutionId {
+        ExecutionId {
+            scope: self.scope,
+            incarnation: self.incarnation,
+        }
+    }
     pub fn scope(&self) -> Scope {
         self.scope
     }
@@ -329,7 +398,7 @@ impl MetalProcess {
                 .as_ref()
                 .ok_or_else(|| io::Error::other("no return channel"))?
                 .as_raw(),
-            &wire(self.nonce, self.scope, message),
+            &wire(self.nonce, self.execution(), message),
             None,
         )
     }
@@ -344,7 +413,9 @@ impl MetalProcess {
         self.lost = true;
         self.offers.clear();
         self.responses.clear();
-        let _ = self.child.kill();
+        if self.child.kill().is_ok() {
+            self.forced = true;
+        }
         let _ = self.child.wait();
     }
     fn poll_inner(&mut self) -> io::Result<()> {
@@ -355,7 +426,7 @@ impl MetalProcess {
             if pid != self.child.id() {
                 return Err(io::Error::other("unexpected Mach sender"));
             }
-            check(&packet, self.nonce, self.scope)?;
+            check(&packet, self.nonce, self.execution())?;
             match packet.message {
                 Message::Hello { adapter } if self.reply.is_none() => {
                     self.reply =
@@ -370,7 +441,17 @@ impl MetalProcess {
                     if self.offers.len() >= 2
                         || self.offers.contains_key(&lease.epoch)
                         || lease.slot >= 2
-                        || FrameSize::new(width, height) != self.size
+                        || width == 0
+                        || height == 0
+                        || u64::from(width) * u64::from(height) * 4
+                            > RenderLimits::default().frame_bytes as u64
+                        || self
+                            .submitted
+                            .get(&lease.revision)
+                            .is_some_and(|(stamp, size)| {
+                                *stamp != lease.stamp(self.scope)
+                                    || *size != FrameSize::new(width, height)
+                            })
                         || lease.epoch == 0
                         || lease.revision == 0
                         || self.offers.values().any(|o| o.lease.slot == lease.slot)
@@ -381,6 +462,7 @@ impl MetalProcess {
                     self.offers.insert(
                         lease.epoch,
                         Offer {
+                            size: FrameSize::new(width, height),
                             lease,
                             right: Some(right),
                             ready: false,
@@ -408,7 +490,10 @@ impl MetalProcess {
         if self.child.try_wait()?.is_some() {
             self.lost = true;
             // A fresh process uses fresh storage. EOF never licenses old reuse.
-            self.offers.clear();
+            self.offers.retain(|_, o| o.ready);
+            if self.offers.values().any(|o| o.ready && !o.taken) {
+                return Ok(());
+            }
             return Err(io::Error::other("Metal executor exited"));
         }
         Ok(())
@@ -454,6 +539,9 @@ impl MetalProcess {
     /// arrived after the helper observed its copy-completion callback.
     pub fn try_frame(&mut self, lease: Lease) -> io::Result<Option<NativeFrame>> {
         self.poll()?;
+        self.take_frame(lease)
+    }
+    fn take_frame(&mut self, lease: Lease) -> io::Result<Option<NativeFrame>> {
         let offer = self
             .offers
             .get_mut(&lease.epoch)
@@ -475,9 +563,9 @@ impl MetalProcess {
             stamp: lease.stamp(self.scope),
             frame: OwnedNativeFrame::new(
                 FrameMetadata {
-                    size: self.size,
+                    size: offer.size,
                     format: PixelFormat::Rgba8Unorm,
-                    generation: lease.epoch,
+                    generation: lease.allocation,
                 },
                 OwnedNativeImage::IoSurface(surface),
                 FrameSync::None,
@@ -493,8 +581,8 @@ impl MetalProcess {
         }
         let offer = self
             .offers
-            .get(&stamp.allocation_epoch)
-            .filter(|o| o.taken && o.lease.stamp(self.scope) == stamp)
+            .values()
+            .find(|o| o.taken && o.lease.stamp(self.scope) == stamp)
             .ok_or_else(|| io::Error::other("stale release"))?;
         let lease = offer.lease;
         self.send(Message::Release(lease))?;
@@ -512,7 +600,9 @@ impl MetalProcess {
     }
     /// Fault injection for qualification: kill and reap the producer only.
     pub fn kill(&mut self) -> io::Result<()> {
+        self.tx.take();
         self.child.kill()?;
+        self.forced = true;
         self.child.wait()?;
         self.lost = true;
         self.offers.clear();
@@ -521,29 +611,131 @@ impl MetalProcess {
 }
 impl Drop for MetalProcess {
     fn drop(&mut self) {
+        self.tx.take();
         let _ = self.child.kill();
         let _ = self.child.wait();
+        if let Some(writer) = self.writer.take() {
+            let _ = writer.join();
+        }
     }
 }
 
 struct Pending {
     lease: Lease,
+    job: Option<RenderJob>,
+    rendered: Option<TextureFrame>,
+    allow_copy: bool,
     done: Option<Arc<AtomicBool>>,
     published: bool,
+}
+impl RenderTransport for MetalProcess {
+    type Frame = NativeFrame;
+    fn try_send(&mut self, request: &RenderRequest) -> Result<SendStatus> {
+        if self.lost || self.stopping {
+            return Err(Error::Retired);
+        }
+        if request.execution != self.execution()
+            || request.job.stamp.scope != self.scope
+            || request.job.stamp.content_revision <= self.last_revision
+        {
+            return Err(Error::Stale);
+        }
+        if self.submitted.len() >= 2 {
+            return Ok(SendStatus::Busy);
+        }
+        let bytes = encode_with_limit(
+            &WireExecutionJob::new(request).map_err(|e| Error::Backend(e.to_string()))?,
+            LIMIT,
+        )
+        .map_err(|e| Error::Backend(e.to_string()))?;
+        match self.tx.as_ref().ok_or(Error::Retired)?.try_send(bytes) {
+            Ok(()) => {
+                self.last_revision = request.job.stamp.content_revision;
+                self.submitted.insert(
+                    request.job.stamp.content_revision,
+                    (request.job.stamp, request.job.snapshot.size()),
+                );
+                Ok(SendStatus::Sent)
+            }
+            Err(TrySendError::Full(_)) => Ok(SendStatus::Busy),
+            Err(TrySendError::Disconnected(_)) => {
+                Err(Error::Backend("Metal input writer lost".into()))
+            }
+        }
+    }
+    fn try_recv(&mut self) -> Result<Option<RenderReply<NativeFrame>>> {
+        let observed = self.poll();
+        let ready = self
+            .offers
+            .values()
+            .find(|o| o.ready && !o.taken && self.submitted.contains_key(&o.lease.revision))
+            .map(|o| o.lease);
+        if let Some(lease) = ready {
+            let frame = self
+                .take_frame(lease)
+                .map_err(|e| Error::Backend(e.to_string()))?
+                .ok_or(Error::NotPending)?;
+            self.submitted.remove(&lease.revision);
+            return Ok(Some(RenderReply {
+                execution: self.execution(),
+                stamp: frame.stamp,
+                result: Ok(frame),
+            }));
+        }
+        observed.map_err(|e| Error::Backend(e.to_string()))?;
+        Ok(None)
+    }
+    fn request_stop(&mut self) -> Result<()> {
+        self.stopping = true;
+        self.tx.take();
+        self.offers.clear();
+        if self
+            .child
+            .try_wait()
+            .map_err(|e| Error::Backend(e.to_string()))?
+            .is_none()
+        {
+            self.child
+                .kill()
+                .map_err(|e| Error::Backend(e.to_string()))?;
+            self.forced = true;
+        }
+        Ok(())
+    }
+    fn poll_stopped(&mut self) -> Result<Option<StopOutcome>> {
+        self.child
+            .try_wait()
+            .map_err(|e| Error::Backend(e.to_string()))
+            .map(|s| {
+                s.map(|status| {
+                    if self.forced && !status.success() {
+                        StopOutcome::Terminated
+                    } else if status.success() {
+                        StopOutcome::Exited
+                    } else {
+                        StopOutcome::Crashed
+                    }
+                })
+            })
+    }
 }
 pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let init: Init =
         read_frame_with_limit(&mut io::stdin().lock(), LIMIT)?.ok_or("missing Metal job")?;
-    if init.schema != SCHEMA {
-        return Err("Metal schema mismatch".into());
+    if init.schema != SCHEMA || init.incarnation == 0 {
+        return Err("Metal schema/incarnation mismatch".into());
     }
     let scope = Scope {
         owner: init.owner,
         generation: init.generation,
     };
+    let execution = ExecutionId {
+        scope,
+        incarnation: init.incarnation,
+    };
     let snapshot = SceneSnapshot::from_bytes(init.scene.into_bytes(), RenderLimits::default())?;
     let size = snapshot.size();
-    let viewport = Viewport {
+    let mut viewport = Viewport {
         width: size.width,
         height: size.height,
         scale: 1.0,
@@ -554,13 +746,19 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
         return Err("native Metal adapter required".into());
     }
     let host = GpuHost::new(core.device().clone(), core.queue().clone())?;
-    let cx = host.context(viewport)?;
-    let native_host = grafting::HostWgpuContext::new(cx.device.clone(), cx.queue.clone());
-    let surfaces = [
-        SharedMetalSurface::new(&native_host, size, PixelFormat::Rgba8Unorm)?,
-        SharedMetalSurface::new(&native_host, size, PixelFormat::Rgba8Unorm)?,
+    let native_host = grafting::HostWgpuContext::new(core.device().clone(), core.queue().clone());
+    let mut surfaces = [
+        (
+            size,
+            SharedMetalSurface::new(&native_host, size, PixelFormat::Rgba8Unorm)?,
+        ),
+        (
+            size,
+            SharedMetalSurface::new(&native_host, size, PixelFormat::Rgba8Unorm)?,
+        ),
     ];
-    let mut source = HybridSceneSource::new(scope, &cx, RenderLimits::default())?;
+    let mut source =
+        HybridSceneSource::new(scope, &host.context(viewport)?, RenderLimits::default())?;
     let warmup = Instant::now() + TIMEOUT;
     while !source.poll_idle()? {
         if Instant::now() >= warmup {
@@ -568,33 +766,72 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
         }
         std::thread::sleep(Duration::from_millis(1));
     }
-    source.submit(&cx, 1, &snapshot)?;
-    let deadline = Instant::now() + TIMEOUT;
-    let rendered = loop {
-        if let Rendered::Changed(frame) = source.render(&cx, true)? {
-            break frame;
-        }
-        if Instant::now() >= deadline {
-            return Err("Hybrid render deadline".into());
-        }
-        std::thread::sleep(Duration::from_millis(1));
-    };
     let remote = lookup(&init.endpoint)?;
     let inbox = Inbox::new(None)?;
-    // COPY_SEND duplicates a send right from our receive endpoint for the host.
-    let reply = lookup_right_for_receive(inbox.port);
+    let reply = unsafe { MachSendRight::from_raw(inbox.port) };
     send(
         remote.as_raw(),
-        &wire(init.nonce, scope, Message::Hello { adapter: info.name }),
+        &wire(init.nonce, execution, Message::Hello { adapter: info.name }),
         Some(&reply),
     )?;
+    let (incoming, jobs) = mpsc::sync_channel::<io::Result<RenderRequest>>(2);
+    std::thread::Builder::new()
+        .name("cue-metal-job-reader".into())
+        .spawn(move || {
+            let mut input = io::stdin().lock();
+            loop {
+                match read_frame_with_limit::<WireExecutionJob>(&mut input, LIMIT) {
+                    Ok(Some(job)) => {
+                        if incoming.send(job.request()).is_err() {
+                            break;
+                        }
+                    }
+                    Ok(None) => break,
+                    Err(error) => {
+                        let _ = incoming.send(Err(error));
+                        break;
+                    }
+                }
+            }
+        })?;
     let mut pool = FrameSlotPool::new(scope, 2)?;
     let mut pending: BTreeMap<u64, Pending> = BTreeMap::new();
+    let mut waiting: Option<RenderRequest> = None;
+    let mut active: Option<u64> = None;
     let mut revision = 0;
     let mut last_activity = Instant::now();
     loop {
-        cx.device.poll(wgpu::PollType::Poll)?;
+        core.device().poll(wgpu::PollType::Poll)?;
+        if let Some(epoch) = active
+            && let Rendered::Changed(frame) = source.render(&host.context(viewport)?, true)?
+        {
+            pending
+                .get_mut(&epoch)
+                .ok_or("missing active render")?
+                .rendered = Some(frame);
+            active = None;
+        }
         for state in pending.values_mut() {
+            if state.allow_copy
+                && state.done.is_none()
+                && let Some(frame) = state.rendered.as_ref()
+            {
+                let mut encoder = core.device().create_command_encoder(&Default::default());
+                encoder.copy_texture_to_texture(
+                    frame.texture.as_image_copy(),
+                    surfaces[state.lease.slot as usize]
+                        .1
+                        .texture()
+                        .as_image_copy(),
+                    frame.texture.size(),
+                );
+                core.queue().submit([encoder.finish()]);
+                let done = Arc::new(AtomicBool::new(false));
+                let callback = done.clone();
+                core.queue()
+                    .on_submitted_work_done(move || callback.store(true, Ordering::Release));
+                state.done = Some(done);
+            }
             if !state.published
                 && state
                     .done
@@ -602,41 +839,130 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                     .is_some_and(|d| d.load(Ordering::Acquire))
             {
                 pool.producer_done(state.lease.slot(scope))?;
+                state.rendered = None;
                 send(
                     remote.as_raw(),
-                    &wire(init.nonce, scope, Message::Ready(state.lease)),
+                    &wire(init.nonce, execution, Message::Ready(state.lease)),
                     None,
                 )?;
                 state.published = true;
             }
         }
+        if active.is_none()
+            && let Some((&epoch, state)) = pending.iter_mut().find(|(_, p)| p.job.is_some())
+        {
+            let job = state.job.take().ok_or("missing render job")?;
+            let extent = job.snapshot.size();
+            viewport = Viewport {
+                width: extent.width,
+                height: extent.height,
+                scale: 1.0,
+            };
+            source.set_viewport(viewport)?;
+            source.submit(
+                &host.context(viewport)?,
+                job.stamp.content_revision,
+                &job.snapshot,
+            )?;
+            active = Some(epoch);
+        }
+        if waiting.is_none() {
+            match jobs.try_recv() {
+                Ok(request) => {
+                    waiting = Some(request?);
+                    last_activity = Instant::now();
+                }
+                Err(mpsc::TryRecvError::Empty | mpsc::TryRecvError::Disconnected) => {}
+            }
+        }
+        if pool.occupied() < 2
+            && let Some(request) = waiting.take()
+        {
+            if request.execution != execution
+                || request.job.stamp.scope != scope
+                || request.job.stamp.content_revision <= revision
+            {
+                return Err("stale Metal render request".into());
+            }
+            revision = request.job.stamp.content_revision;
+            let slot = pool.acquire()?;
+            let extent = request.job.snapshot.size();
+            if surfaces[slot.slot as usize].0 != extent {
+                surfaces[slot.slot as usize] = (
+                    extent,
+                    SharedMetalSurface::new(&native_host, extent, PixelFormat::Rgba8Unorm)?,
+                );
+            }
+            let lease = Lease {
+                slot: slot.slot,
+                epoch: slot.epoch,
+                revision,
+                allocation: request.job.stamp.allocation_epoch,
+            };
+            let right = surfaces[lease.slot as usize].1.export_right()?;
+            send(
+                remote.as_raw(),
+                &wire(
+                    init.nonce,
+                    execution,
+                    Message::Offer {
+                        lease,
+                        width: extent.width,
+                        height: extent.height,
+                    },
+                ),
+                Some(&right),
+            )?;
+            pending.insert(
+                lease.epoch,
+                Pending {
+                    lease,
+                    job: Some(request.job),
+                    rendered: None,
+                    allow_copy: true,
+                    done: None,
+                    published: false,
+                },
+            );
+        }
         if let Some((packet, right, pid)) = inbox.receive()? {
             last_activity = Instant::now();
             if pid != init.parent || right.is_some() {
-                return Err("unexpected helper sender or capability".into());
+                return Err("unexpected helper sender/capability".into());
             }
-            check(&packet, init.nonce, scope)?;
+            check(&packet, init.nonce, execution)?;
             match packet.message {
                 Message::Acquire { revision: next } => {
-                    let lease = if next <= revision {
+                    let slot = if next <= revision {
                         Err(Error::Stale)
                     } else {
                         pool.acquire()
                     };
-                    match lease {
+                    match slot {
                         Ok(slot) => {
                             revision = next;
+                            if surfaces[slot.slot as usize].0 != size {
+                                surfaces[slot.slot as usize] = (
+                                    size,
+                                    SharedMetalSurface::new(
+                                        &native_host,
+                                        size,
+                                        PixelFormat::Rgba8Unorm,
+                                    )?,
+                                );
+                            }
                             let lease = Lease {
                                 slot: slot.slot,
                                 epoch: slot.epoch,
                                 revision,
+                                allocation: revision,
                             };
-                            let right = surfaces[lease.slot as usize].export_right()?;
+                            let right = surfaces[lease.slot as usize].1.export_right()?;
                             send(
                                 remote.as_raw(),
                                 &wire(
                                     init.nonce,
-                                    scope,
+                                    execution,
                                     Message::Offer {
                                         lease,
                                         width: size.width,
@@ -649,6 +975,12 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                                 lease.epoch,
                                 Pending {
                                     lease,
+                                    job: Some(RenderJob {
+                                        stamp: lease.stamp(scope),
+                                        snapshot: snapshot.clone(),
+                                    }),
+                                    rendered: None,
+                                    allow_copy: false,
                                     done: None,
                                     published: false,
                                 },
@@ -656,7 +988,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                         }
                         Err(error) => send(
                             remote.as_raw(),
-                            &wire(init.nonce, scope, Message::Refused(error.to_string())),
+                            &wire(init.nonce, execution, Message::Refused(error.to_string())),
                             None,
                         )?,
                     }
@@ -664,20 +996,9 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                 Message::Copy(lease) => {
                     let p = pending
                         .get_mut(&lease.epoch)
-                        .filter(|p| p.lease.matches(lease) && p.done.is_none())
+                        .filter(|p| p.lease.matches(lease) && !p.allow_copy)
                         .ok_or("stale copy lease")?;
-                    let mut encoder = cx.device.create_command_encoder(&Default::default());
-                    encoder.copy_texture_to_texture(
-                        rendered.texture.as_image_copy(),
-                        surfaces[lease.slot as usize].texture().as_image_copy(),
-                        rendered.texture.size(),
-                    );
-                    cx.queue.submit([encoder.finish()]);
-                    let done = Arc::new(AtomicBool::new(false));
-                    let callback = done.clone();
-                    cx.queue
-                        .on_submitted_work_done(move || callback.store(true, Ordering::Release));
-                    p.done = Some(done);
+                    p.allow_copy = true;
                 }
                 Message::Release(lease) => {
                     let result = pending
@@ -692,7 +1013,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                                 remote.as_raw(),
                                 &wire(
                                     init.nonce,
-                                    scope,
+                                    execution,
                                     Message::Released {
                                         lease,
                                         occupied: pool.occupied(),
@@ -703,19 +1024,19 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                         }
                         Err(e) => send(
                             remote.as_raw(),
-                            &wire(init.nonce, scope, Message::Refused(e.to_string())),
+                            &wire(init.nonce, execution, Message::Refused(e.to_string())),
                             None,
                         )?,
                     }
                 }
                 Message::Shutdown => {
                     if pool.occupied() != 0 {
-                        return Err("shutdown with outstanding frame leases".into());
+                        return Err("shutdown with outstanding leases".into());
                     }
                     pool.retire();
                     send(
                         remote.as_raw(),
-                        &wire(init.nonce, scope, Message::Bye),
+                        &wire(init.nonce, execution, Message::Bye),
                         None,
                     )?;
                     return Ok(());
@@ -728,9 +1049,4 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
         }
         std::thread::sleep(Duration::from_millis(1));
     }
-}
-fn lookup_right_for_receive(port: u32) -> MachSendRight {
-    // cue_receive_port created a receive right plus exactly one send reference.
-    // Transfer only that send reference; Inbox independently owns receive right.
-    unsafe { MachSendRight::from_raw(port) }
 }

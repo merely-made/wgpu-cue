@@ -400,3 +400,125 @@ fn foreign_devices_and_unsupported_sampling_are_refused_without_draw_submission(
     assert_eq!(limited.submitted_count(), 0);
     assert!(!limited.in_flight());
 }
+
+#[test]
+#[ignore = "requires native Metal; run explicitly"]
+fn classic_and_hybrid_use_the_same_render_session_vocabulary() {
+    use std::collections::VecDeque;
+    use webcue::execution::{ExecutionId, SendStatus, StopOutcome};
+    use wgpu_cue_netrender::{SceneRasterizer, render_session::*};
+    struct Endpoint {
+        jobs: VecDeque<RenderRequest>,
+        replies: VecDeque<RenderReply<TextureFrame>>,
+    }
+    impl RenderTransport for Endpoint {
+        type Frame = TextureFrame;
+        fn try_send(&mut self, request: &RenderRequest) -> Result<SendStatus> {
+            if self.jobs.len() >= 2 {
+                return Ok(SendStatus::Busy);
+            }
+            self.jobs.push_back(request.clone());
+            Ok(SendStatus::Sent)
+        }
+        fn try_recv(&mut self) -> Result<Option<RenderReply<TextureFrame>>> {
+            Ok(self.replies.pop_front())
+        }
+        fn request_stop(&mut self) -> Result<()> {
+            self.jobs.clear();
+            Ok(())
+        }
+        fn poll_stopped(&mut self) -> Result<Option<StopOutcome>> {
+            Ok(None)
+        }
+    }
+    let core = core();
+    let host = host(&core);
+    let cx = host.context(viewport()).unwrap();
+    let scope = scope(95);
+    let mut clock = RenderClock::new(scope);
+    let mut revision = 0;
+    for classic in [true, false] {
+        let execution = ExecutionId {
+            scope,
+            incarnation: if classic { 1 } else { 2 },
+        };
+        let mut session = RenderSession::new(
+            execution,
+            Endpoint {
+                jobs: VecDeque::new(),
+                replies: VecDeque::new(),
+            },
+            2,
+            32 * 1024 * 1024,
+            RenderLimits::default(),
+        )
+        .unwrap();
+        let mut classic_source =
+            SceneRasterizer::new(core.renderer().wgpu_device.core.clone()).unwrap();
+        let mut hybrid_source =
+            HybridSceneSource::new(scope, &cx, RenderLimits::default()).unwrap();
+        settle(&mut hybrid_source);
+        for color in [[0.5, 0.0, 0.0, 1.0], [0.0, 0.0, 0.5, 1.0]] {
+            revision += 1;
+            let mut scene = Scene::new(viewport().width, viewport().height);
+            scene.push_rect(
+                0.0,
+                0.0,
+                viewport().width as f32,
+                viewport().height as f32,
+                color,
+            );
+            let snapshot = SceneSnapshot::capture(&scene, RenderLimits::default()).unwrap();
+            session
+                .submit(clock.job(revision, snapshot).unwrap())
+                .unwrap();
+            session.advance().unwrap();
+            // The owner explicitly performs raster work outside transport polling.
+            let request = session.transport_mut().jobs.pop_front().unwrap();
+            let mut output = if classic {
+                let scene = request
+                    .job
+                    .snapshot
+                    .decode(RenderLimits::default())
+                    .unwrap();
+                let deadline = Instant::now() + Duration::from_secs(30);
+                loop {
+                    if let Rendered::Changed(frame) = classic_source
+                        .render(&cx, &scene, request.job.stamp)
+                        .unwrap()
+                    {
+                        break frame;
+                    }
+                    assert!(Instant::now() < deadline);
+                    std::thread::sleep(Duration::from_millis(1));
+                }
+            } else {
+                hybrid_source
+                    .submit(&cx, revision, &request.job.snapshot)
+                    .unwrap();
+                frame(&mut hybrid_source, &cx)
+            };
+            // The host's publication clock is independent of each backend's
+            // private allocation counters and survives renderer replacement.
+            output.stamp = request.job.stamp;
+            session.transport_mut().replies.push_back(RenderReply {
+                execution,
+                stamp: request.job.stamp,
+                result: Ok(output),
+            });
+            session.advance().unwrap();
+            let completed = session.poll_reply().unwrap();
+            assert_eq!(completed.execution, execution);
+            let output = completed.result.unwrap();
+            assert_eq!(output.stamp.content_revision, revision);
+            let pixels = read(&core, &output.texture);
+            assert!(pixels.as_chunks::<4>().0.iter().any(|p| p[3] == 255));
+        }
+        session.retire().unwrap();
+        assert_eq!(
+            session.stopped(),
+            None,
+            "a local GPU owner is not an observed process exit"
+        );
+    }
+}

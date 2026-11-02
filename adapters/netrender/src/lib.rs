@@ -12,6 +12,8 @@ pub mod cpu;
 #[cfg(feature = "hybrid")]
 pub mod hybrid;
 #[cfg(feature = "scene-jobs")]
+pub mod render_session;
+#[cfg(feature = "scene-jobs")]
 pub mod scene_job;
 use std::{
     future::Future,

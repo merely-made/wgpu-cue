@@ -14,52 +14,14 @@ use std::{
 use webcue::*;
 use wgpu_cue_netrender::cpu::*;
 const LIMIT: usize = 128 * 1024 * 1024;
-const SCHEMA: &str = "netrender-66b2f72e-cpu-v1";
+use crate::render_wire::WireJob;
 
 #[derive(Serialize, Deserialize)]
-struct WireJob {
-    schema: String,
-    owner: u128,
-    generation: u64,
-    allocation: u64,
-    revision: u64,
-    scene: String,
-}
-impl WireJob {
-    fn from_job(job: &RenderJob) -> io::Result<Self> {
-        Ok(Self {
-            schema: SCHEMA.into(),
-            owner: job.stamp.scope.owner,
-            generation: job.stamp.scope.generation,
-            allocation: job.stamp.allocation_epoch,
-            revision: job.stamp.content_revision,
-            scene: String::from_utf8(job.snapshot.bytes().to_vec()).map_err(io::Error::other)?,
-        })
-    }
-    fn job(self) -> io::Result<RenderJob> {
-        if self.schema != SCHEMA {
-            return Err(io::Error::other("raster schema mismatch"));
-        }
-        Ok(RenderJob {
-            stamp: FrameStamp {
-                scope: Scope {
-                    owner: self.owner,
-                    generation: self.generation,
-                },
-                allocation_epoch: self.allocation,
-                content_revision: self.revision,
-            },
-            snapshot: SceneSnapshot::from_bytes(self.scene.into_bytes(), RenderLimits::default())
-                .map_err(io::Error::other)?,
-        })
-    }
-}
-#[derive(Serialize, Deserialize)]
-enum Pixels {
+pub(crate) enum Pixels {
     PremultipliedSrgb,
 }
 #[derive(Serialize, Deserialize)]
-enum WireReply {
+pub(crate) enum WireReply {
     Frame {
         owner: u128,
         generation: u64,
@@ -74,7 +36,7 @@ enum WireReply {
     Refused(String),
 }
 impl WireReply {
-    fn frame(self) -> io::Result<CpuFrame> {
+    pub(crate) fn frame(self) -> io::Result<CpuFrame> {
         if let Self::Refused(reason) = self {
             return Err(io::Error::other(reason));
         }

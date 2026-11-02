@@ -8,6 +8,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return cue_execution_proof::metal_handoff::helper();
     }
     #[cfg(feature = "cpu-raster")]
+    if std::env::args().any(|arg| arg == "--render-stream") {
+        return cue_execution_proof::render_stream::helper();
+    }
+    #[cfg(feature = "cpu-raster")]
     if std::env::args().any(|arg| arg == "--raster") {
         return cue_execution_proof::raster::helper();
     }
