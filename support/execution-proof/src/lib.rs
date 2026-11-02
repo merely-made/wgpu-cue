@@ -347,3 +347,6 @@ mod tests {
         assert!(encode(&"x".repeat(MAX_FRAME)).is_err());
     }
 }
+
+#[cfg(all(feature = "metal-handoff", target_os = "macos"))]
+pub mod metal_handoff;

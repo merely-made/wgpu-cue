@@ -8,6 +8,7 @@ publish = false
 [features]
 cpu-raster = ["dep:cue-netrender", "cue-netrender/cpu"]
 hybrid-raster = ["dep:cue-netrender", "cue-netrender/hybrid"]
+metal-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:genet-presenter", "dep:grafting"]
 
 [dependencies]
 cue-genet = { path = "../../adapters/genet" }
@@ -15,6 +16,14 @@ webcue.workspace = true
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = "=1.0.154"
 cue-netrender = { path = "../../adapters/netrender", optional = true }
+
+[build-dependencies]
+cc = "=1.9.0"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
+genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "565458ea3ab816940484079330eb165a878a22e0", optional = true }
+grafting = { version = "=0.6.1", default-features = false, features = ["wgpu-30"], optional = true }
 
 [dev-dependencies]
 pollster = "=1.0.1"

@@ -327,7 +327,7 @@ fn upload_cpu(cx: &RenderContext<'_>, f: CpuFrame) -> Result<TextureFrame> {
 #[cfg(target_os = "macos")]
 mod metal;
 #[cfg(target_os = "macos")]
-pub use metal::GraftMetalImporter;
+pub use metal::{GraftIoSurfaceImporter, GraftMetalImporter};
 
 #[cfg(target_os = "linux")]
 mod vulkan;

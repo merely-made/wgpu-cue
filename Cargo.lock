@@ -760,10 +760,12 @@ dependencies = [
 name = "cue-execution-proof"
 version = "0.1.0"
 dependencies = [
+ "cc",
  "cue-genet",
  "cue-netrender",
- "pollster",
  "genet-presenter",
+ "grafting",
+ "pollster",
  "serde",
  "serde_json",
  "webcue",
@@ -1590,8 +1592,7 @@ dependencies = [
 [[package]]
 name = "grafting"
 version = "0.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "abf232561ba111ce565d554679edcc1a4f36f5350a99624bce688dede7b283ad"
+source = "git+https://github.com/merely-made/wgpu-graft.git?rev=a93693d2aaf0342075d3e9d7caedf51cf67edbc0#a93693d2aaf0342075d3e9d7caedf51cf67edbc0"
 dependencies = [
  "ash",
  "dpi",
@@ -1603,6 +1604,7 @@ dependencies = [
  "image",
  "libc",
  "objc2 0.6.5",
+ "objc2-core-foundation",
  "objc2-foundation 0.3.2",
  "objc2-io-surface",
  "objc2-metal 0.3.2",
@@ -1617,8 +1619,7 @@ dependencies = [
 [[package]]
 name = "grafting-frame"
 version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a9505a0e21129c2d28101fcdda1bdaf9026636f788886176d1845ce48462478"
+source = "git+https://github.com/merely-made/wgpu-graft.git?rev=a93693d2aaf0342075d3e9d7caedf51cf67edbc0#a93693d2aaf0342075d3e9d7caedf51cf67edbc0"
 dependencies = [
  "objc2 0.6.5",
  "objc2-core-foundation",

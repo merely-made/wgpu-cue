@@ -8,6 +8,7 @@ mod document_input;
 pub use document_input::{dispatch_document_input, document_input_events};
 pub mod execution;
 mod frame;
+pub mod frame_slots;
 mod protocol;
 pub use accesskit;
 pub use capabilities::*;

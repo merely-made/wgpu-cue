@@ -80,6 +80,12 @@ The [Hybrid contract](docs/2026-11-01-hybrid-render-jobs.md) covers single-fligh
 backpressure, GPU error scopes, invalidation, cleanup fences and reconstruction.
 The proof's `hybrid-raster` feature enables native qualification independently of CPU.
 
+The [two-process Metal handoff](docs/2026-11-01-metal-frame-handoff.md) adds actual
+IOSurface capability transfer, producer GPU readiness, and tracked consumer GPU
+release. `webcue::frame_slots` bounds reuse; `GraftIoSurfaceImporter` waits for
+both final texture custody and a sealed queue fence. The proof's `metal-handoff`
+feature runs the same Genet Hybrid scene in a helper with two exportable slots.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the
