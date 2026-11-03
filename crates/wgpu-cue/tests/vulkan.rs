@@ -206,8 +206,8 @@ fn vulkan_owned_frame_pixels_and_refusals() {
         .unwrap()
         .unwrap();
     let bytes = buffer.slice(..).get_mapped_range().unwrap();
-    for row in bytes.chunks_exact(256) {
-        for pixel in row[..128].chunks_exact(4) {
+    for row in bytes.as_chunks::<256>().0 {
+        for pixel in row[..128].as_chunks::<4>().0 {
             assert_eq!(pixel, &[128, 0, 0, 128]);
         }
     }

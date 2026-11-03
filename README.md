@@ -94,6 +94,11 @@ changing scenes, resizes held-slot storage safely and replaces its renderer whil
 an older imported frame remains retained. Classic and Hybrid local outputs share
 the same typed session vocabulary. Platform-native transfer remains with Graft.
 
+The [Linux Vulkan handoff](docs/2026-11-02-linux-vulkan-handoff.md) adds tracked
+linear RGBA8 DMA-BUF storage, explicit ownership release, and a private Linux
+process fixture under `vulkan-handoff`. Its qualification is recorded separately
+from the existing CPU and Metal paths.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

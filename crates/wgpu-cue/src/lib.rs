@@ -332,4 +332,4 @@ pub use metal::{GraftIoSurfaceImporter, GraftMetalImporter};
 #[cfg(target_os = "linux")]
 mod vulkan;
 #[cfg(target_os = "linux")]
-pub use vulkan::GraftVulkanImporter;
+pub use vulkan::{GraftVulkanImporter, GraftVulkanSurfaceImporter};

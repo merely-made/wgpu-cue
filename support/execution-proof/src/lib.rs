@@ -355,6 +355,10 @@ pub mod metal_handoff;
 pub mod render_stream;
 #[cfg(any(
     feature = "cpu-raster",
+    all(feature = "vulkan-handoff", target_os = "linux"),
     all(feature = "metal-handoff", target_os = "macos")
 ))]
 mod render_wire;
+
+#[cfg(all(feature = "vulkan-handoff", target_os = "linux"))]
+pub mod vulkan_handoff;

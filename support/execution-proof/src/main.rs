@@ -3,6 +3,10 @@ use cue_execution_proof::{Executor, Request, encode, read_frame, write_frame};
 use std::io;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    #[cfg(all(feature = "vulkan-handoff", target_os = "linux"))]
+    if std::env::args().any(|arg| arg == "--vulkan-handoff") {
+        return cue_execution_proof::vulkan_handoff::helper();
+    }
     #[cfg(all(feature = "metal-handoff", target_os = "macos"))]
     if std::env::args().any(|arg| arg == "--metal-handoff") {
         return cue_execution_proof::metal_handoff::helper();

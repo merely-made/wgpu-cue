@@ -765,6 +765,7 @@ dependencies = [
  "cue-netrender",
  "genet-presenter",
  "grafting",
+ "libc",
  "pollster",
  "serde",
  "serde_json",
@@ -1592,7 +1593,7 @@ dependencies = [
 [[package]]
 name = "grafting"
 version = "0.6.1"
-source = "git+https://github.com/merely-made/wgpu-graft.git?rev=a93693d2aaf0342075d3e9d7caedf51cf67edbc0#a93693d2aaf0342075d3e9d7caedf51cf67edbc0"
+source = "git+https://github.com/merely-made/wgpu-graft.git?rev=52693370c0dc0069ba44565cb3ecf2dbaacaf3cc#52693370c0dc0069ba44565cb3ecf2dbaacaf3cc"
 dependencies = [
  "ash",
  "dpi",
@@ -1619,7 +1620,7 @@ dependencies = [
 [[package]]
 name = "grafting-frame"
 version = "0.1.1"
-source = "git+https://github.com/merely-made/wgpu-graft.git?rev=a93693d2aaf0342075d3e9d7caedf51cf67edbc0#a93693d2aaf0342075d3e9d7caedf51cf67edbc0"
+source = "git+https://github.com/merely-made/wgpu-graft.git?rev=52693370c0dc0069ba44565cb3ecf2dbaacaf3cc#52693370c0dc0069ba44565cb3ecf2dbaacaf3cc"
 dependencies = [
  "objc2 0.6.5",
  "objc2-core-foundation",

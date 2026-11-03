@@ -102,3 +102,116 @@ impl NativeImporter for GraftVulkanImporter {
         }))
     }
 }
+
+/// Final-use tracking for completed Graft Vulkan exports. The host transports
+/// the owned descriptor and validates the producer's completion witness before
+/// calling `try_import`. Seal after the last GPU submission, then drop every
+/// texture/view reference. Return only `poll_releases` stamps to the producer.
+/// Peer loss never releases storage for reuse.
+pub struct GraftVulkanSurfaceImporter {
+    scope: Scope,
+    device_epoch: DeviceEpoch,
+    last: Option<FrameStamp>,
+    active: Vec<(FrameStamp, grafting::vulkan_surface::VulkanRelease)>,
+}
+impl GraftVulkanSurfaceImporter {
+    pub fn new(scope: Scope, device_epoch: DeviceEpoch) -> Self {
+        Self {
+            scope,
+            device_epoch,
+            last: None,
+            active: Vec::new(),
+        }
+    }
+    pub fn seal_use(&mut self, stamp: FrameStamp) -> Result<()> {
+        self.active
+            .iter_mut()
+            .find(|(active, _)| *active == stamp)
+            .ok_or(Error::NotPending)?
+            .1
+            .seal()
+            .map_err(|e| Error::Invalid(e.to_string()))
+    }
+    pub fn in_flight(&self) -> usize {
+        self.active.len()
+    }
+    pub fn poll_releases(&mut self) -> Result<Vec<FrameStamp>> {
+        let mut released = Vec::new();
+        let mut i = 0;
+        while i < self.active.len() {
+            if self.active[i]
+                .1
+                .poll_released()
+                .map_err(|e| Error::Backend(e.to_string()))?
+            {
+                released.push(self.active.remove(i).0);
+            } else {
+                i += 1;
+            }
+        }
+        Ok(released)
+    }
+}
+impl NativeImporter for GraftVulkanSurfaceImporter {
+    fn try_import(&mut self, cx: &RenderContext<'_>, frame: NativeFrame) -> Result<Imported> {
+        if frame.stamp.scope != self.scope || cx.device_epoch != self.device_epoch {
+            return Err(Error::Stale);
+        }
+        if self.last.is_some_and(|last| {
+            frame.stamp.allocation_epoch <= last.allocation_epoch
+                || frame.stamp.content_revision <= last.content_revision
+        }) {
+            return Err(Error::Stale);
+        }
+        if self.active.len() >= 64 {
+            return Err(Error::Backpressure);
+        }
+        if !matches!(frame.frame.sync(), FrameSync::None) {
+            return Err(Error::Unsupported(
+                "Vulkan surface requires observed producer completion".into(),
+            ));
+        }
+        let (metadata, image, _) = frame.frame.into_parts();
+        if metadata.generation == 0
+            || metadata.generation != frame.stamp.allocation_epoch
+            || metadata.size != FrameSize::new(cx.viewport.width, cx.viewport.height)
+            || metadata.format != PixelFormat::Rgba8Unorm
+        {
+            return Err(Error::Invalid(
+                "Vulkan surface extent/format/stamp mismatch".into(),
+            ));
+        }
+        let OwnedNativeImage::DmaBufImage(image) = image else {
+            return Err(Error::Unsupported("expected owned DMA-BUF image".into()));
+        };
+        let (mut buffers, planes, fourcc, modifier) = image.into_parts();
+        if buffers.len() != 1
+            || planes.len() != 1
+            || planes[0].buffer_index != 0
+            || fourcc != u32::from_le_bytes(*b"AB24")
+            || modifier != 0
+        {
+            return Err(Error::Unsupported(
+                "Vulkan surface requires single-plane linear RGBA8".into(),
+            ));
+        }
+        let host = grafting::HostWgpuContext::new(cx.device.clone(), cx.queue.clone());
+        let (texture, release) = grafting::vulkan_surface::import_surface(
+            buffers.remove(0),
+            metadata.size,
+            planes[0].offset,
+            planes[0].stride,
+            &host,
+        )
+        .map_err(|e| Error::Backend(e.to_string()))?;
+        self.last = Some(frame.stamp);
+        self.active.push((frame.stamp, release));
+        Ok(Imported::Ready(TextureFrame {
+            texture,
+            stamp: frame.stamp,
+            device_epoch: cx.device_epoch,
+            alpha: frame.alpha,
+            encoding: frame.encoding,
+        }))
+    }
+}
