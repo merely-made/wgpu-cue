@@ -69,12 +69,21 @@ Loading the layer alone is insufficient evidence that diagnostics are captured.
 
 The tested supplier fix is commit
 `9f454193808dda0db4beb5a46aa295206bfa706d`, a direct child of the existing
-Vello pin, published on `shader-vulkan-1.6-276b466`. These hardware results use a
-shader-package source overlay. Portable consumer-pin adoption is a separate
-integration step: Cargo refuses a Git patch pointing to another revision of
-the same repository. Do not describe the current locked Cue cohort as fixed
-until that integration is recorded. The earlier handoff receipt remains
-unchanged as historical evidence of the failure.
+Vello pin, published on `shader-vulkan-1.6-276b466`. The first hardware results used a
+shader-package source overlay. Portable adoption now pins Genet to
+`82ef34d97c2f5c8000b782c681e4cf7532f28a04` and Netrender to
+`79c9487ba9fc23daeee60f235ba4d3f1cbc1594d`; both use Vello
+`9f454193808dda0db4beb5a46aa295206bfa706d`. These are narrow descendants of
+the previous supplier pins, preserving the earlier cohort apart from this fix.
+All direct adapter pins and the root document-session patch use the same
+sources. The lock changes 34 supplier records and preserves the other 531,
+including all 522 registry records.
+
+The strict Linux local and two-process fixtures pass from this committed Git
+cohort with no source overlay and zero validation diagnostics. Qualification
+receipts for pin adoption are retained in
+`/Users/markik/Code/output/cue-shader-pin-integration/`. The earlier handoff and
+initial shader-overlay receipts remain unchanged as historical evidence.
 
 The explicit-layout rules are documented in the
 [Khronos SPIR-V guide](https://github.com/KhronosGroup/SPIRV-Guide/blob/main/chapters/explicit_layout.md)
