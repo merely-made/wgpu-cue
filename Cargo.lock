@@ -760,6 +760,7 @@ dependencies = [
 name = "cue-execution-proof"
 version = "0.1.0"
 dependencies = [
+ "ash",
  "cc",
  "cue-genet",
  "cue-netrender",
@@ -767,11 +768,16 @@ dependencies = [
  "grafting",
  "libc",
  "pollster",
+ "raw-window-handle",
  "serde",
  "serde_json",
+ "wayland-backend",
+ "wayland-client",
+ "wayland-protocols",
  "webcue",
  "wgpu-cue",
  "windows",
+ "winit",
 ]
 
 [[package]]

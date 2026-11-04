@@ -6,6 +6,7 @@ license.workspace = true
 publish = false
 
 [features]
+window-receiver = ["metal-handoff", "vulkan-handoff", "dx12-handoff", "dep:winit", "dep:raw-window-handle", "dep:pollster", "dep:ash", "dep:wayland-client", "dep:wayland-backend", "dep:wayland-protocols"]
 cpu-raster = ["dep:cue-netrender", "cue-netrender/cpu"]
 hybrid-raster = ["dep:cue-netrender", "cue-netrender/hybrid"]
 vulkan-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:grafting", "dep:libc", "dep:pollster"]
@@ -13,6 +14,8 @@ dx12-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:grafting", "dep:pollster",
 metal-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:genet-presenter", "dep:grafting"]
 
 [dependencies]
+winit = { version = "=0.30.13", optional = true }
+raw-window-handle = { version = "0.6", optional = true }
 cue-genet = { path = "../../adapters/genet" }
 webcue.workspace = true
 serde = { version = "=1.0.229", features = ["derive"] }
@@ -23,11 +26,16 @@ cue-netrender = { path = "../../adapters/netrender", optional = true }
 cc = "=1.9.0"
 
 [target.'cfg(target_os = "macos")'.dependencies]
+pollster = { version = "=1.0.1", optional = true }
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
 genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "82ef34d97c2f5c8000b782c681e4cf7532f28a04", optional = true }
 grafting = { version = "=0.6.1", default-features = false, features = ["wgpu-30"], optional = true }
 
 [target.'cfg(target_os = "linux")'.dependencies]
+ash = { version = "0.38", optional = true }
+wayland-client = { version = "=0.31.15", features = ["system"], optional = true }
+wayland-backend = { version = "=0.3.17", features = ["client_system", "dlopen"], optional = true }
+wayland-protocols = { version = "=0.32.13", features = ["client"], optional = true }
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
 grafting = { version = "=0.6.1", default-features = false, features = ["wgpu-30"], optional = true }
 libc = {version = "0.2", optional = true}
@@ -42,4 +50,9 @@ genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "82e
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
 grafting = { version = "=0.6.1", default-features = false, features = ["wgpu-30"], optional = true }
 pollster = {version = "=1.0.1", optional = true}
-windows = { version = "0.62", optional = true, features = ["Win32_Foundation", "Win32_Graphics_Direct3D12", "Win32_System_Threading", "Win32_Security", "Win32_System_Com", "Win32_Security_Cryptography"] }
+windows = { version = "0.62", optional = true, features = ["Win32_Foundation", "Win32_Graphics_Direct3D12", "Win32_System_Threading", "Win32_Security", "Win32_System_Com", "Win32_Security_Cryptography", "Win32_Graphics_Dxgi", "Win32_Graphics_Dxgi_Common", "Win32_System_Performance"] }
+
+[[bin]]
+name = "cue-window-receiver"
+path = "src/bin/window_receiver.rs"
+required-features = ["window-receiver"]

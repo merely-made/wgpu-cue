@@ -278,6 +278,25 @@ impl Socket {
 /// Hardware-only Vulkan device with exact DMA-BUF extensions enabled. Both
 /// local and helper Hybrid renderers use this same device construction path.
 pub fn gpu() -> io::Result<(wgpu::Adapter, GpuHost, grafting::HostWgpuContext)> {
+    let (_, adapter, host, native) = gpu_for_window(false)?;
+    Ok((adapter, host, native))
+}
+pub fn gpu_with_instance() -> io::Result<(
+    wgpu::Instance,
+    wgpu::Adapter,
+    GpuHost,
+    grafting::HostWgpuContext,
+)> {
+    gpu_for_window(true)
+}
+fn gpu_for_window(
+    presentation: bool,
+) -> io::Result<(
+    wgpu::Instance,
+    wgpu::Adapter,
+    GpuHost,
+    grafting::HostWgpuContext,
+)> {
     let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
         backends: wgpu::Backends::VULKAN,
         flags: wgpu::InstanceFlags::default(),
@@ -296,10 +315,19 @@ pub fn gpu() -> io::Result<(wgpu::Adapter, GpuHost, grafting::HostWgpuContext)> 
         .ok_or_else(|| bad("hardware Vulkan adapter required"))?;
     let info = adapter.get_info();
     eprintln!("Vulkan pid={} adapter={info:?}", std::process::id());
-    let native = grafting::vulkan_dmabuf::create_dmabuf_host_context(&adapter, &Default::default())
-        .map_err(bad)?;
+    let timing = wgpu::Features::VULKAN_GOOGLE_DISPLAY_TIMING;
+    let descriptor = wgpu::DeviceDescriptor {
+        required_features: if presentation && adapter.features().contains(timing) {
+            timing
+        } else {
+            wgpu::Features::empty()
+        },
+        ..Default::default()
+    };
+    let native =
+        grafting::vulkan_dmabuf::create_dmabuf_host_context(&adapter, &descriptor).map_err(bad)?;
     let host = GpuHost::new(native.device.clone(), native.queue.clone()).map_err(bad)?;
-    Ok((adapter, host, native))
+    Ok((instance, adapter, host, native))
 }
 struct Offered {
     lease: Lease,

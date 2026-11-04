@@ -366,3 +366,6 @@ pub mod vulkan_handoff;
 
 #[cfg(all(feature = "dx12-handoff", target_os = "windows"))]
 pub mod dx12_handoff;
+
+#[cfg(feature = "window-receiver")]
+pub mod receiver;

@@ -106,6 +106,15 @@ requires final texture/view destruction before a lease can be returned. The
 fixture selects the same adapter LUID in both processes; qualification records
 AMD and NVIDIA runs separately from public pin availability and presentation.
 
+The private [`window-receiver` workload](docs/2026-11-04-window-presentation-pacing.md)
+adds a real FIFO receiving window, host-dispatched scrolling, resize, CPU load,
+retained-view custody and raw OS presentation feedback. It compares local Hybrid
+rendering with the persistent native process path on Metal, DX12 and Vulkan.
+The measured fresh-content 60 Hz target fails on all tested adapters; Windows
+DXGI polling also falls below the required timestamp coverage. This is a
+reproducible performance baseline, with native correctness gates recorded
+separately from pacing. See the [run instructions](support/execution-proof/WINDOW_RECEIVER.md).
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

@@ -40,6 +40,11 @@ fn backend(error: impl std::fmt::Display) -> Error {
 }
 
 impl GenetDocument {
+    /// Route retained input without choosing a renderer or an event queue.
+    pub fn input(&mut self, input: webcue::Input) -> Result<webcue::SessionInputResult> {
+        webcue::dispatch_document_input(self.session.as_mut(), input)
+    }
+
     /// Prepare CPU layout and a scene. Retained find geometry depends on this;
     /// producing a scene does not submit GPU work or establish presentation.
     pub fn prepare(&mut self, viewport: Viewport) -> Result<Scene> {

@@ -8,7 +8,10 @@ use serde::{Deserialize, Serialize};
 use std::{
     collections::{BTreeMap, VecDeque},
     io,
-    os::windows::io::{AsRawHandle, FromRawHandle, OwnedHandle},
+    os::windows::{
+        io::{AsRawHandle, FromRawHandle, OwnedHandle},
+        process::CommandExt,
+    },
     path::Path,
     process::{Child, Command, Stdio},
     sync::{
@@ -133,7 +136,26 @@ impl Packet {
 pub fn gpu() -> io::Result<(wgpu::Adapter, GpuHost, grafting::HostWgpuContext)> {
     gpu_for(None)
 }
+pub fn gpu_with_instance() -> io::Result<(
+    wgpu::Instance,
+    wgpu::Adapter,
+    GpuHost,
+    grafting::HostWgpuContext,
+)> {
+    gpu_for_instance(None)
+}
 fn gpu_for(luid: Option<u64>) -> io::Result<(wgpu::Adapter, GpuHost, grafting::HostWgpuContext)> {
+    let (_, adapter, host, native) = gpu_for_instance(luid)?;
+    Ok((adapter, host, native))
+}
+fn gpu_for_instance(
+    luid: Option<u64>,
+) -> io::Result<(
+    wgpu::Instance,
+    wgpu::Adapter,
+    GpuHost,
+    grafting::HostWgpuContext,
+)> {
     validation::enable()?;
     static INSTANCE: std::sync::OnceLock<wgpu::Instance> = std::sync::OnceLock::new();
     let instance = INSTANCE.get_or_init(|| {
@@ -172,7 +194,12 @@ fn gpu_for(luid: Option<u64>) -> io::Result<(wgpu::Adapter, GpuHost, grafting::H
             std::process::id(),
             adapter.get_info()
         );
-        return Ok((adapter, GpuHost::new(device, queue).map_err(bad)?, native));
+        return Ok((
+            instance.clone(),
+            adapter,
+            GpuHost::new(device, queue).map_err(bad)?,
+            native,
+        ));
     }
     Err(bad("matching hardware DX12 adapter required"))
 }
@@ -241,6 +268,8 @@ impl Dx12Process {
         }
         let mut startup = Startup(Some(
             Command::new(executable)
+                // Redirected worker pipes never require a desktop console.
+                .creation_flags(0x08000000) // CREATE_NO_WINDOW
                 .arg("--dx12-handoff")
                 .stdin(Stdio::piped())
                 .stdout(Stdio::piped())

@@ -1,0 +1,1276 @@
+{
+  "schema": "cue-window-qualification-v1",
+  "date": "2026-11-04",
+  "performance_target_met": false,
+  "source_manifest_sha256": "b9e9161dc03f577a67bbfab7d303765c3a7521893654e492e0dc7484b3dccea9",
+  "runs": [
+    {
+      "run": "linux-sans-local",
+      "mode": "local",
+      "display_refresh_hz": 60.0,
+      "fixture_font": "sans-serif",
+      "workload_completed": true,
+      "os_feedback_coverage": true,
+      "pacing_target_met": false,
+      "max_imports": 0,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "Wayland wp_presentation feedback for the same winit wl_surface commit",
+      "steady": {
+        "acquire_ms": {
+          "max": 0.09721300000000001,
+          "p50": 0.059793,
+          "p95": 0.07545199999999999,
+          "p99": 0.09022999999999999,
+          "samples": 168
+        },
+        "distinct_content": 166,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 183.32499999999996,
+          "p50": 83.33000000000013,
+          "p95": 99.99599999999998,
+          "p99": 183.32499999999996,
+          "samples": 165
+        },
+        "estimated_missed_content_refreshes": 732,
+        "estimated_missed_display_refreshes": 730,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 201.9451539999997,
+          "p50": 189.67232099999976,
+          "p95": 197.28144900000012,
+          "p99": 200.32983300000052,
+          "samples": 166
+        },
+        "os_frame_interval_ms": {
+          "max": 99.99600000000086,
+          "p50": 83.33000000000013,
+          "p95": 99.99599999999998,
+          "p99": 99.99600000000086,
+          "samples": 167
+        },
+        "os_presented": 168,
+        "prepare_ms": {
+          "max": 51.613319,
+          "p50": 46.746001,
+          "p95": 47.685228,
+          "p99": 47.954324,
+          "samples": 166
+        },
+        "present_calls": 168,
+        "update_ms": {
+          "max": 93.43499399999999,
+          "p50": 87.523132,
+          "p95": 89.136837,
+          "p99": 92.855194,
+          "samples": 168
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 0.224733,
+          "p50": 0.05842,
+          "p95": 0.073959,
+          "p99": 0.110999,
+          "samples": 152
+        },
+        "distinct_content": 150,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 466.64499999999975,
+          "p50": 99.99499999999983,
+          "p95": 116.6620000000016,
+          "p99": 149.99399999999952,
+          "samples": 149
+        },
+        "estimated_missed_content_refreshes": 739,
+        "estimated_missed_display_refreshes": 739,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 379.40771599999937,
+          "p50": 196.91987999999938,
+          "p95": 255.68855199999874,
+          "p99": 319.8823739999988,
+          "samples": 150
+        },
+        "os_frame_interval_ms": {
+          "max": 466.64499999999975,
+          "p50": 99.99499999999983,
+          "p95": 116.6620000000016,
+          "p99": 149.99399999999952,
+          "samples": 149
+        },
+        "os_presented": 150,
+        "prepare_ms": {
+          "max": 81.492085,
+          "p50": 47.241162,
+          "p95": 62.234702000000006,
+          "p99": 80.88923100000001,
+          "samples": 152
+        },
+        "present_calls": 152,
+        "update_ms": {
+          "max": 155.78414199999997,
+          "p50": 89.04118799999999,
+          "p95": 117.322869,
+          "p99": 146.89408600000002,
+          "samples": 152
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          712460,
+          879796
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1592256,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1592256,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 381,
+        "present_calls": 383,
+        "fraction": 0.9947780678851175
+      },
+      "raw_sha256": {
+        "summary.json": "cb233097decb684945c7c0d7f6268c78661b7ef243341fcc987090529488ad62",
+        "frames.json": "e727b677d250f4d053bc8741e1f324cd1ec1872a956dda0f5a443b5db3f4a7e3",
+        "input-resources.json": "68e1c425d28db2b4076b1e1d41a2d0bbdfcf475a448cb914548e8e24b751b67b"
+      },
+      "binary_sha256": {
+        "cue-window-receiver": "ccbc9abb4f9f602a7aeaa911539e55ded262a99c30e103467be56553ccf2d300",
+        "cue-execution-proof": "c92ba23573b4c3b8656b5003b3e1a6cc0b6253a6b1928211f78d8986f0ac4c90"
+      }
+    },
+    {
+      "run": "linux-sans-process",
+      "mode": "process",
+      "display_refresh_hz": 60.0,
+      "fixture_font": "sans-serif",
+      "workload_completed": true,
+      "os_feedback_coverage": true,
+      "pacing_target_met": false,
+      "max_imports": 2,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "Wayland wp_presentation feedback for the same winit wl_surface commit",
+      "steady": {
+        "acquire_ms": {
+          "max": 0.22470199999999999,
+          "p50": 0.081072,
+          "p95": 0.10957599999999999,
+          "p99": 0.124905,
+          "samples": 692
+        },
+        "distinct_content": 99,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 183.32499999999996,
+          "p50": 149.99300000000028,
+          "p95": 166.65900000000101,
+          "p99": 183.32499999999996,
+          "samples": 98
+        },
+        "estimated_missed_content_refreshes": 796,
+        "estimated_missed_display_refreshes": 208,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 441.49981899999966,
+          "p50": 306.18554600000004,
+          "p95": 339.1566720000005,
+          "p99": 441.49981899999966,
+          "samples": 99
+        },
+        "os_frame_interval_ms": {
+          "max": 66.66400000000027,
+          "p50": 16.66600000000029,
+          "p95": 49.99800000000043,
+          "p99": 66.66300000000014,
+          "samples": 691
+        },
+        "os_presented": 692,
+        "prepare_ms": {
+          "max": 54.889623,
+          "p50": 46.63928,
+          "p95": 48.253307,
+          "p99": 54.889623,
+          "samples": 98
+        },
+        "present_calls": 692,
+        "update_ms": {
+          "max": 57.069824999999994,
+          "p50": 1.692504,
+          "p95": 48.52107,
+          "p99": 49.696422,
+          "samples": 692
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 0.160682,
+          "p50": 0.085722,
+          "p95": 0.112873,
+          "p99": 0.135976,
+          "samples": 631
+        },
+        "distinct_content": 80,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 249.9890000000029,
+          "p50": 183.32499999999996,
+          "p95": 233.32200000000114,
+          "p99": 249.9890000000029,
+          "samples": 79
+        },
+        "estimated_missed_content_refreshes": 815,
+        "estimated_missed_display_refreshes": 269,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 472.6899789999983,
+          "p50": 382.6666789999997,
+          "p95": 441.0068530000011,
+          "p99": 472.6899789999983,
+          "samples": 80
+        },
+        "os_frame_interval_ms": {
+          "max": 133.32699999999775,
+          "p50": 16.666000000000736,
+          "p95": 66.66399999999939,
+          "p99": 99.99499999999983,
+          "samples": 630
+        },
+        "os_presented": 631,
+        "prepare_ms": {
+          "max": 123.947292,
+          "p50": 56.237849,
+          "p95": 84.425914,
+          "p99": 123.947292,
+          "samples": 79
+        },
+        "present_calls": 631,
+        "update_ms": {
+          "max": 126.227844,
+          "p50": 1.642059,
+          "p95": 59.802657,
+          "p99": 85.157371,
+          "samples": 631
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          712460,
+          879796
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1592256,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1592256,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 1571,
+        "present_calls": 1571,
+        "fraction": 1.0
+      },
+      "raw_sha256": {
+        "summary.json": "e5065df18c2bf47c86d68703215eae8178e151a058f8d579be4509cf8cf05ec8",
+        "frames.json": "fc4fecb7a5139db0aaf0a7d4c8b4c52241b09778782f421c136b62c504e65f5c",
+        "input-resources.json": "68e1c425d28db2b4076b1e1d41a2d0bbdfcf475a448cb914548e8e24b751b67b"
+      },
+      "binary_sha256": {
+        "cue-window-receiver": "ccbc9abb4f9f602a7aeaa911539e55ded262a99c30e103467be56553ccf2d300",
+        "cue-execution-proof": "c92ba23573b4c3b8656b5003b3e1a6cc0b6253a6b1928211f78d8986f0ac4c90"
+      }
+    },
+    {
+      "run": "mac-arial-local8",
+      "mode": "local",
+      "display_refresh_hz": 60.0,
+      "fixture_font": "Arial",
+      "workload_completed": true,
+      "os_feedback_coverage": true,
+      "pacing_target_met": false,
+      "max_imports": 0,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "MTLDrawable addPresentedHandler and presentedTime",
+      "steady": {
+        "acquire_ms": {
+          "max": 0.090932,
+          "p50": 0.062784,
+          "p95": 0.079669,
+          "p99": 0.08603100000000001,
+          "samples": 130
+        },
+        "distinct_content": 130,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 133.3770756609738,
+          "p50": 116.70406581833959,
+          "p95": 116.70693475753069,
+          "p99": 133.37521813809872,
+          "samples": 129
+        },
+        "estimated_missed_content_refreshes": 767,
+        "estimated_missed_display_refreshes": 767,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 272.1613319177303,
+          "p50": 256.9192619586218,
+          "p95": 267.96032416110813,
+          "p99": 270.6804100460407,
+          "samples": 130
+        },
+        "os_frame_interval_ms": {
+          "max": 133.3770756609738,
+          "p50": 116.70406581833959,
+          "p95": 116.70693475753069,
+          "p99": 133.37521813809872,
+          "samples": 129
+        },
+        "os_presented": 130,
+        "prepare_ms": {
+          "max": 63.247518,
+          "p50": 57.559858,
+          "p95": 61.189955999999995,
+          "p99": 62.125068,
+          "samples": 130
+        },
+        "present_calls": 130,
+        "update_ms": {
+          "max": 121.69261300000001,
+          "p50": 115.226625,
+          "p95": 119.35521,
+          "p99": 119.945107,
+          "samples": 130
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 0.910918,
+          "p50": 0.06349700000000001,
+          "p95": 0.085493,
+          "p99": 0.810022,
+          "samples": 119
+        },
+        "distinct_content": 118,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 183.39490005746484,
+          "p50": 116.7043000459671,
+          "p95": 183.39079804718494,
+          "p99": 183.39453171938658,
+          "samples": 117
+        },
+        "estimated_missed_content_refreshes": 754,
+        "estimated_missed_display_refreshes": 754,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 454.48838630310104,
+          "p50": 261.7790419354762,
+          "p95": 376.5632598793296,
+          "p99": 451.63951316768805,
+          "samples": 118
+        },
+        "os_frame_interval_ms": {
+          "max": 183.39490005746484,
+          "p50": 116.7043000459671,
+          "p95": 183.39079804718494,
+          "p99": 183.39453171938658,
+          "samples": 117
+        },
+        "os_presented": 118,
+        "prepare_ms": {
+          "max": 148.602229,
+          "p50": 58.52487,
+          "p95": 86.53994700000001,
+          "p99": 88.890029,
+          "samples": 119
+        },
+        "present_calls": 119,
+        "update_ms": {
+          "max": 244.046276,
+          "p50": 116.92667,
+          "p95": 176.137918,
+          "p99": 182.384397,
+          "samples": 119
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          773236,
+          750984
+        ],
+        "font_family": "Arial",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1524220,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1524220,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 293,
+        "present_calls": 295,
+        "fraction": 0.9932203389830508
+      },
+      "raw_sha256": {
+        "summary.json": "5b237a0e576d1b0ec177178df0460be00c0f15da2a595f98578aec1bbbd9d298",
+        "frames.json": "f6d3a53a78ffd2bcf15aecc9fbc47b93934f797d7f853b46e532c85a9d7007d9",
+        "input-resources.json": "6d054ebb34e7c02e0213effa6353e2a62a6ef50701c8077fc7096e341694ddaf"
+      },
+      "binary_sha256": {
+        "cue-window-receiver": "3d70cbec3cb6c4f54b5d51597cfe87b675335be41e683a64a7f68e81b350948c",
+        "cue-execution-proof": "5e5933e2b96ac9025e3535d287d0e7250e883547b80abc81fcc9334cd47c5ed5"
+      }
+    },
+    {
+      "run": "mac-arial-process8",
+      "mode": "process",
+      "display_refresh_hz": 60.0,
+      "fixture_font": "Arial",
+      "workload_completed": true,
+      "os_feedback_coverage": true,
+      "pacing_target_met": false,
+      "max_imports": 2,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "MTLDrawable addPresentedHandler and presentedTime",
+      "steady": {
+        "acquire_ms": {
+          "max": 25.120103,
+          "p50": 15.153757,
+          "p95": 16.263467,
+          "p99": 16.437306,
+          "samples": 804
+        },
+        "distinct_content": 83,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 216.74032835289836,
+          "p50": 183.39179176837206,
+          "p95": 200.06470195949078,
+          "p99": 216.74032835289836,
+          "samples": 82
+        },
+        "estimated_missed_content_refreshes": 811,
+        "estimated_missed_display_refreshes": 96,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 438.0560953366679,
+          "p50": 386.99960317731905,
+          "p95": 415.43825393452846,
+          "p99": 438.0560953366679,
+          "samples": 83
+        },
+        "os_frame_interval_ms": {
+          "max": 66.68769288808107,
+          "p50": 16.67203987017274,
+          "p95": 33.3450841717422,
+          "p99": 50.01635989174247,
+          "samples": 801
+        },
+        "os_presented": 802,
+        "prepare_ms": {
+          "max": 67.587053,
+          "p50": 59.525031999999996,
+          "p95": 66.25735200000001,
+          "p99": 67.587053,
+          "samples": 82
+        },
+        "present_calls": 804,
+        "update_ms": {
+          "max": 70.179105,
+          "p50": 1.06402,
+          "p95": 61.44166,
+          "p99": 66.010468,
+          "samples": 804
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 19.350897,
+          "p50": 15.162075,
+          "p95": 15.544768000000001,
+          "p99": 15.690665999999998,
+          "samples": 803
+        },
+        "distinct_content": 83,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 216.73532389104366,
+          "p50": 183.39219689369202,
+          "p95": 200.06506983190775,
+          "p99": 216.73532389104366,
+          "samples": 82
+        },
+        "estimated_missed_content_refreshes": 815,
+        "estimated_missed_display_refreshes": 96,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 488.07325796384407,
+          "p50": 387.27699231447946,
+          "p95": 418.130403062726,
+          "p99": 488.07325796384407,
+          "samples": 83
+        },
+        "os_frame_interval_ms": {
+          "max": 83.36040563881397,
+          "p50": 16.672047320753336,
+          "p95": 33.345202915370464,
+          "p99": 50.01647165045142,
+          "samples": 801
+        },
+        "os_presented": 802,
+        "prepare_ms": {
+          "max": 103.50248400000001,
+          "p50": 60.361191,
+          "p95": 67.166194,
+          "p99": 103.50248400000001,
+          "samples": 82
+        },
+        "present_calls": 803,
+        "update_ms": {
+          "max": 104.769696,
+          "p50": 1.060022,
+          "p95": 61.717779,
+          "p99": 64.99262399999999,
+          "samples": 803
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          773236,
+          750984
+        ],
+        "font_family": "Arial",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1524220,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1524220,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 1911,
+        "present_calls": 1917,
+        "fraction": 0.9968701095461658
+      },
+      "raw_sha256": {
+        "summary.json": "0823b2d67429c5615ce5363c5addda3e0fd13aeb7dbba4135584ceeceb2a45c7",
+        "frames.json": "3c1981fb21d79bd7b2ff9f269caf2a67216de497621308f884485f88f522c86e",
+        "input-resources.json": "6d054ebb34e7c02e0213effa6353e2a62a6ef50701c8077fc7096e341694ddaf"
+      },
+      "binary_sha256": {
+        "cue-window-receiver": "3d70cbec3cb6c4f54b5d51597cfe87b675335be41e683a64a7f68e81b350948c",
+        "cue-execution-proof": "5e5933e2b96ac9025e3535d287d0e7250e883547b80abc81fcc9334cd47c5ed5"
+      }
+    },
+    {
+      "run": "windows-sans-amd-local",
+      "mode": "local",
+      "display_refresh_hz": 165.0,
+      "fixture_font": "sans-serif",
+      "workload_completed": true,
+      "os_feedback_coverage": false,
+      "pacing_target_met": false,
+      "max_imports": 0,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          1894,
+          1020
+        ],
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "steady": {
+        "acquire_ms": {
+          "max": 0.08600000000000001,
+          "p50": 0.0168,
+          "p95": 0.0299,
+          "p99": 0.07959999999999999,
+          "samples": 176
+        },
+        "distinct_content": 163,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 105.02300000000008,
+          "p50": 90.98929999999861,
+          "p95": 100.44279999999972,
+          "p99": 104.31050000000042,
+          "samples": 162
+        },
+        "estimated_missed_content_refreshes": 2276,
+        "estimated_missed_display_refreshes": 2276,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 197.5429000000002,
+          "p50": 177.89870000000008,
+          "p95": 190.19089999999926,
+          "p99": 195.23530000000022,
+          "samples": 163
+        },
+        "os_frame_interval_ms": {
+          "max": 105.02300000000008,
+          "p50": 90.98929999999861,
+          "p95": 100.44279999999972,
+          "p99": 104.31050000000042,
+          "samples": 162
+        },
+        "os_presented": 163,
+        "prepare_ms": {
+          "max": 60.6731,
+          "p50": 50.331300000000006,
+          "p95": 55.129200000000004,
+          "p99": 60.5273,
+          "samples": 164
+        },
+        "present_calls": 176,
+        "update_ms": {
+          "max": 101.0475,
+          "p50": 88.0784,
+          "p95": 96.01650000000001,
+          "p99": 100.0491,
+          "samples": 176
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 0.1289,
+          "p50": 0.0162,
+          "p95": 0.0266,
+          "p99": 0.08610000000000001,
+          "samples": 176
+        },
+        "distinct_content": 165,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 218.2031000000002,
+          "p50": 89.38200000000052,
+          "p95": 99.48329999999928,
+          "p99": 105.78680000000062,
+          "samples": 164
+        },
+        "estimated_missed_content_refreshes": 2256,
+        "estimated_missed_display_refreshes": 2256,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 289.25650000000047,
+          "p50": 175.43090000000205,
+          "p95": 186.96650000000048,
+          "p99": 248.34410000000062,
+          "samples": 165
+        },
+        "os_frame_interval_ms": {
+          "max": 218.2031000000002,
+          "p50": 89.38200000000052,
+          "p95": 99.48329999999928,
+          "p99": 105.78680000000062,
+          "samples": 164
+        },
+        "os_presented": 165,
+        "prepare_ms": {
+          "max": 94.03540000000001,
+          "p50": 49.6373,
+          "p95": 53.2695,
+          "p99": 59.4366,
+          "samples": 167
+        },
+        "present_calls": 176,
+        "update_ms": {
+          "max": 133.5536,
+          "p50": 87.0346,
+          "p95": 94.3736,
+          "p99": 102.86789999999999,
+          "samples": 176
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 390,
+        "present_calls": 416,
+        "fraction": 0.9375
+      },
+      "raw_sha256": {
+        "summary.json": "3793e1aa705821521b6a50acca47ab8a2b96ed78f06af10b2330990f8a23d79d",
+        "frames.json": "407616346b905ad3a4e796782586db9a863308835bfbc9ff879a2b15793103c6",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      },
+      "binary_sha256": {
+        "source": "source8.json",
+        "receiver": "43CF8B8E8869A9763CF7CB94E4A4B2FDA4E4994F3ABA05CBA6C3B50D12E79CA6",
+        "helper": "E47223A51406E4C6E27E13DCC0E966E3CA7881E6DB1A2043F7DA56588A2D8300"
+      }
+    },
+    {
+      "run": "windows-sans-amd-process",
+      "mode": "process",
+      "display_refresh_hz": 165.0,
+      "fixture_font": "sans-serif",
+      "workload_completed": true,
+      "os_feedback_coverage": false,
+      "pacing_target_met": false,
+      "max_imports": 2,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          1894,
+          1020
+        ],
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "steady": {
+        "acquire_ms": {
+          "max": 22.7236,
+          "p50": 4.5307,
+          "p95": 5.5002,
+          "p99": 8.452,
+          "samples": 1656
+        },
+        "distinct_content": 104,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 180.6907,
+          "p50": 145.59000000000032,
+          "p95": 162.70000000000095,
+          "p99": 166.7424000000004,
+          "samples": 103
+        },
+        "estimated_missed_content_refreshes": 2356,
+        "estimated_missed_display_refreshes": 895,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 371.44299999999976,
+          "p50": 287.4627000000007,
+          "p95": 310.20439999999996,
+          "p99": 334.17550000000017,
+          "samples": 104
+        },
+        "os_frame_interval_ms": {
+          "max": 54.93490000000101,
+          "p50": 6.081700000001078,
+          "p95": 40.09070000000037,
+          "p99": 40.704500000000365,
+          "samples": 1539
+        },
+        "os_presented": 1540,
+        "prepare_ms": {
+          "max": 70.64320000000001,
+          "p50": 51.5195,
+          "p95": 58.0389,
+          "p99": 63.480999999999995,
+          "samples": 104
+        },
+        "present_calls": 1656,
+        "update_ms": {
+          "max": 72.75800000000001,
+          "p50": 0.0083,
+          "p95": 50.5035,
+          "p99": 56.1206,
+          "samples": 1656
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 41.526399999999995,
+          "p50": 4.55,
+          "p95": 5.5174,
+          "p99": 6.4677,
+          "samples": 1679
+        },
+        "distinct_content": 104,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 218.9206999999982,
+          "p50": 139.72569999999962,
+          "p95": 171.8221999999976,
+          "p99": 206.69020000000415,
+          "samples": 103
+        },
+        "estimated_missed_content_refreshes": 2339,
+        "estimated_missed_display_refreshes": 841,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 398.2399000000001,
+          "p50": 278.67209999999784,
+          "p95": 358.6510999999995,
+          "p99": 365.92470000000077,
+          "samples": 104
+        },
+        "os_frame_interval_ms": {
+          "max": 115.12570000000011,
+          "p50": 6.079400000004398,
+          "p95": 40.09320000000116,
+          "p99": 40.72209999999998,
+          "samples": 1567
+        },
+        "os_presented": 1568,
+        "prepare_ms": {
+          "max": 70.0982,
+          "p50": 49.354299999999995,
+          "p95": 59.3913,
+          "p99": 64.881,
+          "samples": 103
+        },
+        "present_calls": 1679,
+        "update_ms": {
+          "max": 71.9793,
+          "p50": 0.0078,
+          "p95": 48.8786,
+          "p99": 55.912000000000006,
+          "samples": 1679
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 3700,
+        "present_calls": 3976,
+        "fraction": 0.9305835010060363
+      },
+      "raw_sha256": {
+        "summary.json": "2ce98c8741450f7f33fd4f5371b45c2e906e36f7b22e299d38be29ca12e77ca6",
+        "frames.json": "411b70723de8752a0d513e9d65403c954460908750038d94e21cdd07ec083f71",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      },
+      "binary_sha256": {
+        "source": "source8.json",
+        "receiver": "43CF8B8E8869A9763CF7CB94E4A4B2FDA4E4994F3ABA05CBA6C3B50D12E79CA6",
+        "helper": "E47223A51406E4C6E27E13DCC0E966E3CA7881E6DB1A2043F7DA56588A2D8300"
+      }
+    },
+    {
+      "run": "windows-sans-nvidia-local",
+      "mode": "local",
+      "display_refresh_hz": 165.0,
+      "fixture_font": "sans-serif",
+      "workload_completed": true,
+      "os_feedback_coverage": false,
+      "pacing_target_met": false,
+      "max_imports": 0,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          1894,
+          1020
+        ],
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "steady": {
+        "acquire_ms": {
+          "max": 7.0199,
+          "p50": 0.0141,
+          "p95": 0.0191,
+          "p99": 2.9274,
+          "samples": 270
+        },
+        "distinct_content": 169,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 172.51420000000195,
+          "p50": 85.26170000000022,
+          "p95": 99.2329999999999,
+          "p99": 169.77180000000035,
+          "samples": 168
+        },
+        "estimated_missed_content_refreshes": 2267,
+        "estimated_missed_display_refreshes": 2184,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 219.95469999999884,
+          "p50": 174.54060000000027,
+          "p95": 192.44869999999992,
+          "p99": 202.55190000000002,
+          "samples": 169
+        },
+        "os_frame_interval_ms": {
+          "max": 172.51420000000195,
+          "p50": 74.03019999999927,
+          "p95": 93.25929999999971,
+          "p99": 121.18339999999961,
+          "samples": 254
+        },
+        "os_presented": 255,
+        "prepare_ms": {
+          "max": 55.5762,
+          "p50": 48.3063,
+          "p95": 51.6919,
+          "p99": 55.328700000000005,
+          "samples": 172
+        },
+        "present_calls": 270,
+        "update_ms": {
+          "max": 98.9669,
+          "p50": 83.1338,
+          "p95": 89.74409999999999,
+          "p99": 94.077,
+          "samples": 270
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 3.4006000000000003,
+          "p50": 0.0158,
+          "p95": 0.0253,
+          "p99": 2.1711,
+          "samples": 229
+        },
+        "distinct_content": 163,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 178.73730000000165,
+          "p50": 90.08980000000122,
+          "p95": 103.64159999999956,
+          "p99": 175.39569999999927,
+          "samples": 162
+        },
+        "estimated_missed_content_refreshes": 2280,
+        "estimated_missed_display_refreshes": 2238,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 240.97480000000004,
+          "p50": 173.78970000000038,
+          "p95": 185.9667999999992,
+          "p99": 212.848300000001,
+          "samples": 163
+        },
+        "os_frame_interval_ms": {
+          "max": 178.73730000000165,
+          "p50": 84.58989999999744,
+          "p95": 99.0655000000018,
+          "p99": 125.59949999999986,
+          "samples": 204
+        },
+        "os_presented": 205,
+        "prepare_ms": {
+          "max": 75.7011,
+          "p50": 50.297799999999995,
+          "p95": 55.222899999999996,
+          "p99": 65.26079999999999,
+          "samples": 167
+        },
+        "present_calls": 229,
+        "update_ms": {
+          "max": 113.95270000000001,
+          "p50": 86.7482,
+          "p95": 93.30470000000001,
+          "p99": 103.5705,
+          "samples": 229
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 536,
+        "present_calls": 577,
+        "fraction": 0.92894280762565
+      },
+      "raw_sha256": {
+        "summary.json": "42bd00e4dbc4f633672eb5d98b4476f27c1ca2370143a5a83acfe0939e870d65",
+        "frames.json": "f632594b6e2683f891cc64c10566c8226b554dfe23a392c0a24fc5eee20e318e",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      },
+      "binary_sha256": {
+        "source": "source8.json",
+        "receiver": "43CF8B8E8869A9763CF7CB94E4A4B2FDA4E4994F3ABA05CBA6C3B50D12E79CA6",
+        "helper": "E47223A51406E4C6E27E13DCC0E966E3CA7881E6DB1A2043F7DA56588A2D8300"
+      }
+    },
+    {
+      "run": "windows-sans-nvidia-process",
+      "mode": "process",
+      "display_refresh_hz": 165.0,
+      "fixture_font": "sans-serif",
+      "workload_completed": true,
+      "os_feedback_coverage": false,
+      "pacing_target_met": false,
+      "max_imports": 2,
+      "final_imports": 0,
+      "error": null,
+      "validation_errors": [],
+      "viewport_history": [
+        [
+          800,
+          600
+        ],
+        [
+          1894,
+          1020
+        ],
+        [
+          800,
+          600
+        ],
+        [
+          960,
+          640
+        ]
+      ],
+      "basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "steady": {
+        "acquire_ms": {
+          "max": 13.476999999999999,
+          "p50": 4.6214,
+          "p95": 5.4261,
+          "p99": 5.5338,
+          "samples": 1714
+        },
+        "distinct_content": 113,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 144.79570000000132,
+          "p50": 132.21159999999975,
+          "p95": 142.21679999999992,
+          "p99": 144.53019999999972,
+          "samples": 112
+        },
+        "estimated_missed_content_refreshes": 2339,
+        "estimated_missed_display_refreshes": 808,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 278.24649999999986,
+          "p50": 263.10759999999965,
+          "p95": 273.3860999999997,
+          "p99": 277.91869999999983,
+          "samples": 113
+        },
+        "os_frame_interval_ms": {
+          "max": 52.18200000000017,
+          "p50": 6.095000000000184,
+          "p95": 40.117300000000355,
+          "p99": 40.50920000000069,
+          "samples": 1597
+        },
+        "os_presented": 1598,
+        "prepare_ms": {
+          "max": 53.9445,
+          "p50": 49.7201,
+          "p95": 52.15,
+          "p99": 53.270900000000005,
+          "samples": 113
+        },
+        "present_calls": 1714,
+        "update_ms": {
+          "max": 56.0325,
+          "p50": 0.0048,
+          "p95": 50.5601,
+          "p99": 53.1015,
+          "samples": 1714
+        }
+      },
+      "loaded": {
+        "acquire_ms": {
+          "max": 43.094,
+          "p50": 4.823,
+          "p95": 5.524699999999999,
+          "p99": 6.2995,
+          "samples": 1744
+        },
+        "distinct_content": 116,
+        "distinct_content_60hz_target_met": false,
+        "distinct_content_interval_ms": {
+          "max": 161.66510000000045,
+          "p50": 128.7577000000013,
+          "p95": 149.67020000000275,
+          "p99": 160.7360999999976,
+          "samples": 115
+        },
+        "estimated_missed_content_refreshes": 2342,
+        "estimated_missed_display_refreshes": 764,
+        "expected_content_frames": 900,
+        "input_to_os_presentation_ms": {
+          "max": 343.559299999999,
+          "p50": 250.01819999999952,
+          "p95": 277.3862999999999,
+          "p99": 303.37570000000017,
+          "samples": 116
+        },
+        "os_frame_interval_ms": {
+          "max": 72.70829999999862,
+          "p50": 6.108699999998635,
+          "p95": 25.856999999998465,
+          "p99": 40.32980000000208,
+          "samples": 1621
+        },
+        "os_presented": 1622,
+        "prepare_ms": {
+          "max": 76.4837,
+          "p50": 47.3219,
+          "p95": 52.7804,
+          "p99": 62.0101,
+          "samples": 115
+        },
+        "present_calls": 1744,
+        "update_ms": {
+          "max": 78.4695,
+          "p50": 0.004,
+          "p95": 47.828500000000005,
+          "p99": 51.9246,
+          "samples": 1744
+        }
+      },
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "os_timestamp_coverage": {
+        "samples": 3864,
+        "present_calls": 4147,
+        "fraction": 0.9317578972751387
+      },
+      "raw_sha256": {
+        "summary.json": "a6b9b37e2983cf785ab795604cca4934b6f00c57be1358e3f6d74feb76c80425",
+        "frames.json": "348aeb657ce2cf01d5702204607c01ad40d8ad15350fbf172e7b6337a3fb08bf",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      },
+      "binary_sha256": {
+        "source": "source8.json",
+        "receiver": "43CF8B8E8869A9763CF7CB94E4A4B2FDA4E4994F3ABA05CBA6C3B50D12E79CA6",
+        "helper": "E47223A51406E4C6E27E13DCC0E966E3CA7881E6DB1A2043F7DA56588A2D8300"
+      }
+    }
+  ]
+}
