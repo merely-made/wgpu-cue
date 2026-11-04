@@ -15,8 +15,11 @@ impl Receiver {
         let covered = feedback >= 100 && feedback as f64 / self.frames.len().max(1) as f64 > 0.95;
         let complete =
             error.is_none() && self.handled > 100 && self.sizes.len() >= 2 && self.max_imports <= 2;
+        let resource_stats = self.renderer.resource_stats();
         let summary = serde_json::json!({
+            "resource_table_entries_bytes_packets":resource_stats,
             "schema": "cue-window-pacing-v1",
+            "snapshot_delivery": if cfg.byte_snapshots {"byte-control"} else {"typed"},
             "mode": if cfg.local {"local"} else {"process"},
             "adapter": self.adapter,
             "display_refresh_hz": self.feedback.refresh,

@@ -88,7 +88,7 @@ fn snapshot(
     document.execute(Command::LoadHtml{address:"https://fixture.invalid/dx12".into(),html:format!("<!doctype html><style>body{{margin:0;background:{color};color:white;font:16px Arial}}p{{margin:8px}}</style><p>{text}</p>")},viewport).unwrap();
     let scene = document.prepare(viewport).unwrap();
     assert!(scene.iter_glyph_runs().next().is_some());
-    SceneSnapshot::capture(&scene, RenderLimits::default()).unwrap()
+    SceneSnapshot::capture_owned(scene, RenderLimits::default()).unwrap()
 }
 fn resource_handle(frame: &NativeFrame) -> std::os::windows::io::OwnedHandle {
     let webcue::grafting_frame::OwnedNativeImage::Dx12SharedTexture(image) = frame.frame.image()
@@ -102,7 +102,9 @@ fn local(host: &GpuHost, native: &grafting::HostWgpuContext, job: &RenderJob) ->
     let cx = host.context(viewport(size.width, size.height)).unwrap();
     let mut source = HybridSceneSource::new(scope(), &cx, RenderLimits::default()).unwrap();
     wait(|| source.poll_idle().unwrap());
-    source.submit(&cx, 1, &job.snapshot).unwrap();
+    let byte_control =
+        SceneSnapshot::from_bytes(job.snapshot.bytes().to_vec(), RenderLimits::default()).unwrap();
+    source.submit(&cx, 1, &byte_control).unwrap();
     let mut frame = None;
     wait(|| {
         if let Rendered::Changed(result) = source.render(&cx, true).unwrap() {

@@ -164,6 +164,12 @@ impl Renderer {
             _ => 0,
         }
     }
+    pub fn resource_stats(&mut self) -> Option<(usize, usize, u64)> {
+        match self {
+            Self::Process { session, .. } => Some(session.transport_mut().resource_stats()),
+            _ => None,
+        }
+    }
     pub fn stop(&mut self) -> AnyResult<()> {
         match self {
             Self::Local(s) => s.retire()?,

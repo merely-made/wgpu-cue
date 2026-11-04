@@ -184,7 +184,11 @@ impl Receiver {
         )?;
         let scene = document.prepare(viewport)?;
         report::inputs(cfg, &scene)?;
-        let snapshot = SceneSnapshot::capture(&scene, RenderLimits::default())?;
+        let snapshot = if cfg.byte_snapshots {
+            SceneSnapshot::capture(&scene, RenderLimits::default())?
+        } else {
+            SceneSnapshot::capture_owned(scene, RenderLimits::default())?
+        };
         let renderer = renderer::Renderer::new(cfg.local, &cfg.helper, &host, viewport, &snapshot)?;
         feedback.begin()?;
         Ok(Self {
@@ -343,7 +347,11 @@ impl Receiver {
             let scene = wgpu_cue_netrender::scene_profile::measure("document.prepare", 0, || {
                 self.document.prepare(self.viewport)
             })?;
-            let snapshot = SceneSnapshot::capture(&scene, RenderLimits::default())?;
+            let snapshot = if cfg.byte_snapshots {
+                SceneSnapshot::capture(&scene, RenderLimits::default())?
+            } else {
+                SceneSnapshot::capture_owned(scene, RenderLimits::default())?
+            };
             prepare_ms = prepare.elapsed().as_secs_f64() * 1000.;
             self.revision += 1;
             let job = self.clock.job(self.revision, snapshot)?;

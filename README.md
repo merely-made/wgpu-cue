@@ -121,6 +121,13 @@ and resource-ID rebinding. Repeated CPU probes and native process traces identif
 JSON processing of embedded font payloads as the dominant snapshot cost. The
 diagnostics preserve the existing codec, resource checks and supplier pins.
 
+[`Typed local scenes and renderer resource tables`](docs/2026-11-04-typed-scenes-and-resources.md)
+add owned scene delivery with shared immutable buffers and exact input accounting.
+Native persistent helpers transfer each distinct font/image payload once per
+renderer incarnation. Namespace, replay, pressure and custody checks remain
+separate from native frame-slot release. The complete byte path remains available
+for controls through the private receiver's `--byte-snapshots` option.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

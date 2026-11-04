@@ -14,6 +14,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let init: Init =
         read_frame_with_limit(&mut io::stdin().lock(), LIMIT)?.ok_or("missing DX12 init")?;
     let execution = ExecutionId::from(init.identity);
+    let mut resources = ResourceReceiver::new(execution, RenderLimits::default())?;
     if init.schema != SCHEMA || execution.incarnation == 0 {
         return Err("invalid DX12 init".into());
     }
@@ -147,7 +148,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                 last_activity = Instant::now();
                 match input? {
                     Input::Job(wire) if waiting.len() < 2 => {
-                        waiting.push_back(wire.request()?);
+                        waiting.push_back(wire.request_with(&mut resources)?);
                     }
                     Input::Job(_) => return Err("DX12 helper job bound exceeded".into()),
                     Input::Release(lease) => {

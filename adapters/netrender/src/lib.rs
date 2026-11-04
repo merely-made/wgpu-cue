@@ -14,9 +14,13 @@ pub mod hybrid;
 #[cfg(feature = "scene-jobs")]
 pub mod render_session;
 #[cfg(feature = "scene-jobs")]
+pub mod resource_table;
+#[cfg(feature = "scene-jobs")]
 pub mod scene_job;
 #[cfg(feature = "scene-jobs")]
 pub mod scene_profile;
+#[cfg(feature = "scene-jobs")]
+mod typed_scene;
 use std::{
     future::Future,
     pin::Pin,

@@ -45,26 +45,90 @@ impl WireJob {
     }
 }
 
+use wgpu_cue_netrender::resource_table::{ResourcePacket, ResourceReceiver, ResourceSender};
 #[derive(Serialize, Deserialize)]
-pub(crate) struct WireExecutionJob {
-    incarnation: u64,
-    job: WireJob,
+pub(crate) enum WireExecutionJob {
+    Legacy {
+        incarnation: u64,
+        job: WireJob,
+    },
+    Resources {
+        allocation: u64,
+        revision: u64,
+        packet: ResourcePacket,
+    },
 }
 impl WireExecutionJob {
     pub(crate) fn new(request: &RenderRequest) -> io::Result<Self> {
-        Ok(Self {
+        Ok(Self::Legacy {
             incarnation: request.execution.incarnation,
             job: WireJob::from_job(&request.job)?,
         })
     }
-    pub(crate) fn request(self) -> io::Result<RenderRequest> {
-        let job = self.job.job()?;
-        Ok(RenderRequest {
-            execution: ExecutionId {
-                scope: job.stamp.scope,
-                incarnation: self.incarnation,
+    pub(crate) fn prepare(
+        request: &RenderRequest,
+        resources: &ResourceSender,
+    ) -> io::Result<(Self, Option<ResourceSender>)> {
+        if !request.job.snapshot.is_typed() {
+            return Ok((Self::new(request)?, None));
+        }
+        let (packet, next) = resources
+            .prepare(&request.job.snapshot)
+            .map_err(io::Error::other)?;
+        if packet.namespace.execution() != request.execution {
+            return Err(io::Error::other("resource sender incarnation mismatch"));
+        }
+        Ok((
+            Self::Resources {
+                allocation: request.job.stamp.allocation_epoch,
+                revision: request.job.stamp.content_revision,
+                packet,
             },
-            job,
-        })
+            Some(next),
+        ))
+    }
+    pub(crate) fn request(self) -> io::Result<RenderRequest> {
+        match self {
+            Self::Legacy { incarnation, job } => {
+                let job = job.job()?;
+                Ok(RenderRequest {
+                    execution: ExecutionId {
+                        scope: job.stamp.scope,
+                        incarnation,
+                    },
+                    job,
+                })
+            }
+            Self::Resources { .. } => Err(io::Error::other(
+                "resource packet needs an incarnation-owned table",
+            )),
+        }
+    }
+    pub(crate) fn request_with(
+        self,
+        resources: &mut ResourceReceiver,
+    ) -> io::Result<RenderRequest> {
+        match self {
+            Self::Resources {
+                allocation,
+                revision,
+                packet,
+            } => {
+                let execution = packet.namespace.execution();
+                let snapshot = resources.receive(packet).map_err(io::Error::other)?;
+                Ok(RenderRequest {
+                    execution,
+                    job: RenderJob {
+                        stamp: FrameStamp {
+                            scope: execution.scope,
+                            allocation_epoch: allocation,
+                            content_revision: revision,
+                        },
+                        snapshot,
+                    },
+                })
+            }
+            other => other.request(),
+        }
     }
 }

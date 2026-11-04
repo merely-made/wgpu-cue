@@ -522,3 +522,32 @@ fn classic_and_hybrid_use_the_same_render_session_vocabulary() {
         );
     }
 }
+
+#[test]
+#[ignore = "requires native Metal; run explicitly"]
+fn typed_local_matches_byte_controls_for_genet_glyphs_images_and_alpha() {
+    let core = core();
+    let gpu_host = host(&core);
+    let cx = gpu_host.context(viewport()).unwrap();
+    let (_, text) = genet();
+    let mut source = HybridSceneSource::new(scope(901), &cx, RenderLimits::default()).unwrap();
+    settle(&mut source);
+    let mut revision = 0;
+    for byte in [solid(), image(), text] {
+        revision += 1;
+        source.submit(&cx, revision, &byte).unwrap();
+        let expected = read(&core, &frame(&mut source, &cx).texture);
+        settle(&mut source);
+        let typed = SceneSnapshot::capture_owned(
+            byte.decode(RenderLimits::default()).unwrap(),
+            RenderLimits::default(),
+        )
+        .unwrap();
+        revision += 1;
+        source.submit(&cx, revision, &typed).unwrap();
+        let actual = read(&core, &frame(&mut source, &cx).texture);
+        settle(&mut source);
+        assert_eq!(actual, expected);
+        assert!(!typed.encoded_materialized());
+    }
+}

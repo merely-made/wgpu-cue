@@ -5,6 +5,7 @@ pub(super) struct Config {
     pub(super) output: PathBuf,
     pub(super) helper: PathBuf,
     pub(super) local: bool,
+    pub(super) byte_snapshots: bool,
     pub(super) phase: f64,
     pub(super) warmup: f64,
     pub(super) font: String,
@@ -23,6 +24,7 @@ impl Config {
         let mut output = None;
         let mut helper = None;
         let mut local = false;
+        let mut byte_snapshots = false;
         let mut phase = 15.;
         let mut warmup = 3.;
         let mut font = "sans-serif".to_owned();
@@ -31,6 +33,7 @@ impl Config {
                 "--output" => output = Some(PathBuf::from(args.next().ok_or("output missing")?)),
                 "--helper" => helper = Some(PathBuf::from(args.next().ok_or("helper missing")?)),
                 "--local" => local = true,
+                "--byte-snapshots" => byte_snapshots = true,
                 "--font" => font = args.next().ok_or("font missing")?,
                 "--phase-seconds" => phase = args.next().ok_or("phase missing")?.parse()?,
                 "--warmup-seconds" => warmup = args.next().ok_or("warmup missing")?.parse()?,
@@ -63,6 +66,7 @@ impl Config {
             output,
             helper,
             local,
+            byte_snapshots,
             phase,
             warmup,
             font,

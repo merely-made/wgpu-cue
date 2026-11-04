@@ -31,6 +31,7 @@ use webcue::{
     *,
 };
 use wgpu_cue::*;
+use wgpu_cue_netrender::resource_table::{ResourceReceiver, ResourceSender};
 use wgpu_cue_netrender::{hybrid::HybridSceneSource, render_session::*, scene_job::*};
 const LIMIT: usize = 12 * 1024 * 1024;
 const CONTROL: usize = 4096;
@@ -334,6 +335,7 @@ struct Offered {
     taken: bool,
 }
 pub struct VulkanProcess {
+    resources: ResourceSender,
     child: Child,
     socket: Socket,
     execution: ExecutionId,
@@ -381,6 +383,8 @@ impl VulkanProcess {
         let child = command.spawn()?;
         drop(remote);
         let mut process = Self {
+            resources: ResourceSender::new(execution, RenderLimits::default())
+                .map_err(io::Error::other)?,
             child,
             socket,
             execution,
@@ -443,6 +447,13 @@ impl VulkanProcess {
             thread::sleep(Duration::from_millis(1));
         }
         Ok(process)
+    }
+    pub fn resource_stats(&self) -> (usize, usize, u64) {
+        (
+            self.resources.entries(),
+            self.resources.retained_bytes(),
+            self.resources.packets(),
+        )
     }
     pub fn pid(&self) -> u32 {
         self.child.id()
@@ -619,13 +630,17 @@ impl RenderTransport for VulkanProcess {
         if self.failed.load(Ordering::Acquire) {
             return Err(backend("Vulkan job writer lost"));
         }
-        let bytes = encode_with_limit(&WireExecutionJob::new(request).map_err(backend)?, LIMIT)
-            .map_err(backend)?;
+        let (wire, next_resources) =
+            WireExecutionJob::prepare(request, &self.resources).map_err(backend)?;
+        let bytes = encode_with_limit(&wire, LIMIT).map_err(backend)?;
         if self.submitted.len() >= 2 {
             return Ok(SendStatus::Busy);
         }
         match self.tx.as_ref().ok_or(Error::Retired)?.try_send(bytes) {
             Ok(()) => {
+                if let Some(next) = next_resources {
+                    self.resources = next;
+                }
                 self.submitted.insert(
                     request.job.stamp.content_revision,
                     (request.job.stamp, request.job.snapshot.size()),
@@ -742,6 +757,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
         ),
         None,
     )?;
+    let mut resources = ResourceReceiver::new(execution, RenderLimits::default())?;
     let (tx, jobs) = mpsc::sync_channel::<io::Result<RenderRequest>>(2);
     thread::Builder::new()
         .name("cue-vulkan-job-reader".into())
@@ -750,7 +766,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
             loop {
                 match read_frame_with_limit::<WireExecutionJob>(&mut input, LIMIT) {
                     Ok(Some(wire)) => {
-                        if tx.send(wire.request()).is_err() {
+                        if tx.send(wire.request_with(&mut resources)).is_err() {
                             break;
                         }
                     }

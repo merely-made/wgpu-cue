@@ -421,7 +421,7 @@ fn persistent_renderer_changes_resizes_and_restarts_while_old_frame_is_held() {
         }
     }
     fn snapshot(doc: &mut GenetDocument, v: Viewport) -> SceneSnapshot {
-        SceneSnapshot::capture(&doc.prepare(v).unwrap(), RenderLimits::default()).unwrap()
+        SceneSnapshot::capture_owned(doc.prepare(v).unwrap(), RenderLimits::default()).unwrap()
     }
     fn local_pixels(
         core: &genet_render_host::RenderCore,
@@ -440,8 +440,11 @@ fn persistent_renderer_changes_resizes_and_restarts_while_old_frame_is_held() {
         while !source.poll_idle().unwrap() {
             assert!(Instant::now() < deadline);
         }
+        let byte_control =
+            SceneSnapshot::from_bytes(job.snapshot.bytes().to_vec(), RenderLimits::default())
+                .unwrap();
         source
-            .submit(&cx, job.stamp.content_revision, &job.snapshot)
+            .submit(&cx, job.stamp.content_revision, &byte_control)
             .unwrap();
         loop {
             if let Rendered::Changed(frame) = source.render(&cx, true).unwrap() {
@@ -533,7 +536,10 @@ fn persistent_renderer_changes_resizes_and_restarts_while_old_frame_is_held() {
     let second_stamp = second_frame.stamp;
     drop(second_frame);
     assert_eq!(released(&mut importer), [second_stamp]);
-    session.transport_mut().release(second_stamp).unwrap();
+    session
+        .transport_mut()
+        .release_after_poll_delay(second_stamp, Duration::from_millis(100))
+        .unwrap();
     let native = wait(&mut session);
     let resized_cx = host.context(resized).unwrap();
     let third_frame = ready(&mut importer, &resized_cx, native);

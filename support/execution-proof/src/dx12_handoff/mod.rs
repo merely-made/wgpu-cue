@@ -32,6 +32,7 @@ use webcue::{
     *,
 };
 use wgpu_cue::*;
+use wgpu_cue_netrender::resource_table::{ResourceReceiver, ResourceSender};
 use wgpu_cue_netrender::{hybrid::HybridSceneSource, render_session::*, scene_job::*};
 use windows::Win32::{
     Foundation::{DUPLICATE_SAME_ACCESS, DuplicateHandle, HANDLE},
@@ -237,6 +238,7 @@ struct Offered {
     taken: bool,
 }
 pub struct Dx12Process {
+    resources: ResourceSender,
     child: Child,
     execution: ExecutionId,
     nonce: u128,
@@ -325,6 +327,8 @@ impl Dx12Process {
                 }
             })?;
         let mut process = Self {
+            resources: ResourceSender::new(execution, RenderLimits::default())
+                .map_err(io::Error::other)?,
             child: startup.0.take().unwrap(),
             execution,
             nonce,
@@ -372,6 +376,13 @@ impl Dx12Process {
             .ok_or_else(|| bad("DX12 retired"))?
             .try_send(bytes)
             .map_err(bad)
+    }
+    pub fn resource_stats(&self) -> (usize, usize, u64) {
+        (
+            self.resources.entries(),
+            self.resources.retained_bytes(),
+            self.resources.packets(),
+        )
     }
     pub fn pid(&self) -> u32 {
         self.child.id()
@@ -531,13 +542,14 @@ impl RenderTransport for Dx12Process {
         if self.submitted.len() >= 2 {
             return Ok(SendStatus::Busy);
         }
-        let bytes = encode_with_limit(
-            &Input::Job(WireExecutionJob::new(request).map_err(backend)?),
-            LIMIT,
-        )
-        .map_err(backend)?;
+        let (wire, next_resources) =
+            WireExecutionJob::prepare(request, &self.resources).map_err(backend)?;
+        let bytes = encode_with_limit(&Input::Job(wire), LIMIT).map_err(backend)?;
         match self.tx.as_ref().ok_or(Error::Retired)?.try_send(bytes) {
             Ok(()) => {
+                if let Some(next) = next_resources {
+                    self.resources = next;
+                }
                 self.submitted.insert(
                     request.job.stamp.content_revision,
                     (request.job.stamp, request.job.snapshot.size()),

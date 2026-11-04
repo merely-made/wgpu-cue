@@ -204,7 +204,7 @@ impl<T: RenderTransport> RenderSession<T> {
         let size = job.snapshot.size();
         let pixels = frame_bytes(size.width, size.height, self.limits)
             .map_err(|e| Error::Invalid(e.to_string()))?;
-        if job.snapshot.bytes().len() > self.limits.snapshot_bytes
+        if job.snapshot.accounted_bytes() > self.limits.snapshot_bytes
             || job.snapshot.resource_bytes() > self.limits.resource_bytes
         {
             return Err(Error::Invalid("render input exceeds job limits".into()));
@@ -213,8 +213,7 @@ impl<T: RenderTransport> RenderSession<T> {
         // and expected output. Hold the reservation until its outcome is read.
         let charge = job
             .snapshot
-            .bytes()
-            .len()
+            .accounted_bytes()
             .checked_add(job.snapshot.resource_bytes())
             .and_then(|n| n.checked_add(pixels))
             .ok_or(Error::Exhausted)?;

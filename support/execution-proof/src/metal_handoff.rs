@@ -29,6 +29,7 @@ use webcue::{
     *,
 };
 use wgpu_cue::{wgpu, *};
+use wgpu_cue_netrender::resource_table::{ResourceReceiver, ResourceSender};
 use wgpu_cue_netrender::{
     hybrid::HybridSceneSource,
     render_session::{RenderReply, RenderRequest, RenderTransport},
@@ -227,7 +228,9 @@ struct Init {
     owner: u128,
     generation: u64,
     parent: u32,
-    scene: String,
+    width: u32,
+    height: u32,
+    scene: Option<String>,
 }
 struct Offer {
     size: FrameSize,
@@ -239,6 +242,7 @@ struct Offer {
 /// Host-owned transport with two outstanding native frame slots. Drop kills and
 /// reaps the private helper, retires the session and drops pending capabilities.
 pub struct MetalProcess {
+    resources: ResourceSender,
     child: Child,
     inbox: Inbox,
     reply: Option<MachSendRight>,
@@ -253,17 +257,19 @@ pub struct MetalProcess {
     last_revision: u64,
     offers: BTreeMap<u64, Offer>,
     responses: Vec<Message>,
+    releasing: Option<Lease>,
     lost: bool,
 }
 impl MetalProcess {
     pub fn spawn(executable: &Path, scope: Scope, snapshot: &SceneSnapshot) -> io::Result<Self> {
-        Self::spawn_execution(
+        Self::spawn_inner(
             executable,
             ExecutionId {
                 scope,
                 incarnation: 1,
             },
             snapshot,
+            true,
         )
     }
     pub fn spawn_execution(
@@ -271,9 +277,19 @@ impl MetalProcess {
         execution: ExecutionId,
         snapshot: &SceneSnapshot,
     ) -> io::Result<Self> {
+        Self::spawn_inner(executable, execution, snapshot, false)
+    }
+    fn spawn_inner(
+        executable: &Path,
+        execution: ExecutionId,
+        snapshot: &SceneSnapshot,
+        legacy: bool,
+    ) -> io::Result<Self> {
         let scope = execution.scope;
-        if !executable.is_absolute() {
-            return Err(io::Error::other("helper path must be absolute"));
+        if !executable.is_absolute() || execution.incarnation == 0 {
+            return Err(io::Error::other(
+                "absolute helper path and positive incarnation required",
+            ));
         }
         let nonce = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
@@ -288,6 +304,8 @@ impl MetalProcess {
             .stderr(Stdio::inherit())
             .spawn()?;
         let mut process = Self {
+            resources: ResourceSender::new(execution, RenderLimits::default())
+                .map_err(io::Error::other)?,
             child,
             inbox,
             reply: None,
@@ -302,6 +320,7 @@ impl MetalProcess {
             last_revision: 0,
             offers: BTreeMap::new(),
             responses: Vec::new(),
+            releasing: None,
             lost: false,
         };
         let init = Init {
@@ -312,7 +331,13 @@ impl MetalProcess {
             owner: scope.owner,
             generation: scope.generation,
             parent: std::process::id(),
-            scene: String::from_utf8(snapshot.bytes().to_vec()).map_err(io::Error::other)?,
+            width: snapshot.size().width,
+            height: snapshot.size().height,
+            scene: if legacy {
+                Some(String::from_utf8(snapshot.bytes().to_vec()).map_err(io::Error::other)?)
+            } else {
+                None
+            },
         };
         write_frame_with_limit(
             process.child.stdin.as_mut().unwrap(),
@@ -386,6 +411,13 @@ impl MetalProcess {
     pub fn scope(&self) -> Scope {
         self.scope
     }
+    pub fn resource_stats(&self) -> (usize, usize, u64) {
+        (
+            self.resources.entries(),
+            self.resources.retained_bytes(),
+            self.resources.packets(),
+        )
+    }
     pub fn pid(&self) -> u32 {
         self.child.id()
     }
@@ -413,6 +445,7 @@ impl MetalProcess {
         self.lost = true;
         self.offers.clear();
         self.responses.clear();
+        self.releasing = None;
         if self.child.kill().is_ok() {
             self.forced = true;
         }
@@ -477,6 +510,26 @@ impl MetalProcess {
                         .filter(|o| o.lease.matches(lease) && !o.ready)
                         .ok_or_else(|| io::Error::other("stale or duplicate readiness"))?;
                     offer.ready = true;
+                }
+                Message::Released { lease, occupied } if right.is_none() => {
+                    if self.responses.len() >= 8
+                        || occupied >= 2
+                        || !self
+                            .releasing
+                            .is_some_and(|expected| expected.matches(lease))
+                        || !self.offers.get(&lease.epoch).is_some_and(|offer| {
+                            offer.ready && offer.taken && offer.lease.matches(lease)
+                        })
+                    {
+                        return Err(io::Error::other(
+                            "unsolicited or stale Metal release acknowledgement",
+                        ));
+                    }
+                    // Apply custody transfer in message order. The helper may
+                    // already have queued a new Offer for this same slot.
+                    self.offers.remove(&lease.epoch);
+                    self.releasing = None;
+                    self.responses.push(Message::Released { lease, occupied });
                 }
                 message if right.is_none() => {
                     if self.responses.len() >= 8 {
@@ -576,6 +629,18 @@ impl MetalProcess {
     }
     /// Accept stamps only from GraftIoSurfaceImporter's completed release list.
     pub fn release(&mut self, stamp: FrameStamp) -> io::Result<usize> {
+        self.release_after_poll_delay(stamp, Duration::ZERO)
+    }
+    /// Qualification control: let Released and the next Offer batch together.
+    #[doc(hidden)]
+    pub fn release_after_poll_delay(
+        &mut self,
+        stamp: FrameStamp,
+        delay: Duration,
+    ) -> io::Result<usize> {
+        if self.releasing.is_some() {
+            return Err(io::Error::other("Metal release already pending"));
+        }
         if stamp.scope != self.scope {
             return Err(io::Error::other("stale release scope"));
         }
@@ -585,16 +650,17 @@ impl MetalProcess {
             .find(|o| o.taken && o.lease.stamp(self.scope) == stamp)
             .ok_or_else(|| io::Error::other("stale release"))?;
         let lease = offer.lease;
+        self.releasing = Some(lease);
         self.send(Message::Release(lease))?;
+        if !delay.is_zero() {
+            std::thread::sleep(delay)
+        }
         self.wait(|p| !p.responses.is_empty())?;
         match self.responses.remove(0) {
             Message::Released {
                 lease: ack,
                 occupied,
-            } if lease.matches(ack) => {
-                self.offers.remove(&lease.epoch);
-                Ok(occupied)
-            }
+            } if lease.matches(ack) => Ok(occupied),
             other => Err(io::Error::other(format!("release refused: {other:?}"))),
         }
     }
@@ -643,13 +709,14 @@ impl RenderTransport for MetalProcess {
         if self.submitted.len() >= 2 {
             return Ok(SendStatus::Busy);
         }
-        let bytes = encode_with_limit(
-            &WireExecutionJob::new(request).map_err(|e| Error::Backend(e.to_string()))?,
-            LIMIT,
-        )
-        .map_err(|e| Error::Backend(e.to_string()))?;
+        let (wire, next_resources) = WireExecutionJob::prepare(request, &self.resources)
+            .map_err(|e| Error::Backend(e.to_string()))?;
+        let bytes = encode_with_limit(&wire, LIMIT).map_err(|e| Error::Backend(e.to_string()))?;
         match self.tx.as_ref().ok_or(Error::Retired)?.try_send(bytes) {
             Ok(()) => {
+                if let Some(next) = next_resources {
+                    self.resources = next;
+                }
                 self.last_revision = request.job.stamp.content_revision;
                 self.submitted.insert(
                     request.job.stamp.content_revision,
@@ -733,8 +800,14 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
         scope,
         incarnation: init.incarnation,
     };
-    let snapshot = SceneSnapshot::from_bytes(init.scene.into_bytes(), RenderLimits::default())?;
-    let size = snapshot.size();
+    let legacy_snapshot = init
+        .scene
+        .map(|bytes| SceneSnapshot::from_bytes(bytes.into_bytes(), RenderLimits::default()))
+        .transpose()?;
+    let size = FrameSize::new(init.width, init.height);
+    if legacy_snapshot.as_ref().is_some_and(|s| s.size() != size) {
+        return Err("legacy init extent mismatch".into());
+    }
     let mut viewport = Viewport {
         width: size.width,
         height: size.height,
@@ -774,6 +847,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
         &wire(init.nonce, execution, Message::Hello { adapter: info.name }),
         Some(&reply),
     )?;
+    let mut resources = ResourceReceiver::new(execution, RenderLimits::default())?;
     let (incoming, jobs) = mpsc::sync_channel::<io::Result<RenderRequest>>(2);
     std::thread::Builder::new()
         .name("cue-metal-job-reader".into())
@@ -782,7 +856,7 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
             loop {
                 match read_frame_with_limit::<WireExecutionJob>(&mut input, LIMIT) {
                     Ok(Some(job)) => {
-                        if incoming.send(job.request()).is_err() {
+                        if incoming.send(job.request_with(&mut resources)).is_err() {
                             break;
                         }
                     }
@@ -977,7 +1051,10 @@ pub fn helper() -> std::result::Result<(), Box<dyn std::error::Error>> {
                                     lease,
                                     job: Some(RenderJob {
                                         stamp: lease.stamp(scope),
-                                        snapshot: snapshot.clone(),
+                                        snapshot: legacy_snapshot
+                                            .as_ref()
+                                            .ok_or("Acquire requires legacy init snapshot")?
+                                            .clone(),
                                     }),
                                     rendered: None,
                                     allow_copy: false,

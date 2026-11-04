@@ -33,6 +33,11 @@ session's `XDG_RUNTIME_DIR`, `WAYLAND_DISPLAY` and `DBUS_SESSION_BUS_ADDRESS`
 when launching over SSH. `WINIT_UNIX_BACKEND=wayland` selects the measured path.
 An SSH shell by itself is not evidence of a working graphical session.
 
+The default now uses typed snapshots and, in process mode, an incarnation-owned
+resource table. Add `--byte-snapshots` to exercise the complete byte-snapshot
+control in either placement. See the [typed delivery qualification](../../docs/2026-11-04-typed-scenes-and-resources.md)
+for preserved validation, table bounds and lifetime guarantees.
+
 For macOS package already-built binaries as a foreground application:
 
 ```sh

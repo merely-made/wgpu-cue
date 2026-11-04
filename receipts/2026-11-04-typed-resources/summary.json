@@ -1,0 +1,4950 @@
+{
+  "schema": "cue-typed-resource-qualification-v1",
+  "runs": [
+    {
+      "host": "mac",
+      "run": "mac-local-bytes-final5",
+      "source_manifest": "source5.json",
+      "binary_hashes": {
+        "cue-execution-proof": "cf6d4667f090f98a159de2dd95aa45b4648a912a7e10ad914ba9b9f3d4f4e8f5",
+        "cue-window-receiver": "e0e9bd3a6efda7d3912d321346464924284f506ee349166ac4dfb0d356e6acce"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Pro Vega 56\", vendor: 0, device: 0, device_type: DiscreteGpu, device_pci_bus_id: \"\", driver: \"\", driver_info: \"\", backend: Metal, subgroup_min_size: 4, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.088467,
+            "p50": 0.060525,
+            "p95": 0.078735,
+            "p99": 0.088467,
+            "samples": 27
+          },
+          "distinct_content": 27,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 116.70638201758265,
+            "p50": 116.70332308858633,
+            "p95": 116.70533614233136,
+            "p99": 116.70638201758265,
+            "samples": 26
+          },
+          "estimated_missed_content_refreshes": 147,
+          "estimated_missed_display_refreshes": 147,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 260.59437376197536,
+            "p50": 247.3089908689161,
+            "p95": 258.69103885989375,
+            "p99": 260.59437376197536,
+            "samples": 27
+          },
+          "os_frame_interval_ms": {
+            "max": 116.70638201758265,
+            "p50": 116.70332308858633,
+            "p95": 116.70533614233136,
+            "p99": 116.70638201758265,
+            "samples": 26
+          },
+          "os_presented": 27,
+          "prepare_ms": {
+            "max": 59.779872999999995,
+            "p50": 55.416773,
+            "p95": 57.771513,
+            "p99": 59.779872999999995,
+            "samples": 27
+          },
+          "present_calls": 27,
+          "update_ms": {
+            "max": 117.440523,
+            "p50": 110.262444,
+            "p95": 113.793327,
+            "p99": 117.440523,
+            "samples": 27
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "Arial",
+        "handled_inputs": 315,
+        "inputs": 325,
+        "loaded": {
+          "acquire_ms": {
+            "max": 0.595293,
+            "p50": 0.060143,
+            "p95": 0.072084,
+            "p99": 0.5901,
+            "samples": 130
+          },
+          "distinct_content": 129,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 133.37826915085316,
+            "p50": 116.70400621369481,
+            "p95": 116.70617200434208,
+            "p99": 133.37803492322564,
+            "samples": 128
+          },
+          "estimated_missed_content_refreshes": 756,
+          "estimated_missed_display_refreshes": 756,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 292.8459380720767,
+            "p50": 254.87423594252334,
+            "p95": 265.36113996262145,
+            "p99": 291.07673810685594,
+            "samples": 129
+          },
+          "os_frame_interval_ms": {
+            "max": 133.37826915085316,
+            "p50": 116.70400621369481,
+            "p95": 116.70617200434208,
+            "p99": 133.37803492322564,
+            "samples": 128
+          },
+          "os_presented": 129,
+          "prepare_ms": {
+            "max": 99.922938,
+            "p50": 57.551491000000006,
+            "p95": 60.36089,
+            "p99": 61.437075,
+            "samples": 130
+          },
+          "present_calls": 130,
+          "update_ms": {
+            "max": 155.669261,
+            "p50": 114.151721,
+            "p95": 117.362911,
+            "p99": 119.364327,
+            "samples": 130
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 16.388272999999998,
+            "p50": 0.061555000000000006,
+            "p95": 15.117795999999998,
+            "p99": 15.642990999999999,
+            "samples": 145
+          },
+          "distinct_content": 132,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 316.7669433169067,
+            "p50": 116.70374125242233,
+            "p95": 116.71335063874722,
+            "p99": 266.70755073428154,
+            "samples": 131
+          },
+          "estimated_missed_content_refreshes": 762,
+          "estimated_missed_display_refreshes": 749,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 267.5620017967768,
+            "p50": 249.7686379973807,
+            "p95": 260.23721074704207,
+            "p99": 266.9580870684873,
+            "samples": 132
+          },
+          "os_frame_interval_ms": {
+            "max": 133.3758318796754,
+            "p50": 116.703559178859,
+            "p95": 116.70625815168023,
+            "p99": 133.37526377290487,
+            "samples": 144
+          },
+          "os_presented": 145,
+          "prepare_ms": {
+            "max": 73.823426,
+            "p50": 56.290043999999995,
+            "p95": 59.812587,
+            "p99": 61.547181,
+            "samples": 132
+          },
+          "present_calls": 145,
+          "update_ms": {
+            "max": 127.896911,
+            "p50": 111.147197,
+            "p95": 115.142105,
+            "p99": 118.77278199999999,
+            "samples": 145
+          }
+        },
+        "surface_timeouts_or_occlusions": 3,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "MTLDrawable addPresentedHandler and presentedTime",
+      "timestamp_coverage_fraction": 0.9938271604938271,
+      "frames": 324,
+      "profile": [
+        {
+          "file": "mac-local-bytes-final5-profile/stages-54056.jsonl",
+          "sha256": "c037f4cc02b6a21c7f88577befe5258b42a8e59341ba254c8fab11f3850319b8",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 316,
+              "mean": 0.0024619746835443036,
+              "p50": 0.00179,
+              "p95": 0.005286,
+              "p99": 0.005731,
+              "max": 0.011791
+            },
+            "capture.json_encode": {
+              "samples": 316,
+              "mean": 26.605703683544302,
+              "p50": 26.269729,
+              "p95": 28.966735,
+              "p99": 29.720955,
+              "max": 30.205177
+            },
+            "capture.total": {
+              "samples": 316,
+              "mean": 56.495345287974686,
+              "p50": 56.207428,
+              "p95": 59.669087,
+              "p99": 60.759312,
+              "max": 63.357739
+            },
+            "decode.check_resources": {
+              "samples": 315,
+              "mean": 0.004790498412698413,
+              "p50": 0.00467,
+              "p95": 0.006131,
+              "p99": 0.020398,
+              "max": 0.022023
+            },
+            "decode.json_parse": {
+              "samples": 315,
+              "mean": 27.678216603174604,
+              "p50": 27.777032,
+              "p95": 28.439767,
+              "p99": 28.655305,
+              "max": 29.186093
+            },
+            "decode.rebind_resources": {
+              "samples": 315,
+              "mean": 0.33460252063492063,
+              "p50": 0.230392,
+              "p95": 0.822638,
+              "p99": 0.96889,
+              "max": 1.432069
+            },
+            "decode.total": {
+              "samples": 315,
+              "mean": 28.06683547936508,
+              "p50": 28.136539,
+              "p95": 28.94562,
+              "p99": 29.531143,
+              "max": 29.818036
+            },
+            "document.prepare": {
+              "samples": 315,
+              "mean": 0.7841649365079365,
+              "p50": 0.255344,
+              "p95": 2.297257,
+              "p99": 2.355703,
+              "max": 40.722452
+            },
+            "from_bytes.check_resources": {
+              "samples": 316,
+              "mean": 0.005147806962025316,
+              "p50": 0.005216,
+              "p95": 0.006253,
+              "p99": 0.006662,
+              "max": 0.020539
+            },
+            "from_bytes.json_parse": {
+              "samples": 316,
+              "mean": 27.816790193037978,
+              "p50": 27.858267,
+              "p95": 28.697311,
+              "p99": 29.668763,
+              "max": 30.077816
+            },
+            "from_bytes.total": {
+              "samples": 316,
+              "mean": 29.825572724683546,
+              "p50": 29.778612,
+              "p95": 31.568667,
+              "p99": 32.433603,
+              "max": 33.860186
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          773236,
+          750984
+        ],
+        "font_family": "Arial",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1524220,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1524220,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "09f1dfab3e6c53de42adb5252b3e10eac0943b8accb548a690652eecea491a67",
+        "frames.json": "c280201bf03f788991b8946eb3d628094e14fd92bee33bdc071ee848b9f570f4",
+        "input-resources.json": "6d054ebb34e7c02e0213effa6353e2a62a6ef50701c8077fc7096e341694ddaf"
+      }
+    },
+    {
+      "host": "mac",
+      "run": "mac-local-typed-final5",
+      "source_manifest": "source5.json",
+      "binary_hashes": {
+        "cue-execution-proof": "cf6d4667f090f98a159de2dd95aa45b4648a912a7e10ad914ba9b9f3d4f4e8f5",
+        "cue-window-receiver": "e0e9bd3a6efda7d3912d321346464924284f506ee349166ac4dfb0d356e6acce"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Pro Vega 56\", vendor: 0, device: 0, device_type: DiscreteGpu, device_pci_bus_id: \"\", driver: \"\", driver_info: \"\", backend: Metal, subgroup_min_size: 4, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.144805,
+            "p50": 0.052543,
+            "p95": 0.084609,
+            "p99": 0.10217699999999999,
+            "samples": 115
+          },
+          "distinct_content": 89,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 50.015108194202185,
+            "p50": 33.34396006539464,
+            "p95": 33.35178177803755,
+            "p99": 50.015108194202185,
+            "samples": 88
+          },
+          "estimated_missed_content_refreshes": 89,
+          "estimated_missed_display_refreshes": 63,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 100.2363698982549,
+            "p50": 94.15058423495992,
+            "p95": 99.6135961973863,
+            "p99": 100.2363698982549,
+            "samples": 89
+          },
+          "os_frame_interval_ms": {
+            "max": 33.35311729460955,
+            "p50": 33.34207180887461,
+            "p95": 33.34651468321681,
+            "p99": 33.35310332477093,
+            "samples": 114
+          },
+          "os_presented": 115,
+          "prepare_ms": {
+            "max": 7.803185,
+            "p50": 6.93064,
+            "p95": 7.528778,
+            "p99": 7.803185,
+            "samples": 89
+          },
+          "present_calls": 115,
+          "update_ms": {
+            "max": 34.800352,
+            "p50": 32.583187,
+            "p95": 33.781722,
+            "p99": 34.359647,
+            "samples": 115
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "Arial",
+        "handled_inputs": 1128,
+        "inputs": 1128,
+        "loaded": {
+          "acquire_ms": {
+            "max": 0.735878,
+            "p50": 0.049213,
+            "p95": 0.06469699999999999,
+            "p99": 0.09589400000000001,
+            "samples": 625
+          },
+          "distinct_content": 438,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 50.01863883808255,
+            "p50": 33.344069961458445,
+            "p95": 33.35480624809861,
+            "p99": 50.01679388806224,
+            "samples": 437
+          },
+          "estimated_missed_content_refreshes": 457,
+          "estimated_missed_display_refreshes": 271,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 146.33293723821694,
+            "p50": 93.41477899157269,
+            "p95": 100.48306589909117,
+            "p99": 102.32054501894439,
+            "samples": 438
+          },
+          "os_frame_interval_ms": {
+            "max": 50.01863883808255,
+            "p50": 16.673410777002573,
+            "p95": 33.34594517946243,
+            "p99": 50.01538572832942,
+            "samples": 623
+          },
+          "os_presented": 624,
+          "prepare_ms": {
+            "max": 51.814367,
+            "p50": 7.08678,
+            "p95": 7.7424729999999995,
+            "p99": 7.851745,
+            "samples": 439
+          },
+          "present_calls": 625,
+          "update_ms": {
+            "max": 78.07093499999999,
+            "p50": 32.617437,
+            "p95": 34.030761999999996,
+            "p99": 34.565428000000004,
+            "samples": 625
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 0.145546,
+            "p50": 0.054323,
+            "p95": 0.097509,
+            "p99": 0.125936,
+            "samples": 600
+          },
+          "distinct_content": 450,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 83.36044894531369,
+            "p50": 33.34397543221712,
+            "p95": 50.012761261314154,
+            "p99": 50.01751286908984,
+            "samples": 449
+          },
+          "estimated_missed_content_refreshes": 450,
+          "estimated_missed_display_refreshes": 300,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 136.4409319311024,
+            "p50": 93.58349905026131,
+            "p95": 100.01319218406657,
+            "p99": 101.85796405938507,
+            "samples": 450
+          },
+          "os_frame_interval_ms": {
+            "max": 83.36044894531369,
+            "p50": 16.67713513597846,
+            "p95": 33.34635216742754,
+            "p99": 33.35531195625663,
+            "samples": 599
+          },
+          "os_presented": 600,
+          "prepare_ms": {
+            "max": 7.79939,
+            "p50": 7.003066,
+            "p95": 7.304197,
+            "p99": 7.380114,
+            "samples": 450
+          },
+          "present_calls": 600,
+          "update_ms": {
+            "max": 39.741382,
+            "p50": 32.084081,
+            "p95": 33.288678000000004,
+            "p99": 33.944244,
+            "samples": 600
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "MTLDrawable addPresentedHandler and presentedTime",
+      "timestamp_coverage_fraction": 0.9986168741355463,
+      "frames": 1446,
+      "profile": [
+        {
+          "file": "mac-local-typed-final5-profile/stages-53958.jsonl",
+          "sha256": "c0d5d77b01dd184aa98c78a2f826fee1a80740ccd8ac13131f71b45b1b07c8e2",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 1064,
+              "mean": 0.06480633458646617,
+              "p50": 0.063613,
+              "p95": 0.078834,
+              "p99": 0.093516,
+              "max": 0.114804
+            },
+            "document.prepare": {
+              "samples": 1064,
+              "mean": 0.43287485620300753,
+              "p50": 0.394051,
+              "p95": 0.596977,
+              "p99": 0.762524,
+              "max": 44.938057
+            },
+            "typed.capture": {
+              "samples": 1065,
+              "mean": 6.604488195305164,
+              "p50": 6.596709,
+              "p95": 6.908005,
+              "p99": 7.049755,
+              "max": 7.349113
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          773236,
+          750984
+        ],
+        "font_family": "Arial",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1524220,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1524220,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "a573c71ad6540832ec4a187b6b3a5f0950736685d85b271db346c1d2a7e10f62",
+        "frames.json": "59fd6694d32b6746a8d974fdb6b8536e4fc91425ea3f3c36ecdcd81dd594d314",
+        "input-resources.json": "6d054ebb34e7c02e0213effa6353e2a62a6ef50701c8077fc7096e341694ddaf"
+      }
+    },
+    {
+      "host": "mac",
+      "run": "mac-process-bytes-final5",
+      "source_manifest": "source5.json",
+      "binary_hashes": {
+        "cue-execution-proof": "cf6d4667f090f98a159de2dd95aa45b4648a912a7e10ad914ba9b9f3d4f4e8f5",
+        "cue-window-receiver": "e0e9bd3a6efda7d3912d321346464924284f506ee349166ac4dfb0d356e6acce"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Pro Vega 56\", vendor: 0, device: 0, device_type: DiscreteGpu, device_pci_bus_id: \"\", driver: \"\", driver_info: \"\", backend: Metal, subgroup_min_size: 4, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 16.515591,
+            "p50": 14.448442,
+            "p95": 15.776396000000002,
+            "p99": 16.396518,
+            "samples": 164
+          },
+          "distinct_content": 17,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 183.3933610469103,
+            "p50": 183.39175591245294,
+            "p95": 183.3933610469103,
+            "p99": 183.3933610469103,
+            "samples": 16
+          },
+          "estimated_missed_content_refreshes": 156,
+          "estimated_missed_display_refreshes": 16,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 404.05405523971183,
+            "p50": 387.2799329657539,
+            "p95": 404.05405523971183,
+            "p99": 404.05405523971183,
+            "samples": 17
+          },
+          "os_frame_interval_ms": {
+            "max": 33.34680572152138,
+            "p50": 16.672058030962944,
+            "p95": 33.344177063554525,
+            "p99": 33.34617568179965,
+            "samples": 163
+          },
+          "os_presented": 164,
+          "prepare_ms": {
+            "max": 61.400937000000006,
+            "p50": 59.663148,
+            "p95": 61.400937000000006,
+            "p99": 61.400937000000006,
+            "samples": 16
+          },
+          "present_calls": 164,
+          "update_ms": {
+            "max": 62.97638899999999,
+            "p50": 1.042095,
+            "p95": 61.335065,
+            "p99": 62.59139699999999,
+            "samples": 164
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "Arial",
+        "handled_inputs": 1588,
+        "inputs": 1596,
+        "loaded": {
+          "acquire_ms": {
+            "max": 16.540749,
+            "p50": 15.239621999999999,
+            "p95": 16.238481999999998,
+            "p99": 16.383674,
+            "samples": 812
+          },
+          "distinct_content": 83,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 216.73669992014766,
+            "p50": 183.39202692732215,
+            "p95": 183.39640693739057,
+            "p99": 216.73669992014766,
+            "samples": 82
+          },
+          "estimated_missed_content_refreshes": 814,
+          "estimated_missed_display_refreshes": 86,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 449.3903251063358,
+            "p50": 386.71848727342353,
+            "p95": 390.695792207918,
+            "p99": 449.3903251063358,
+            "samples": 83
+          },
+          "os_frame_interval_ms": {
+            "max": 83.36005173623562,
+            "p50": 16.672024969011545,
+            "p95": 33.34434889256954,
+            "p99": 33.346583135426044,
+            "samples": 810
+          },
+          "os_presented": 811,
+          "prepare_ms": {
+            "max": 101.794691,
+            "p50": 60.137588,
+            "p95": 61.820966,
+            "p99": 101.794691,
+            "samples": 83
+          },
+          "present_calls": 812,
+          "update_ms": {
+            "max": 103.157407,
+            "p50": 1.0375180000000002,
+            "p95": 61.655369,
+            "p99": 62.880727,
+            "samples": 812
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          0,
+          0,
+          0
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 17.187968,
+            "p50": 15.178346000000001,
+            "p95": 16.149778,
+            "p99": 16.366477,
+            "samples": 818
+          },
+          "distinct_content": 85,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 183.3977159112692,
+            "p50": 183.39139595627785,
+            "p95": 183.39472310617566,
+            "p99": 183.3977159112692,
+            "samples": 84
+          },
+          "estimated_missed_content_refreshes": 809,
+          "estimated_missed_display_refreshes": 84,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 399.7801570729136,
+            "p50": 372.74482403900856,
+            "p95": 389.6507693422393,
+            "p99": 399.7801570729136,
+            "samples": 85
+          },
+          "os_frame_interval_ms": {
+            "max": 33.35871919989586,
+            "p50": 16.67200867086649,
+            "p95": 33.34460407495499,
+            "p99": 33.34655798971653,
+            "samples": 817
+          },
+          "os_presented": 818,
+          "prepare_ms": {
+            "max": 63.29543,
+            "p50": 58.39254,
+            "p95": 61.91998,
+            "p99": 63.29543,
+            "samples": 84
+          },
+          "present_calls": 818,
+          "update_ms": {
+            "max": 65.15903200000001,
+            "p50": 1.055074,
+            "p95": 60.754187,
+            "p99": 62.562375,
+            "samples": 818
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "MTLDrawable addPresentedHandler and presentedTime",
+      "timestamp_coverage_fraction": 0.9979381443298969,
+      "frames": 1940,
+      "profile": [
+        {
+          "file": "mac-process-bytes-final5-profile/stages-54246.jsonl",
+          "sha256": "cd20f584bff5bf132d2819b680e57cce609ed825f96417d9e7425240174ff90c",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 201,
+              "mean": 0.004505383084577114,
+              "p50": 0.004842,
+              "p95": 0.005781,
+              "p99": 0.01456,
+              "max": 0.029688
+            },
+            "capture.json_encode": {
+              "samples": 201,
+              "mean": 27.574388223880597,
+              "p50": 27.26922,
+              "p95": 29.471636,
+              "p99": 29.843361,
+              "max": 30.781081
+            },
+            "capture.total": {
+              "samples": 201,
+              "mean": 58.153648129353236,
+              "p50": 58.206052,
+              "p95": 60.963333,
+              "p99": 62.129148,
+              "max": 63.269605
+            },
+            "document.prepare": {
+              "samples": 200,
+              "mean": 1.356848075,
+              "p50": 1.220144,
+              "p95": 1.90377,
+              "p99": 1.994547,
+              "max": 44.138545
+            },
+            "from_bytes.check_resources": {
+              "samples": 201,
+              "mean": 0.005778497512437811,
+              "p50": 0.005709,
+              "p95": 0.006398,
+              "p99": 0.008057,
+              "max": 0.015985
+            },
+            "from_bytes.json_parse": {
+              "samples": 201,
+              "mean": 28.315170378109453,
+              "p50": 28.278241,
+              "p95": 29.041053,
+              "p99": 29.78288,
+              "max": 30.09465
+            },
+            "from_bytes.total": {
+              "samples": 201,
+              "mean": 30.501850815920395,
+              "p50": 30.403765,
+              "p95": 31.931255,
+              "p99": 32.738773,
+              "max": 33.778083
+            }
+          }
+        },
+        {
+          "file": "mac-process-bytes-final5-profile/stages-54248.jsonl",
+          "sha256": "61055c0a83dddaf8da66ebf5ed0a4aa43613f7dcfaad049e49f0054e5e422b52",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.check_resources": {
+              "samples": 200,
+              "mean": 0.00573322,
+              "p50": 0.00568,
+              "p95": 0.006346,
+              "p99": 0.006791,
+              "max": 0.016269
+            },
+            "decode.json_parse": {
+              "samples": 200,
+              "mean": 28.125168064999997,
+              "p50": 28.065604,
+              "p95": 29.354251,
+              "p99": 29.886109,
+              "max": 30.564926
+            },
+            "decode.rebind_resources": {
+              "samples": 200,
+              "mean": 0.784817575,
+              "p50": 0.565864,
+              "p95": 1.739122,
+              "p99": 2.51739,
+              "max": 2.873376
+            },
+            "decode.total": {
+              "samples": 200,
+              "mean": 28.98711254,
+              "p50": 28.843398,
+              "p95": 30.474343,
+              "p99": 31.014678,
+              "max": 31.318379
+            },
+            "from_bytes.check_resources": {
+              "samples": 200,
+              "mean": 0.005944509999999999,
+              "p50": 0.005816,
+              "p95": 0.00634,
+              "p99": 0.00967,
+              "max": 0.021596
+            },
+            "from_bytes.json_parse": {
+              "samples": 200,
+              "mean": 28.22053184,
+              "p50": 28.211029,
+              "p95": 28.908105,
+              "p99": 29.37743,
+              "max": 29.608178
+            },
+            "from_bytes.total": {
+              "samples": 200,
+              "mean": 30.618219640000003,
+              "p50": 30.427454,
+              "p95": 32.196214,
+              "p99": 32.594514,
+              "max": 33.394182
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          773236,
+          750984
+        ],
+        "font_family": "Arial",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1524220,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1524220,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "05f3831ec820c71456f76899114c3d2ab1c9a6ad5b2f94687242dc698dfb6a39",
+        "frames.json": "794d7d2645c3ad6c0e761b91a2c148487bbfb036f552b074e738de59ab1a0340",
+        "input-resources.json": "6d054ebb34e7c02e0213effa6353e2a62a6ef50701c8077fc7096e341694ddaf"
+      }
+    },
+    {
+      "host": "mac",
+      "run": "mac-process-typed-final5",
+      "source_manifest": "source5.json",
+      "binary_hashes": {
+        "cue-execution-proof": "cf6d4667f090f98a159de2dd95aa45b4648a912a7e10ad914ba9b9f3d4f4e8f5",
+        "cue-window-receiver": "e0e9bd3a6efda7d3912d321346464924284f506ee349166ac4dfb0d356e6acce"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Pro Vega 56\", vendor: 0, device: 0, device_type: DiscreteGpu, device_pci_bus_id: \"\", driver: \"\", driver_info: \"\", backend: Metal, subgroup_min_size: 4, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 16.299986999999998,
+            "p50": 15.309276,
+            "p95": 15.657352999999999,
+            "p99": 16.264565,
+            "samples": 180
+          },
+          "distinct_content": 22,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 150.04980424419045,
+            "p50": 150.04721377044916,
+            "p95": 150.04927525296807,
+            "p99": 150.04980424419045,
+            "samples": 21
+          },
+          "estimated_missed_content_refreshes": 156,
+          "estimated_missed_display_refreshes": 0,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 349.639889996169,
+            "p50": 332.9639480585769,
+            "p95": 349.54905505046696,
+            "p99": 349.639889996169,
+            "samples": 22
+          },
+          "os_frame_interval_ms": {
+            "max": 16.727042850106955,
+            "p50": 16.671943943947554,
+            "p95": 16.67460985481739,
+            "p99": 16.70994283631444,
+            "samples": 179
+          },
+          "os_presented": 180,
+          "prepare_ms": {
+            "max": 7.617736,
+            "p50": 7.100676999999999,
+            "p95": 7.374934,
+            "p99": 7.617736,
+            "samples": 21
+          },
+          "present_calls": 180,
+          "update_ms": {
+            "max": 9.014833999999999,
+            "p50": 1.060856,
+            "p95": 8.334043,
+            "p99": 8.696451,
+            "samples": 180
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "Arial",
+        "handled_inputs": 2138,
+        "inputs": 2141,
+        "loaded": {
+          "acquire_ms": {
+            "max": 17.035346,
+            "p50": 13.212679,
+            "p95": 15.562997000000001,
+            "p99": 16.274783,
+            "samples": 898
+          },
+          "distinct_content": 225,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 83.36517587304115,
+            "p50": 66.68797880411148,
+            "p95": 66.69064098969102,
+            "p99": 66.70264387503266,
+            "samples": 224
+          },
+          "estimated_missed_content_refreshes": 673,
+          "estimated_missed_display_refreshes": 1,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 215.66133114676944,
+            "p50": 182.43177105487618,
+            "p95": 182.96543015269506,
+            "p99": 199.3276820720027,
+            "samples": 225
+          },
+          "os_frame_interval_ms": {
+            "max": 33.345775213092566,
+            "p50": 16.671958845108747,
+            "p95": 16.674457117915154,
+            "p99": 16.682271845638752,
+            "samples": 896
+          },
+          "os_presented": 897,
+          "prepare_ms": {
+            "max": 51.99389,
+            "p50": 7.017715,
+            "p95": 7.757464000000001,
+            "p99": 8.234192,
+            "samples": 224
+          },
+          "present_calls": 898,
+          "update_ms": {
+            "max": 53.399767000000004,
+            "p50": 1.7463730000000002,
+            "p95": 8.642422999999999,
+            "p99": 9.025438,
+            "samples": 898
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          2,
+          1524220,
+          514
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 17.040792999999997,
+            "p50": 12.960401,
+            "p95": 15.621364,
+            "p99": 16.05271,
+            "samples": 900
+          },
+          "distinct_content": 225,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 66.74415711313486,
+            "p50": 66.68800488114357,
+            "p95": 66.70334422960877,
+            "p99": 66.7400280945003,
+            "samples": 224
+          },
+          "estimated_missed_content_refreshes": 671,
+          "estimated_missed_display_refreshes": 0,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 197.7618539931898,
+            "p50": 182.43314102019605,
+            "p95": 182.87736825588308,
+            "p99": 182.9743640464967,
+            "samples": 225
+          },
+          "os_frame_interval_ms": {
+            "max": 16.72912109643221,
+            "p50": 16.671965830028057,
+            "p95": 16.677947714924812,
+            "p99": 16.724111046642065,
+            "samples": 897
+          },
+          "os_presented": 898,
+          "prepare_ms": {
+            "max": 9.998965,
+            "p50": 7.00645,
+            "p95": 7.399057,
+            "p99": 7.571738,
+            "samples": 225
+          },
+          "present_calls": 900,
+          "update_ms": {
+            "max": 11.347671,
+            "p50": 1.6293950000000001,
+            "p95": 8.435322000000001,
+            "p99": 8.80833,
+            "samples": 900
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "MTLDrawable addPresentedHandler and presentedTime",
+      "timestamp_coverage_fraction": 0.9972093023255814,
+      "frames": 2150,
+      "profile": [
+        {
+          "file": "mac-process-typed-final5-profile/stages-54164.jsonl",
+          "sha256": "d14008a73b93c70551922252a23c798547db0552847cbda5c1eeb98a2d1dd15f",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 514,
+              "mean": 0.07616376264591439,
+              "p50": 0.072669,
+              "p95": 0.092431,
+              "p99": 0.140031,
+              "max": 0.331675
+            },
+            "document.prepare": {
+              "samples": 514,
+              "mean": 0.49072011284046696,
+              "p50": 0.385197,
+              "p95": 0.988639,
+              "p99": 1.007692,
+              "max": 45.187328
+            },
+            "resources.prepare_packet": {
+              "samples": 514,
+              "mean": 0.40804990661478596,
+              "p50": 0.384263,
+              "p95": 0.591862,
+              "p99": 0.77754,
+              "max": 1.037909
+            },
+            "typed.capture": {
+              "samples": 515,
+              "mean": 6.609661050485437,
+              "p50": 6.606076,
+              "p95": 6.829884,
+              "p99": 7.085983,
+              "max": 8.012132
+            }
+          }
+        },
+        {
+          "file": "mac-process-typed-final5-profile/stages-54166.jsonl",
+          "sha256": "b7c347554320bf50606f9545ca2cb9c80cc8ba665e705a04ba897e02fde0bea0",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 514,
+              "mean": 0.08288404085603114,
+              "p50": 0.074943,
+              "p95": 0.132414,
+              "p99": 0.192975,
+              "max": 0.296278
+            },
+            "resources.receive_packet": {
+              "samples": 514,
+              "mean": 9.01368503307393,
+              "p50": 9.008038,
+              "p95": 9.325551,
+              "p99": 9.622607,
+              "max": 13.626581
+            },
+            "typed.capture": {
+              "samples": 514,
+              "mean": 6.648682566147859,
+              "p50": 6.632808,
+              "p95": 6.910538,
+              "p99": 7.112429,
+              "max": 9.7763
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          773236,
+          750984
+        ],
+        "font_family": "Arial",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1524220,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1524220,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "9f7c70a378e0380a2f1edf32da041993f0c9cb4a7a9124f913f4c8f1d4e400eb",
+        "frames.json": "73008750796368c6042728da3b897fd32169c0e670bb8c3f36b50189f4c02cd2",
+        "input-resources.json": "6d054ebb34e7c02e0213effa6353e2a62a6ef50701c8077fc7096e341694ddaf"
+      }
+    },
+    {
+      "host": "linux",
+      "run": "window-local-bytes-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-window-receiver": "9e61ec9c470e13235cecbddf98ae7ee954ec152935fe811906fb0b38b4508465",
+        "cue-execution-proof": "484facc3075ad9073b4b2dd5c75728c782c44fb04ea23a59f38c2caab6b22cf1"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Graphics (RADV RENOIR)\", vendor: 4098, device: 5686, device_type: IntegratedGpu, device_pci_bus_id: \"0000:06:00.0\", driver: \"radv\", driver_info: \"Mesa 26.2.6\", backend: Vulkan, subgroup_min_size: 64, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.105439,
+            "p50": 0.061986,
+            "p95": 0.091712,
+            "p99": 0.105439,
+            "samples": 31
+          },
+          "distinct_content": 31,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 99.99599999999731,
+            "p50": 99.99499999999983,
+            "p95": 99.99599999999731,
+            "p99": 99.99599999999731,
+            "samples": 30
+          },
+          "estimated_missed_content_refreshes": 141,
+          "estimated_missed_display_refreshes": 141,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 211.64459699999583,
+            "p50": 198.5233169999958,
+            "p95": 206.37549499999608,
+            "p99": 211.64459699999583,
+            "samples": 31
+          },
+          "os_frame_interval_ms": {
+            "max": 99.99599999999731,
+            "p50": 99.99499999999983,
+            "p95": 99.99599999999731,
+            "p99": 99.99599999999731,
+            "samples": 30
+          },
+          "os_presented": 31,
+          "prepare_ms": {
+            "max": 50.661161,
+            "p50": 49.604814999999995,
+            "p95": 50.475412,
+            "p99": 50.661161,
+            "samples": 31
+          },
+          "present_calls": 31,
+          "update_ms": {
+            "max": 95.195882,
+            "p50": 92.090433,
+            "p95": 94.521423,
+            "p99": 95.195882,
+            "samples": 31
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 381,
+        "inputs": 381,
+        "loaded": {
+          "acquire_ms": {
+            "max": 0.080972,
+            "p50": 0.059472000000000004,
+            "p95": 0.069992,
+            "p99": 0.080742,
+            "samples": 158
+          },
+          "distinct_content": 158,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 99.99600000000441,
+            "p50": 99.99499999999983,
+            "p95": 99.99600000000086,
+            "p99": 99.99600000000441,
+            "samples": 157
+          },
+          "estimated_missed_content_refreshes": 733,
+          "estimated_missed_display_refreshes": 733,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 245.34365399999913,
+            "p50": 198.48536599999989,
+            "p95": 207.05819600000197,
+            "p99": 234.5574649999982,
+            "samples": 158
+          },
+          "os_frame_interval_ms": {
+            "max": 99.99600000000441,
+            "p50": 99.99499999999983,
+            "p95": 99.99600000000086,
+            "p99": 99.99600000000441,
+            "samples": 157
+          },
+          "os_presented": 158,
+          "prepare_ms": {
+            "max": 89.404342,
+            "p50": 49.346218,
+            "p95": 50.417242,
+            "p99": 57.027150999999996,
+            "samples": 158
+          },
+          "present_calls": 158,
+          "update_ms": {
+            "max": 132.10674699999998,
+            "p50": 91.776973,
+            "p95": 94.07093699999999,
+            "p99": 99.649206,
+            "samples": 158
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 0.08409799999999999,
+            "p50": 0.060113,
+            "p95": 0.069872,
+            "p99": 0.07764599999999999,
+            "samples": 159
+          },
+          "distinct_content": 159,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 99.99600000000086,
+            "p50": 99.99499999999983,
+            "p95": 99.99600000000086,
+            "p99": 99.99600000000086,
+            "samples": 158
+          },
+          "estimated_missed_content_refreshes": 738,
+          "estimated_missed_display_refreshes": 738,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 208.60955000000024,
+            "p50": 198.15985700000027,
+            "p95": 206.34653599999984,
+            "p99": 207.43097499999942,
+            "samples": 159
+          },
+          "os_frame_interval_ms": {
+            "max": 99.99600000000086,
+            "p50": 99.99499999999983,
+            "p95": 99.99600000000086,
+            "p99": 99.99600000000086,
+            "samples": 158
+          },
+          "os_presented": 159,
+          "prepare_ms": {
+            "max": 56.488217999999996,
+            "p50": 49.400134,
+            "p95": 54.436068999999996,
+            "p99": 54.990021999999996,
+            "samples": 159
+          },
+          "present_calls": 159,
+          "update_ms": {
+            "max": 98.34855,
+            "p50": 91.644655,
+            "p95": 96.19009100000001,
+            "p99": 96.994883,
+            "samples": 159
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "Wayland wp_presentation feedback for the same winit wl_surface commit",
+      "timestamp_coverage_fraction": 1.0,
+      "frames": 379,
+      "profile": [
+        {
+          "file": "linux-collected4/window-local-bytes-final4/stages-88061.jsonl",
+          "sha256": "859655d4240dcc426f1fa55706947000927ee1c8f20a0db1eb30121e553024a5",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 381,
+              "mean": 0.0016471732283464568,
+              "p50": 0.001383,
+              "p95": 0.002545,
+              "p99": 0.003347,
+              "max": 0.018375
+            },
+            "capture.json_encode": {
+              "samples": 381,
+              "mean": 24.20818818897638,
+              "p50": 24.174928,
+              "p95": 25.403698,
+              "p99": 26.647497,
+              "max": 31.620598
+            },
+            "capture.total": {
+              "samples": 381,
+              "mean": 49.25852122834646,
+              "p50": 49.091209,
+              "p95": 51.556654,
+              "p99": 54.725484,
+              "max": 56.730493
+            },
+            "decode.check_resources": {
+              "samples": 380,
+              "mean": 0.005936763157894737,
+              "p50": 0.005741,
+              "p95": 0.007213,
+              "p99": 0.009628,
+              "max": 0.028193
+            },
+            "decode.json_parse": {
+              "samples": 380,
+              "mean": 24.03628102368421,
+              "p50": 24.107918,
+              "p95": 24.493333,
+              "p99": 26.354726,
+              "max": 27.270448
+            },
+            "decode.rebind_resources": {
+              "samples": 380,
+              "mean": 0.15237879736842105,
+              "p50": 0.148088,
+              "p95": 0.214233,
+              "p99": 0.224141,
+              "max": 0.2395
+            },
+            "decode.total": {
+              "samples": 380,
+              "mean": 24.239491242105263,
+              "p50": 24.324355,
+              "p95": 24.656399,
+              "p99": 26.583717,
+              "max": 27.491734
+            },
+            "document.prepare": {
+              "samples": 380,
+              "mean": 0.35947949999999995,
+              "p50": 0.230623,
+              "p95": 0.375977,
+              "p99": 0.406925,
+              "max": 37.200069
+            },
+            "from_bytes.check_resources": {
+              "samples": 381,
+              "mean": 0.006071561679790026,
+              "p50": 0.005971,
+              "p95": 0.007114,
+              "p99": 0.008416,
+              "max": 0.01039
+            },
+            "from_bytes.json_parse": {
+              "samples": 381,
+              "mean": 24.189276440944884,
+              "p50": 24.209742,
+              "p95": 24.834929,
+              "p99": 26.594668,
+              "max": 28.16749
+            },
+            "from_bytes.total": {
+              "samples": 381,
+              "mean": 24.9887787007874,
+              "p50": 24.890901,
+              "p95": 26.208517,
+              "p99": 28.107562,
+              "max": 29.894322
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          712460,
+          879796
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1592256,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1592256,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "71d862b318020b963c4ea19a45d65afdf3351a71ba27193737c7768a0003b796",
+        "frames.json": "7e2595a17cc9f9cdae9c1fae135677a35b17bbf7fa4322a0b1f80230a40f6c88",
+        "input-resources.json": "68e1c425d28db2b4076b1e1d41a2d0bbdfcf475a448cb914548e8e24b751b67b"
+      }
+    },
+    {
+      "host": "linux",
+      "run": "window-local-typed-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-window-receiver": "9e61ec9c470e13235cecbddf98ae7ee954ec152935fe811906fb0b38b4508465",
+        "cue-execution-proof": "484facc3075ad9073b4b2dd5c75728c782c44fb04ea23a59f38c2caab6b22cf1"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Graphics (RADV RENOIR)\", vendor: 4098, device: 5686, device_type: IntegratedGpu, device_pci_bus_id: \"0000:06:00.0\", driver: \"radv\", driver_info: \"Mesa 26.2.6\", backend: Vulkan, subgroup_min_size: 64, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.08722400000000001,
+            "p50": 0.05841,
+            "p95": 0.065243,
+            "p99": 0.068298,
+            "samples": 103
+          },
+          "distinct_content": 103,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 49.9979999999951,
+            "p50": 33.331000000003996,
+            "p95": 33.33200000000147,
+            "p99": 33.33200000000147,
+            "samples": 102
+          },
+          "estimated_missed_content_refreshes": 76,
+          "estimated_missed_display_refreshes": 76,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 100.5807290000007,
+            "p50": 67.25787999999966,
+            "p95": 77.38588800000201,
+            "p99": 95.63930599999537,
+            "samples": 103
+          },
+          "os_frame_interval_ms": {
+            "max": 49.9979999999951,
+            "p50": 33.331000000003996,
+            "p95": 33.33200000000147,
+            "p99": 33.33200000000147,
+            "samples": 102
+          },
+          "os_presented": 103,
+          "prepare_ms": {
+            "max": 40.312180000000005,
+            "p50": 6.601549,
+            "p95": 7.2208239999999995,
+            "p99": 7.453371000000001,
+            "samples": 103
+          },
+          "present_calls": 103,
+          "update_ms": {
+            "max": 59.287701,
+            "p50": 25.175665,
+            "p95": 25.883216,
+            "p99": 26.174093,
+            "samples": 103
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 1220,
+        "inputs": 1221,
+        "loaded": {
+          "acquire_ms": {
+            "max": 1.267042,
+            "p50": 0.057357,
+            "p95": 0.06651499999999999,
+            "p99": 0.073438,
+            "samples": 516
+          },
+          "distinct_content": 516,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 49.997999999998655,
+            "p50": 33.33199999999792,
+            "p95": 33.33200000000147,
+            "p99": 33.33200000000147,
+            "samples": 515
+          },
+          "estimated_missed_content_refreshes": 381,
+          "estimated_missed_display_refreshes": 381,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 103.23385100000237,
+            "p50": 67.2735770000017,
+            "p95": 77.315138000003,
+            "p99": 83.87692000000158,
+            "samples": 516
+          },
+          "os_frame_interval_ms": {
+            "max": 49.997999999998655,
+            "p50": 33.33199999999792,
+            "p95": 33.33200000000147,
+            "p99": 33.33200000000147,
+            "samples": 515
+          },
+          "os_presented": 516,
+          "prepare_ms": {
+            "max": 42.37668,
+            "p50": 6.615234999999999,
+            "p95": 7.171341,
+            "p99": 9.478829,
+            "samples": 516
+          },
+          "present_calls": 516,
+          "update_ms": {
+            "max": 60.314129,
+            "p50": 25.12984,
+            "p95": 26.338312,
+            "p99": 29.936615,
+            "samples": 516
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 0.123573,
+            "p50": 0.057117,
+            "p95": 0.068118,
+            "p99": 0.076163,
+            "samples": 505
+          },
+          "distinct_content": 504,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 49.99700000000118,
+            "p50": 33.331999999999695,
+            "p95": 33.33200000000147,
+            "p99": 33.33200000000147,
+            "samples": 503
+          },
+          "estimated_missed_content_refreshes": 394,
+          "estimated_missed_display_refreshes": 393,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 100.58276600000049,
+            "p50": 68.83945100000055,
+            "p95": 77.35739900000027,
+            "p99": 78.67080800000004,
+            "samples": 504
+          },
+          "os_frame_interval_ms": {
+            "max": 49.99700000000118,
+            "p50": 33.331999999999695,
+            "p95": 33.33200000000147,
+            "p99": 33.33200000000147,
+            "samples": 504
+          },
+          "os_presented": 505,
+          "prepare_ms": {
+            "max": 8.835098,
+            "p50": 6.790525000000001,
+            "p95": 7.412213,
+            "p99": 7.717959,
+            "samples": 504
+          },
+          "present_calls": 505,
+          "update_ms": {
+            "max": 31.348169000000002,
+            "p50": 24.763882000000002,
+            "p95": 25.696575,
+            "p99": 27.028008,
+            "samples": 505
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "Wayland wp_presentation feedback for the same winit wl_surface commit",
+      "timestamp_coverage_fraction": 1.0,
+      "frames": 1220,
+      "profile": [
+        {
+          "file": "linux-collected4/window-local-typed-final4/stages-88013.jsonl",
+          "sha256": "65557aa77320646b34d5b596356ab4b6dacfad679bdb0db7da6ed600292dfa54",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 1220,
+              "mean": 0.07425126639344262,
+              "p50": 0.07451,
+              "p95": 0.08524,
+              "p99": 0.113904,
+              "max": 0.172434
+            },
+            "document.prepare": {
+              "samples": 1220,
+              "mean": 0.29487588360655737,
+              "p50": 0.235122,
+              "p95": 0.380786,
+              "p99": 0.411814,
+              "max": 36.043225
+            },
+            "typed.capture": {
+              "samples": 1221,
+              "mean": 6.534723531531531,
+              "p50": 6.446839,
+              "p95": 7.082554,
+              "p99": 7.748456,
+              "max": 10.322645
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          712460,
+          879796
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1592256,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1592256,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "4962b0e62ab80a591302e18a753f6b806a9bb75b0be6693c4d68ea9cc67f4d41",
+        "frames.json": "ca5bc69ce3e629a146d135dfbf4fb8dab9fd7133166e7b82339f715c61517520",
+        "input-resources.json": "68e1c425d28db2b4076b1e1d41a2d0bbdfcf475a448cb914548e8e24b751b67b"
+      }
+    },
+    {
+      "host": "linux",
+      "run": "window-process-bytes-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-window-receiver": "9e61ec9c470e13235cecbddf98ae7ee954ec152935fe811906fb0b38b4508465",
+        "cue-execution-proof": "484facc3075ad9073b4b2dd5c75728c782c44fb04ea23a59f38c2caab6b22cf1"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Graphics (RADV RENOIR)\", vendor: 4098, device: 5686, device_type: IntegratedGpu, device_pci_bus_id: \"0000:06:00.0\", driver: \"radv\", driver_info: \"Mesa 26.2.6\", backend: Vulkan, subgroup_min_size: 64, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.12081700000000001,
+            "p50": 0.06899,
+            "p95": 0.101421,
+            "p99": 0.118794,
+            "samples": 129
+          },
+          "distinct_content": 18,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 183.3250000000035,
+            "p50": 183.3249999999964,
+            "p95": 183.3250000000035,
+            "p99": 183.3250000000035,
+            "samples": 17
+          },
+          "estimated_missed_content_refreshes": 162,
+          "estimated_missed_display_refreshes": 51,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 382.0885780000012,
+            "p50": 363.3346300000042,
+            "p95": 382.0885780000012,
+            "p99": 382.0885780000012,
+            "samples": 18
+          },
+          "os_frame_interval_ms": {
+            "max": 66.66400000000294,
+            "p50": 16.666000000000736,
+            "p95": 66.66399999999584,
+            "p99": 66.66400000000294,
+            "samples": 128
+          },
+          "os_presented": 129,
+          "prepare_ms": {
+            "max": 55.028432,
+            "p50": 54.257332999999996,
+            "p95": 55.028432,
+            "p99": 55.028432,
+            "samples": 17
+          },
+          "present_calls": 129,
+          "update_ms": {
+            "max": 56.684898,
+            "p50": 1.407487,
+            "p95": 56.0479,
+            "p99": 56.62253,
+            "samples": 129
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 1522,
+        "inputs": 1528,
+        "loaded": {
+          "acquire_ms": {
+            "max": 0.123573,
+            "p50": 0.071876,
+            "p95": 0.099778,
+            "p99": 0.11050800000000001,
+            "samples": 629
+          },
+          "distinct_content": 91,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 183.32499999999996,
+            "p50": 166.65899999999922,
+            "p95": 183.32399999999893,
+            "p99": 183.32499999999996,
+            "samples": 90
+          },
+          "estimated_missed_content_refreshes": 811,
+          "estimated_missed_display_refreshes": 273,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 384.70900600000135,
+            "p50": 347.77143799999874,
+            "p95": 365.1812499999991,
+            "p99": 384.70900600000135,
+            "samples": 91
+          },
+          "os_frame_interval_ms": {
+            "max": 83.33000000000013,
+            "p50": 16.666000000000736,
+            "p95": 66.66399999999939,
+            "p99": 66.66400000000294,
+            "samples": 628
+          },
+          "os_presented": 629,
+          "prepare_ms": {
+            "max": 82.68726099999999,
+            "p50": 54.0859,
+            "p95": 55.764587,
+            "p99": 82.68726099999999,
+            "samples": 90
+          },
+          "present_calls": 629,
+          "update_ms": {
+            "max": 84.574449,
+            "p50": 1.369756,
+            "p95": 55.937112,
+            "p99": 57.257344,
+            "samples": 629
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          0,
+          0,
+          0
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 0.145223,
+            "p50": 0.07443000000000001,
+            "p95": 0.102042,
+            "p99": 0.11695,
+            "samples": 693
+          },
+          "distinct_content": 101,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 166.65900000000101,
+            "p50": 149.99300000000028,
+            "p95": 166.65899999999922,
+            "p99": 166.65900000000101,
+            "samples": 100
+          },
+          "estimated_missed_content_refreshes": 795,
+          "estimated_missed_display_refreshes": 207,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 384.83198600000003,
+            "p50": 301.7218470000014,
+            "p95": 317.9234219999998,
+            "p99": 318.7078490000008,
+            "samples": 101
+          },
+          "os_frame_interval_ms": {
+            "max": 66.66400000000117,
+            "p50": 16.66600000000029,
+            "p95": 49.99800000000043,
+            "p99": 66.66299999999924,
+            "samples": 692
+          },
+          "os_presented": 693,
+          "prepare_ms": {
+            "max": 54.546146,
+            "p50": 48.926849000000004,
+            "p95": 49.507041,
+            "p99": 49.830889000000006,
+            "samples": 100
+          },
+          "present_calls": 693,
+          "update_ms": {
+            "max": 56.375356000000004,
+            "p50": 1.427835,
+            "p95": 50.69274,
+            "p99": 51.149469,
+            "samples": 693
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "Wayland wp_presentation feedback for the same winit wl_surface commit",
+      "timestamp_coverage_fraction": 1.0,
+      "frames": 1582,
+      "profile": [
+        {
+          "file": "linux-collected4/window-process-bytes-final4/stages-88209.jsonl",
+          "sha256": "8273d69b00657550825e7dda1e76f90cc3f76555f0e88e582d94859176fed97a",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 228,
+              "mean": 0.0013959605263157895,
+              "p50": 0.001293,
+              "p95": 0.002214,
+              "p99": 0.003377,
+              "max": 0.003687
+            },
+            "capture.json_encode": {
+              "samples": 228,
+              "mean": 25.19973604824561,
+              "p50": 24.341991,
+              "p95": 27.444956,
+              "p99": 28.061816,
+              "max": 38.659223
+            },
+            "capture.total": {
+              "samples": 228,
+              "mean": 51.16816609649123,
+              "p50": 49.307485,
+              "p95": 54.795976,
+              "p99": 55.576463,
+              "max": 66.13126
+            },
+            "document.prepare": {
+              "samples": 227,
+              "mean": 0.34397129515418506,
+              "p50": 0.194405,
+              "p95": 0.333097,
+              "p99": 0.357061,
+              "max": 30.715336
+            },
+            "from_bytes.check_resources": {
+              "samples": 228,
+              "mean": 0.006091583333333333,
+              "p50": 0.006001,
+              "p95": 0.006933,
+              "p99": 0.009708,
+              "max": 0.01079
+            },
+            "from_bytes.json_parse": {
+              "samples": 228,
+              "mean": 24.082286171052633,
+              "p50": 24.137307,
+              "p95": 24.508094,
+              "p99": 25.654029,
+              "max": 29.922345
+            },
+            "from_bytes.total": {
+              "samples": 228,
+              "mean": 25.908561530701753,
+              "p50": 25.271009,
+              "p95": 27.600098,
+              "p99": 28.677563,
+              "max": 30.543082
+            }
+          }
+        },
+        {
+          "file": "linux-collected4/window-process-bytes-final4/stages-88224.jsonl",
+          "sha256": "629db4e240833fa28377f37101f8bc0dfc103c142459ecb6084118d7b6945794",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.check_resources": {
+              "samples": 227,
+              "mean": 0.005784154185022026,
+              "p50": 0.00562,
+              "p95": 0.007484,
+              "p99": 0.008816,
+              "max": 0.012193
+            },
+            "decode.json_parse": {
+              "samples": 227,
+              "mean": 24.231201136563875,
+              "p50": 23.924326,
+              "p95": 25.47441,
+              "p99": 32.696901,
+              "max": 36.607795
+            },
+            "decode.rebind_resources": {
+              "samples": 227,
+              "mean": 0.1637446872246696,
+              "p50": 0.153749,
+              "p95": 0.20785,
+              "p99": 0.439266,
+              "max": 0.59537
+            },
+            "decode.total": {
+              "samples": 227,
+              "mean": 24.44438979735683,
+              "p50": 24.137196,
+              "p95": 25.816474,
+              "p99": 32.879304,
+              "max": 36.810306
+            },
+            "from_bytes.check_resources": {
+              "samples": 227,
+              "mean": 0.0056603788546255515,
+              "p50": 0.005511,
+              "p95": 0.007174,
+              "p99": 0.008937,
+              "max": 0.011812
+            },
+            "from_bytes.json_parse": {
+              "samples": 227,
+              "mean": 23.518817220264317,
+              "p50": 23.2405,
+              "p95": 24.523252,
+              "p99": 31.444106,
+              "max": 36.254691
+            },
+            "from_bytes.total": {
+              "samples": 227,
+              "mean": 24.17681871806167,
+              "p50": 23.88401,
+              "p95": 25.446869,
+              "p99": 32.059613,
+              "max": 36.922206
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          712460,
+          879796
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1592256,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1592256,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "df13e7883780200c6b341b36a2665f5c47382a072d098dae0f7d48ddf77a7c2c",
+        "frames.json": "45e5a44781bbeeb64b9e7230e277a98faf4c6e9146689cf0bedf428140b7a136",
+        "input-resources.json": "68e1c425d28db2b4076b1e1d41a2d0bbdfcf475a448cb914548e8e24b751b67b"
+      }
+    },
+    {
+      "host": "linux",
+      "run": "window-process-typed-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-window-receiver": "9e61ec9c470e13235cecbddf98ae7ee954ec152935fe811906fb0b38b4508465",
+        "cue-execution-proof": "484facc3075ad9073b4b2dd5c75728c782c44fb04ea23a59f38c2caab6b22cf1"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon Graphics (RADV RENOIR)\", vendor: 4098, device: 5686, device_type: IntegratedGpu, device_pci_bus_id: \"0000:06:00.0\", driver: \"radv\", driver_info: \"Mesa 26.2.6\", backend: Vulkan, subgroup_min_size: 64, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.105108,
+            "p50": 0.064281,
+            "p95": 0.089418,
+            "p99": 0.10048900000000001,
+            "samples": 180
+          },
+          "distinct_content": 20,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 166.65900000000278,
+            "p50": 149.99300000000204,
+            "p95": 166.65900000000278,
+            "p99": 166.65900000000278,
+            "samples": 19
+          },
+          "estimated_missed_content_refreshes": 152,
+          "estimated_missed_display_refreshes": 0,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 338.84603900000343,
+            "p50": 321.46339099999466,
+            "p95": 338.4909590000049,
+            "p99": 338.84603900000343,
+            "samples": 20
+          },
+          "os_frame_interval_ms": {
+            "max": 16.667000000005316,
+            "p50": 16.666000000000736,
+            "p95": 16.666000000000736,
+            "p99": 16.66699999999821,
+            "samples": 179
+          },
+          "os_presented": 180,
+          "prepare_ms": {
+            "max": 6.6845799999999995,
+            "p50": 6.580624,
+            "p95": 6.6845799999999995,
+            "p99": 6.6845799999999995,
+            "samples": 19
+          },
+          "present_calls": 180,
+          "update_ms": {
+            "max": 8.650516,
+            "p50": 1.326775,
+            "p95": 8.012246000000001,
+            "p99": 8.526122,
+            "samples": 180
+          }
+        },
+        "display_refresh_hz": 60.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 2107,
+        "inputs": 2109,
+        "loaded": {
+          "acquire_ms": {
+            "max": 0.160452,
+            "p50": 0.072135,
+            "p95": 0.093706,
+            "p99": 0.107352,
+            "samples": 898
+          },
+          "distinct_content": 225,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 83.33000000000013,
+            "p50": 66.66399999999939,
+            "p95": 66.66400000000294,
+            "p99": 66.66400000000294,
+            "samples": 224
+          },
+          "estimated_missed_content_refreshes": 673,
+          "estimated_missed_display_refreshes": 2,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 172.46852299999915,
+            "p50": 138.97830499999841,
+            "p95": 139.536678999999,
+            "p99": 155.65320400000004,
+            "samples": 225
+          },
+          "os_frame_interval_ms": {
+            "max": 49.997999999998655,
+            "p50": 16.666000000000736,
+            "p95": 16.666000000000736,
+            "p99": 16.667000000001764,
+            "samples": 897
+          },
+          "os_presented": 898,
+          "prepare_ms": {
+            "max": 42.542465,
+            "p50": 6.594971,
+            "p95": 7.955029000000001,
+            "p99": 9.972211,
+            "samples": 224
+          },
+          "present_calls": 898,
+          "update_ms": {
+            "max": 43.871003,
+            "p50": 1.9416710000000001,
+            "p95": 8.453496,
+            "p99": 9.96622,
+            "samples": 898
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          2,
+          1592256,
+          513
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 0.12074700000000001,
+            "p50": 0.07166399999999999,
+            "p95": 0.096181,
+            "p99": 0.106951,
+            "samples": 899
+          },
+          "distinct_content": 226,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 66.66400000000294,
+            "p50": 66.66399999999939,
+            "p95": 66.66400000000117,
+            "p99": 66.66400000000294,
+            "samples": 225
+          },
+          "estimated_missed_content_refreshes": 673,
+          "estimated_missed_display_refreshes": 0,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 174.4375360000001,
+            "p50": 139.86859099999904,
+            "p95": 141.2837090000001,
+            "p99": 141.45620000000036,
+            "samples": 226
+          },
+          "os_frame_interval_ms": {
+            "max": 16.666999999999987,
+            "p50": 16.665999999999848,
+            "p95": 16.666000000000736,
+            "p99": 16.66699999999821,
+            "samples": 898
+          },
+          "os_presented": 899,
+          "prepare_ms": {
+            "max": 7.681895,
+            "p50": 6.779257,
+            "p95": 6.963714,
+            "p99": 7.3717619999999995,
+            "samples": 225
+          },
+          "present_calls": 899,
+          "update_ms": {
+            "max": 9.297382,
+            "p50": 1.955688,
+            "p95": 8.530891,
+            "p99": 8.857856,
+            "samples": 899
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "Wayland wp_presentation feedback for the same winit wl_surface commit",
+      "timestamp_coverage_fraction": 1.0,
+      "frames": 2151,
+      "profile": [
+        {
+          "file": "linux-collected4/window-process-typed-final4/stages-88107.jsonl",
+          "sha256": "f8bfee2e78eec5919729bc654a3e93d704e5079f235c5587c6b19c2aec906208",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 513,
+              "mean": 0.12921097465886938,
+              "p50": 0.126939,
+              "p95": 0.172144,
+              "p99": 0.194676,
+              "max": 0.235543
+            },
+            "document.prepare": {
+              "samples": 513,
+              "mean": 0.289995962962963,
+              "p50": 0.211578,
+              "p95": 0.273935,
+              "p99": 0.363754,
+              "max": 36.132793
+            },
+            "resources.prepare_packet": {
+              "samples": 513,
+              "mean": 0.44291938401559455,
+              "p50": 0.438494,
+              "p95": 0.554904,
+              "p99": 0.608825,
+              "max": 1.674789
+            },
+            "typed.capture": {
+              "samples": 514,
+              "mean": 6.528879733463035,
+              "p50": 6.469064,
+              "p95": 7.050348,
+              "p99": 8.63134,
+              "max": 10.697515
+            }
+          }
+        },
+        {
+          "file": "linux-collected4/window-process-typed-final4/stages-88132.jsonl",
+          "sha256": "7ffb6680fef5d14130791ab4fe4d76041803514814b0cd1dfaacd33aca144101",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 513,
+              "mean": 0.10379406822612086,
+              "p50": 0.101851,
+              "p95": 0.134653,
+              "p99": 0.17541,
+              "max": 0.214614
+            },
+            "resources.receive_packet": {
+              "samples": 513,
+              "mean": 9.075571781676413,
+              "p50": 9.014771,
+              "p95": 10.254722,
+              "p99": 12.949259,
+              "max": 13.025172
+            },
+            "typed.capture": {
+              "samples": 513,
+              "mean": 6.69623095711501,
+              "p50": 6.675853,
+              "p95": 7.071166,
+              "p99": 9.665164,
+              "max": 9.720769
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          712460,
+          879796
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 1592256,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 1592256,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "ed3a4ecafe8d87a55f1f780fe792facb231f49eedb0e049c900c695a5bff3982",
+        "frames.json": "19624ee96f9fad4baeec06e6af482cadd03019925ef19bd16062571977c131c7",
+        "input-resources.json": "68e1c425d28db2b4076b1e1d41a2d0bbdfcf475a448cb914548e8e24b751b67b"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-amd-local-bytes-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon 780M Graphics\", vendor: 4098, device: 5567, device_type: IntegratedGpu, device_pci_bus_id: \"0000:65:00.0\", driver: \"31.0.14084.3001\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.0253,
+            "p50": 0.0157,
+            "p95": 0.0218,
+            "p99": 0.0253,
+            "samples": 39
+          },
+          "distinct_content": 33,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 169.70680000000016,
+            "p50": 84.85199999999793,
+            "p95": 163.63640000000146,
+            "p99": 169.70680000000016,
+            "samples": 32
+          },
+          "estimated_missed_content_refreshes": 455,
+          "estimated_missed_display_refreshes": 454,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 192.19580000000036,
+            "p50": 179.44360000000614,
+            "p95": 190.61760000000305,
+            "p99": 192.19580000000036,
+            "samples": 33
+          },
+          "os_frame_interval_ms": {
+            "max": 169.70680000000016,
+            "p50": 84.85199999999793,
+            "p95": 163.63640000000146,
+            "p99": 169.70680000000016,
+            "samples": 33
+          },
+          "os_presented": 34,
+          "prepare_ms": {
+            "max": 51.6434,
+            "p50": 45.254200000000004,
+            "p95": 48.4897,
+            "p99": 51.6434,
+            "samples": 36
+          },
+          "present_calls": 39,
+          "update_ms": {
+            "max": 88.203,
+            "p50": 81.1582,
+            "p95": 87.7163,
+            "p99": 88.203,
+            "samples": 39
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 407,
+        "inputs": 412,
+        "loaded": {
+          "acquire_ms": {
+            "max": 0.1316,
+            "p50": 0.0172,
+            "p95": 0.0771,
+            "p99": 0.13019999999999998,
+            "samples": 165
+          },
+          "distinct_content": 149,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 230.30769999999734,
+            "p50": 90.91339999999803,
+            "p95": 181.8249000000023,
+            "p99": 214.28140000000084,
+            "samples": 148
+          },
+          "estimated_missed_content_refreshes": 2259,
+          "estimated_missed_display_refreshes": 2256,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 243.64189999999653,
+            "p50": 192.16059999999757,
+            "p95": 213.1721000000013,
+            "p99": 229.17520000000025,
+            "samples": 149
+          },
+          "os_frame_interval_ms": {
+            "max": 230.30769999999734,
+            "p50": 90.91200000000299,
+            "p95": 181.8249000000023,
+            "p99": 214.28140000000084,
+            "samples": 151
+          },
+          "os_presented": 152,
+          "prepare_ms": {
+            "max": 84.25779999999999,
+            "p50": 48.8427,
+            "p95": 55.9628,
+            "p99": 78.06960000000001,
+            "samples": 162
+          },
+          "present_calls": 165,
+          "update_ms": {
+            "max": 139.45659999999998,
+            "p50": 88.7733,
+            "p95": 100.24470000000001,
+            "p99": 122.3974,
+            "samples": 165
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": false,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 10.577,
+            "p50": 0.0159,
+            "p95": 3.9788,
+            "p99": 5.4824,
+            "samples": 200
+          },
+          "distinct_content": 173,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 231.5336999999995,
+            "p50": 86.2362000000001,
+            "p95": 95.98900000000121,
+            "p99": 99.7129000000001,
+            "samples": 172
+          },
+          "estimated_missed_content_refreshes": 2277,
+          "estimated_missed_display_refreshes": 2264,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 184.97010000000014,
+            "p50": 167.8797999999997,
+            "p95": 177.7488000000007,
+            "p99": 183.43129999999962,
+            "samples": 173
+          },
+          "os_frame_interval_ms": {
+            "max": 99.7129000000001,
+            "p50": 85.9759000000011,
+            "p95": 95.08319999999948,
+            "p99": 99.6024000000002,
+            "samples": 185
+          },
+          "os_presented": 186,
+          "prepare_ms": {
+            "max": 51.140699999999995,
+            "p50": 46.309799999999996,
+            "p95": 48.592299999999994,
+            "p99": 51.1294,
+            "samples": 174
+          },
+          "present_calls": 200,
+          "update_ms": {
+            "max": 89.18180000000001,
+            "p50": 83.36670000000001,
+            "p95": 86.9757,
+            "p99": 88.30399999999999,
+            "samples": 200
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.9244851258581236,
+      "frames": 437,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-amd-local-bytes-final4/stages-40668.jsonl",
+          "sha256": "99da30a97ce460d9e367fb99dd5c7ba7179df67919b0cdf19fc12e85787a243b",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 407,
+              "mean": 0.0010621621621621621,
+              "p50": 0.001,
+              "p95": 0.0016,
+              "p99": 0.0023,
+              "max": 0.0103
+            },
+            "capture.json_encode": {
+              "samples": 407,
+              "mean": 23.489482555282557,
+              "p50": 23.3212,
+              "p95": 26.5476,
+              "p99": 28.5529,
+              "max": 36.3698
+            },
+            "capture.total": {
+              "samples": 407,
+              "mean": 47.35097100737101,
+              "p50": 46.7901,
+              "p95": 53.0924,
+              "p99": 56.5035,
+              "max": 83.867
+            },
+            "decode.check_resources": {
+              "samples": 406,
+              "mean": 0.0031226600985221676,
+              "p50": 0.0032,
+              "p95": 0.0041,
+              "p99": 0.0051,
+              "max": 0.0193
+            },
+            "decode.json_parse": {
+              "samples": 406,
+              "mean": 22.71807660098522,
+              "p50": 22.3233,
+              "p95": 25.3831,
+              "p99": 30.3026,
+              "max": 41.0734
+            },
+            "decode.rebind_resources": {
+              "samples": 406,
+              "mean": 0.2895731527093596,
+              "p50": 0.2815,
+              "p95": 0.3656,
+              "p99": 0.407,
+              "max": 0.4947
+            },
+            "decode.total": {
+              "samples": 406,
+              "mean": 23.061632019704433,
+              "p50": 22.6622,
+              "p95": 25.8882,
+              "p99": 30.6423,
+              "max": 41.5368
+            },
+            "document.prepare": {
+              "samples": 406,
+              "mean": 0.3058766009852217,
+              "p50": 0.2015,
+              "p95": 0.392,
+              "p99": 0.5233,
+              "max": 30.9317
+            },
+            "from_bytes.check_resources": {
+              "samples": 407,
+              "mean": 0.003487960687960688,
+              "p50": 0.0035,
+              "p95": 0.0041,
+              "p99": 0.0049,
+              "max": 0.0057
+            },
+            "from_bytes.json_parse": {
+              "samples": 407,
+              "mean": 22.739802457002455,
+              "p50": 22.3313,
+              "p95": 25.6346,
+              "p99": 28.5111,
+              "max": 45.8525
+            },
+            "from_bytes.total": {
+              "samples": 407,
+              "mean": 23.798232678132678,
+              "p50": 23.3756,
+              "p95": 26.7446,
+              "p99": 29.8346,
+              "max": 47.4064
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "1df0ac1e8cf80e24de6af8cb7c936ae148d2f145739aa0158db2a539f4abbf3d",
+        "frames.json": "4f32218c84fcb0102a50ca0b02367c1d89644b876d4e8a597ae8e2e073805c14",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-amd-local-typed-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon 780M Graphics\", vendor: 4098, device: 5567, device_type: IntegratedGpu, device_pci_bus_id: \"0000:65:00.0\", driver: \"31.0.14084.3001\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 0.017,
+            "p50": 0.011300000000000001,
+            "p95": 0.013600000000000001,
+            "p99": 0.016399999999999998,
+            "samples": 134
+          },
+          "distinct_content": 134,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 28.278000000000247,
+            "p50": 22.598600000002023,
+            "p95": 26.838899999994226,
+            "p99": 28.10039999999958,
+            "samples": 133
+          },
+          "estimated_missed_content_refreshes": 359,
+          "estimated_missed_display_refreshes": 359,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 46.34829999999823,
+            "p50": 40.161500000003514,
+            "p95": 44.419099999998934,
+            "p99": 45.35330000000215,
+            "samples": 134
+          },
+          "os_frame_interval_ms": {
+            "max": 28.278000000000247,
+            "p50": 22.598600000002023,
+            "p95": 26.838899999994226,
+            "p99": 28.10039999999958,
+            "samples": 133
+          },
+          "os_presented": 134,
+          "prepare_ms": {
+            "max": 8.600800000000001,
+            "p50": 5.9350000000000005,
+            "p95": 7.0468,
+            "p99": 8.302999999999999,
+            "samples": 134
+          },
+          "present_calls": 134,
+          "update_ms": {
+            "max": 24.340600000000002,
+            "p50": 21.2726,
+            "p95": 23.3355,
+            "p99": 24.2301,
+            "samples": 134
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 1615,
+        "inputs": 1620,
+        "loaded": {
+          "acquire_ms": {
+            "max": 0.031900000000000005,
+            "p50": 0.011,
+            "p95": 0.0148,
+            "p99": 0.0204,
+            "samples": 654
+          },
+          "distinct_content": 649,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 54.49750000000009,
+            "p50": 22.7012000000002,
+            "p95": 29.41849999999846,
+            "p99": 34.79649999999879,
+            "samples": 648
+          },
+          "estimated_missed_content_refreshes": 1777,
+          "estimated_missed_display_refreshes": 1777,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 88.89939999999896,
+            "p50": 40.97439999999963,
+            "p95": 48.6360000000019,
+            "p99": 54.03749999999974,
+            "samples": 649
+          },
+          "os_frame_interval_ms": {
+            "max": 54.49750000000009,
+            "p50": 22.7012000000002,
+            "p95": 29.41849999999846,
+            "p99": 34.79649999999879,
+            "samples": 648
+          },
+          "os_presented": 649,
+          "prepare_ms": {
+            "max": 34.5457,
+            "p50": 6.1404,
+            "p95": 7.4495000000000005,
+            "p99": 8.6985,
+            "samples": 654
+          },
+          "present_calls": 654,
+          "update_ms": {
+            "max": 49.142900000000004,
+            "p50": 21.6756,
+            "p95": 25.1118,
+            "p99": 27.8017,
+            "samples": 654
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 9.7149,
+            "p50": 0.0112,
+            "p95": 0.015099999999999999,
+            "p99": 4.87,
+            "samples": 705
+          },
+          "distinct_content": 689,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 122.44460000000012,
+            "p50": 21.62530000000018,
+            "p95": 25.850500000000665,
+            "p99": 28.009399999998408,
+            "samples": 688
+          },
+          "estimated_missed_content_refreshes": 1791,
+          "estimated_missed_display_refreshes": 1778,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 45.57950000000055,
+            "p50": 38.93140000000006,
+            "p95": 42.95570000000026,
+            "p99": 44.38000000000031,
+            "samples": 689
+          },
+          "os_frame_interval_ms": {
+            "max": 28.78659999999833,
+            "p50": 21.550699999998812,
+            "p95": 25.73880000000095,
+            "p99": 27.821100000000598,
+            "samples": 702
+          },
+          "os_presented": 703,
+          "prepare_ms": {
+            "max": 8.972100000000001,
+            "p50": 5.8803,
+            "p95": 6.7457,
+            "p99": 7.3354,
+            "samples": 690
+          },
+          "present_calls": 705,
+          "update_ms": {
+            "max": 24.278399999999998,
+            "p50": 20.687,
+            "p95": 22.3063,
+            "p99": 23.3201,
+            "samples": 705
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.9950890116635973,
+      "frames": 1629,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-amd-local-typed-final4/stages-5604.jsonl",
+          "sha256": "9f525733cc43824f38180a16509fcaf15388b60e5aa6ad9bfefa33bd08029841",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 1615,
+              "mean": 0.08943944272445821,
+              "p50": 0.0799,
+              "p95": 0.1464,
+              "p99": 0.1814,
+              "max": 0.3759
+            },
+            "document.prepare": {
+              "samples": 1615,
+              "mean": 0.23776860681114553,
+              "p50": 0.2046,
+              "p95": 0.3236,
+              "p99": 0.4244,
+              "max": 29.032
+            },
+            "typed.capture": {
+              "samples": 1616,
+              "mean": 5.8179036509900985,
+              "p50": 5.6954,
+              "p95": 6.7749,
+              "p99": 7.5393,
+              "max": 9.7442
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "3cbe0a45b3905ee1992156414d916193f67f32cd185332b7c17d99d7e4025cfd",
+        "frames.json": "fb3e6b271bed809a0d6068929af2cc92057e03139c836db1401fb750b436fa2f",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-amd-process-bytes-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon 780M Graphics\", vendor: 4098, device: 5567, device_type: IntegratedGpu, device_pci_bus_id: \"0000:65:00.0\", driver: \"31.0.14084.3001\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 6.8634,
+            "p50": 4.602799999999999,
+            "p95": 5.3203,
+            "p99": 5.9911,
+            "samples": 354
+          },
+          "distinct_content": 19,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 176.85679999999593,
+            "p50": 165.296000000005,
+            "p95": 176.85679999999593,
+            "p99": 176.85679999999593,
+            "samples": 18
+          },
+          "estimated_missed_content_refreshes": 471,
+          "estimated_missed_display_refreshes": 147,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 344.19739999999877,
+            "p50": 327.6690999999943,
+            "p95": 344.19739999999877,
+            "p99": 344.19739999999877,
+            "samples": 19
+          },
+          "os_frame_interval_ms": {
+            "max": 40.91120000000359,
+            "p50": 6.060000000005061,
+            "p95": 40.12949999999904,
+            "p99": 40.57120000000225,
+            "samples": 335
+          },
+          "os_presented": 336,
+          "prepare_ms": {
+            "max": 58.4807,
+            "p50": 50.2896,
+            "p95": 58.4807,
+            "p99": 58.4807,
+            "samples": 18
+          },
+          "present_calls": 354,
+          "update_ms": {
+            "max": 59.954,
+            "p50": 0.0126,
+            "p95": 49.5066,
+            "p99": 54.2493,
+            "samples": 354
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 1620,
+        "inputs": 1629,
+        "loaded": {
+          "acquire_ms": {
+            "max": 59.795899999999996,
+            "p50": 4.4345,
+            "p95": 5.357200000000001,
+            "p99": 11.88,
+            "samples": 1703
+          },
+          "distinct_content": 87,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 215.21519999999938,
+            "p50": 170.10589999999937,
+            "p95": 201.18910000000056,
+            "p99": 215.21519999999938,
+            "samples": 86
+          },
+          "estimated_missed_content_refreshes": 2367,
+          "estimated_missed_display_refreshes": 835,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 437.0709999999996,
+            "p50": 338.1211999999998,
+            "p95": 403.9403999999997,
+            "p99": 437.0709999999996,
+            "samples": 87
+          },
+          "os_frame_interval_ms": {
+            "max": 126.90639999999931,
+            "p50": 6.067900000001458,
+            "p95": 40.18969999999911,
+            "p99": 54.60289999999901,
+            "samples": 1603
+          },
+          "os_presented": 1604,
+          "prepare_ms": {
+            "max": 86.6143,
+            "p50": 53.7874,
+            "p95": 62.654199999999996,
+            "p99": 86.6143,
+            "samples": 86
+          },
+          "present_calls": 1703,
+          "update_ms": {
+            "max": 89.0229,
+            "p50": 0.0097,
+            "p95": 49.4745,
+            "p99": 60.0051,
+            "samples": 1703
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": false,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          0,
+          0,
+          0
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 13.890400000000001,
+            "p50": 4.5877,
+            "p95": 5.335,
+            "p99": 5.6285,
+            "samples": 1758
+          },
+          "distinct_content": 93,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 252.7848000000006,
+            "p50": 156.96649999999934,
+            "p95": 178.26149999999961,
+            "p99": 252.7848000000006,
+            "samples": 92
+          },
+          "estimated_missed_content_refreshes": 2347,
+          "estimated_missed_display_refreshes": 774,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 422.8562,
+            "p50": 313.02899999999977,
+            "p95": 367.33759999999995,
+            "p99": 422.8562,
+            "samples": 93
+          },
+          "os_frame_interval_ms": {
+            "max": 54.38350000000014,
+            "p50": 6.064100000000572,
+            "p95": 40.089299999999994,
+            "p99": 40.66819999999893,
+            "samples": 1659
+          },
+          "os_presented": 1660,
+          "prepare_ms": {
+            "max": 58.3386,
+            "p50": 51.1444,
+            "p95": 56.7436,
+            "p99": 58.3386,
+            "samples": 93
+          },
+          "present_calls": 1758,
+          "update_ms": {
+            "max": 60.547700000000006,
+            "p50": 0.0074,
+            "p95": 50.388000000000005,
+            "p99": 54.7254,
+            "samples": 1758
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.9430226943505553,
+      "frames": 4142,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-amd-process-bytes-final4/stages-16132.jsonl",
+          "sha256": "2299e0e5cbb5064e7f65a6609402721f0b1c87fbf0dacaf961bf434417b88cee",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 216,
+              "mean": 0.001436111111111111,
+              "p50": 0.0013,
+              "p95": 0.0023,
+              "p99": 0.0028,
+              "max": 0.004
+            },
+            "capture.json_encode": {
+              "samples": 216,
+              "mean": 25.643255555555555,
+              "p50": 25.2586,
+              "p95": 29.3787,
+              "p99": 31.0339,
+              "max": 32.0256
+            },
+            "capture.total": {
+              "samples": 216,
+              "mean": 52.64763148148148,
+              "p50": 51.8364,
+              "p95": 59.5187,
+              "p99": 64.121,
+              "max": 67.1811
+            },
+            "document.prepare": {
+              "samples": 215,
+              "mean": 0.3825051162790698,
+              "p50": 0.2285,
+              "p95": 0.3158,
+              "p99": 0.4198,
+              "max": 31.8357
+            },
+            "from_bytes.check_resources": {
+              "samples": 216,
+              "mean": 0.0040587962962962965,
+              "p50": 0.004,
+              "p95": 0.0051,
+              "p99": 0.0056,
+              "max": 0.0077
+            },
+            "from_bytes.json_parse": {
+              "samples": 216,
+              "mean": 25.404924537037036,
+              "p50": 24.7241,
+              "p95": 29.9911,
+              "p99": 33.5061,
+              "max": 35.17
+            },
+            "from_bytes.total": {
+              "samples": 216,
+              "mean": 26.930127777777777,
+              "p50": 26.2412,
+              "p95": 31.7913,
+              "p99": 34.8672,
+              "max": 36.913
+            }
+          }
+        },
+        {
+          "file": "windows-collected4/windows-amd-process-bytes-final4/stages-31540.jsonl",
+          "sha256": "c199bec9882d7e99b354fa48a4cdb3b3371204c6c185451ccb3d338c8bd5c4a9",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.check_resources": {
+              "samples": 215,
+              "mean": 0.004804651162790698,
+              "p50": 0.0041,
+              "p95": 0.0083,
+              "p99": 0.0105,
+              "max": 0.0196
+            },
+            "decode.json_parse": {
+              "samples": 215,
+              "mean": 26.34917069767442,
+              "p50": 25.4521,
+              "p95": 32.8852,
+              "p99": 34.7309,
+              "max": 41.8862
+            },
+            "decode.rebind_resources": {
+              "samples": 215,
+              "mean": 0.5107502325581396,
+              "p50": 0.4501,
+              "p95": 0.8795,
+              "p99": 1.0195,
+              "max": 1.0586
+            },
+            "decode.total": {
+              "samples": 215,
+              "mean": 26.937198139534882,
+              "p50": 25.9791,
+              "p95": 33.2798,
+              "p99": 35.2302,
+              "max": 42.5589
+            },
+            "from_bytes.check_resources": {
+              "samples": 215,
+              "mean": 0.004877674418604651,
+              "p50": 0.004,
+              "p95": 0.0084,
+              "p99": 0.0109,
+              "max": 0.0227
+            },
+            "from_bytes.json_parse": {
+              "samples": 215,
+              "mean": 25.95423534883721,
+              "p50": 24.858,
+              "p95": 31.7369,
+              "p99": 33.6404,
+              "max": 38.9397
+            },
+            "from_bytes.total": {
+              "samples": 215,
+              "mean": 27.65991069767442,
+              "p50": 26.7716,
+              "p95": 33.2385,
+              "p99": 35.2302,
+              "max": 41.846
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "5b87d4a11dac0403ed087ad97706ae5560adc9490b3a7ab7ab17a0f6fcd65eb0",
+        "frames.json": "474c5ee97af25354ea7706f3fdd76f847a98d12e3febcd9da601582a66aede82",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-amd-process-typed-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"AMD Radeon 780M Graphics\", vendor: 4098, device: 5567, device_type: IntegratedGpu, device_pci_bus_id: \"0000:65:00.0\", driver: \"31.0.14084.3001\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 64, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 5.6222,
+            "p50": 4.8966,
+            "p95": 5.3114,
+            "p99": 5.4926,
+            "samples": 495
+          },
+          "distinct_content": 21,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 182.02910000000116,
+            "p50": 145.6176999999954,
+            "p95": 175.96430000000396,
+            "p99": 182.02910000000116,
+            "samples": 20
+          },
+          "estimated_missed_content_refreshes": 457,
+          "estimated_missed_display_refreshes": 0,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 359.41920000000493,
+            "p50": 293.6927999999952,
+            "p95": 348.653800000001,
+            "p99": 359.41920000000493,
+            "samples": 21
+          },
+          "os_frame_interval_ms": {
+            "max": 6.241899999999134,
+            "p50": 6.067099999995662,
+            "p95": 6.087999999998317,
+            "p99": 6.186100000000749,
+            "samples": 494
+          },
+          "os_presented": 495,
+          "prepare_ms": {
+            "max": 7.3755,
+            "p50": 6.2131,
+            "p95": 6.8976999999999995,
+            "p99": 7.3755,
+            "samples": 20
+          },
+          "present_calls": 495,
+          "update_ms": {
+            "max": 9.7003,
+            "p50": 0.0078,
+            "p95": 2.9396999999999998,
+            "p99": 8.2422,
+            "samples": 495
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 2146,
+        "inputs": 2152,
+        "loaded": {
+          "acquire_ms": {
+            "max": 33.7796,
+            "p50": 4.4161,
+            "p95": 5.439699999999999,
+            "p99": 5.575,
+            "samples": 2459
+          },
+          "distinct_content": 237,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 103.14999999999941,
+            "p50": 60.67949999999911,
+            "p95": 78.88329999999755,
+            "p99": 84.97949999999932,
+            "samples": 236
+          },
+          "estimated_missed_content_refreshes": 2222,
+          "estimated_missed_display_refreshes": 39,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 212.95010000000048,
+            "p50": 128.59519999999947,
+            "p95": 151.97119999999842,
+            "p99": 170.96270000000047,
+            "samples": 237
+          },
+          "os_frame_interval_ms": {
+            "max": 54.71939999999975,
+            "p50": 6.066999999998046,
+            "p95": 6.098199999996723,
+            "p99": 12.13300000000217,
+            "samples": 2420
+          },
+          "os_presented": 2421,
+          "prepare_ms": {
+            "max": 35.361700000000006,
+            "p50": 6.2829,
+            "p95": 7.3264000000000005,
+            "p99": 8.1302,
+            "samples": 236
+          },
+          "present_calls": 2459,
+          "update_ms": {
+            "max": 38.1962,
+            "p50": 0.01,
+            "p95": 7.9229,
+            "p99": 9.1631,
+            "samples": 2459
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          2,
+          2035964,
+          565
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 7.5338,
+            "p50": 4.5511,
+            "p95": 5.422599999999999,
+            "p99": 5.6054,
+            "samples": 2472
+          },
+          "distinct_content": 260,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 84.9340999999999,
+            "p50": 54.617999999997835,
+            "p95": 66.74340000000001,
+            "p99": 78.87360000000143,
+            "samples": 259
+          },
+          "estimated_missed_content_refreshes": 2201,
+          "estimated_missed_display_refreshes": 3,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 165.19359999999983,
+            "p50": 119.05519999999825,
+            "p95": 135.52819999999954,
+            "p99": 153.3937999999999,
+            "samples": 260
+          },
+          "os_frame_interval_ms": {
+            "max": 12.170300000001077,
+            "p50": 6.066800000002814,
+            "p95": 6.109000000000364,
+            "p99": 6.1912999999993445,
+            "samples": 2466
+          },
+          "os_presented": 2467,
+          "prepare_ms": {
+            "max": 8.0095,
+            "p50": 5.8102,
+            "p95": 6.5541,
+            "p99": 7.2448,
+            "samples": 260
+          },
+          "present_calls": 2472,
+          "update_ms": {
+            "max": 15.0928,
+            "p50": 0.0101,
+            "p95": 7.3902,
+            "p99": 8.3663,
+            "samples": 2472
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.9920176630434783,
+      "frames": 5888,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-amd-process-typed-final4/stages-40128.jsonl",
+          "sha256": "6cda148ed41e4f1fba3dbf227a358d77232f1ea189b84156cb3784cdc28922fb",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 565,
+              "mean": 0.1315454867256637,
+              "p50": 0.1065,
+              "p95": 0.2494,
+              "p99": 0.3502,
+              "max": 0.4112
+            },
+            "resources.receive_packet": {
+              "samples": 565,
+              "mean": 7.967949911504425,
+              "p50": 7.8384,
+              "p95": 9.2679,
+              "p99": 10.1245,
+              "max": 21.7353
+            },
+            "typed.capture": {
+              "samples": 565,
+              "mean": 5.971176637168142,
+              "p50": 5.8487,
+              "p95": 7.1321,
+              "p99": 7.6656,
+              "max": 16.0047
+            }
+          }
+        },
+        {
+          "file": "windows-collected4/windows-amd-process-typed-final4/stages-40176.jsonl",
+          "sha256": "47e783f11c3c65b5ae019d032f032e45c411712d263e97a7d84903bcbe33cede",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 565,
+              "mean": 0.16634212389380532,
+              "p50": 0.1377,
+              "p95": 0.2957,
+              "p99": 0.338,
+              "max": 0.3924
+            },
+            "document.prepare": {
+              "samples": 565,
+              "mean": 0.3051109734513274,
+              "p50": 0.2219,
+              "p95": 0.4124,
+              "p99": 0.5062,
+              "max": 29.2813
+            },
+            "resources.prepare_packet": {
+              "samples": 565,
+              "mean": 0.42784849557522125,
+              "p50": 0.3795,
+              "p95": 0.667,
+              "p99": 0.7237,
+              "max": 0.9465
+            },
+            "typed.capture": {
+              "samples": 566,
+              "mean": 5.768884098939929,
+              "p50": 5.6765,
+              "p95": 6.711,
+              "p99": 7.4251,
+              "max": 7.8271
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "65726c5e14c5bab0d44c9df64ad6fc1fc51c6579919111246c2f6e67d9a10275",
+        "frames.json": "1d6382711c6a66b189ad212c9f4ded61f17f64b7cceb1aad8db37be14bbfa97a",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-nvidia-local-bytes-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"NVIDIA GeForce RTX 4060 Laptop GPU\", vendor: 4318, device: 10464, device_type: DiscreteGpu, device_pci_bus_id: \"0000:01:00.0\", driver: \"32.0.16.1088\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 32, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 6.9697,
+            "p50": 0.0158,
+            "p95": 5.2006,
+            "p99": 6.9697,
+            "samples": 50
+          },
+          "distinct_content": 31,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 181.82679999999607,
+            "p50": 90.91169999999948,
+            "p95": 109.09459999999882,
+            "p99": 181.82679999999607,
+            "samples": 30
+          },
+          "estimated_missed_content_refreshes": 445,
+          "estimated_missed_display_refreshes": 430,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 213.68389999999948,
+            "p50": 196.2576000000027,
+            "p95": 208.5694000000018,
+            "p99": 213.68389999999948,
+            "samples": 31
+          },
+          "os_frame_interval_ms": {
+            "max": 181.82679999999607,
+            "p50": 84.85109999999452,
+            "p95": 103.03060000000386,
+            "p99": 181.82679999999607,
+            "samples": 45
+          },
+          "os_presented": 46,
+          "prepare_ms": {
+            "max": 57.0683,
+            "p50": 49.3251,
+            "p95": 56.3109,
+            "p99": 57.0683,
+            "samples": 32
+          },
+          "present_calls": 50,
+          "update_ms": {
+            "max": 101.1628,
+            "p50": 87.9898,
+            "p95": 93.9731,
+            "p99": 101.1628,
+            "samples": 50
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 395,
+        "inputs": 395,
+        "loaded": {
+          "acquire_ms": {
+            "max": 7.1121,
+            "p50": 0.018000000000000002,
+            "p95": 0.027399999999999997,
+            "p99": 3.9879,
+            "samples": 201
+          },
+          "distinct_content": 141,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 212.12170000000086,
+            "p50": 96.97950000000333,
+            "p95": 187.88629999999884,
+            "p99": 206.07419999999976,
+            "samples": 140
+          },
+          "estimated_missed_content_refreshes": 2296,
+          "estimated_missed_display_refreshes": 2263,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 242.38360000000014,
+            "p50": 206.2652000000007,
+            "p95": 232.33169999999959,
+            "p99": 237.6675999999982,
+            "samples": 141
+          },
+          "os_frame_interval_ms": {
+            "max": 212.12170000000086,
+            "p50": 96.96930000000137,
+            "p95": 129.48689999999985,
+            "p99": 206.07419999999976,
+            "samples": 173
+          },
+          "os_presented": 174,
+          "prepare_ms": {
+            "max": 81.6234,
+            "p50": 53.0527,
+            "p95": 62.730999999999995,
+            "p99": 67.2689,
+            "samples": 150
+          },
+          "present_calls": 201,
+          "update_ms": {
+            "max": 126.8039,
+            "p50": 93.584,
+            "p95": 110.0606,
+            "p99": 119.2337,
+            "samples": 201
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": false,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 2.2428,
+            "p50": 0.0173,
+            "p95": 0.0244,
+            "p99": 2.0018000000000002,
+            "samples": 204
+          },
+          "distinct_content": 157,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 193.09400000000034,
+            "p50": 91.45370000000064,
+            "p95": 104.07140000000048,
+            "p99": 187.58680000000004,
+            "samples": 156
+          },
+          "estimated_missed_content_refreshes": 2273,
+          "estimated_missed_display_refreshes": 2245,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 201.50499999999914,
+            "p50": 177.2178000000011,
+            "p95": 188.8329000000013,
+            "p99": 198.11699999999988,
+            "samples": 157
+          },
+          "os_frame_interval_ms": {
+            "max": 193.09400000000034,
+            "p50": 89.05359999999973,
+            "p95": 100.2521999999999,
+            "p99": 184.66149999999982,
+            "samples": 187
+          },
+          "os_presented": 188,
+          "prepare_ms": {
+            "max": 63.0911,
+            "p50": 49.8484,
+            "p95": 53.1446,
+            "p99": 55.2507,
+            "samples": 163
+          },
+          "present_calls": 204,
+          "update_ms": {
+            "max": 104.55839999999999,
+            "p50": 89.4233,
+            "p95": 94.1387,
+            "p99": 99.6138,
+            "samples": 204
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.8891170431211499,
+      "frames": 487,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-nvidia-local-bytes-final4/stages-9376.jsonl",
+          "sha256": "862f5df57996d4705ad8681e67ca451bbc676ed8eabf0fbcf017d5efe3e0f710",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 379,
+              "mean": 0.0012854881266490766,
+              "p50": 0.0011,
+              "p95": 0.0021,
+              "p99": 0.0029,
+              "max": 0.0048
+            },
+            "capture.json_encode": {
+              "samples": 379,
+              "mean": 25.207938786279684,
+              "p50": 24.9485,
+              "p95": 28.3639,
+              "p99": 30.618,
+              "max": 31.4378
+            },
+            "capture.total": {
+              "samples": 379,
+              "mean": 51.32426886543536,
+              "p50": 50.2879,
+              "p95": 58.787,
+              "p99": 63.7354,
+              "max": 66.9916
+            },
+            "decode.check_resources": {
+              "samples": 378,
+              "mean": 0.0038047619047619045,
+              "p50": 0.0037,
+              "p95": 0.0047,
+              "p99": 0.0063,
+              "max": 0.018
+            },
+            "decode.json_parse": {
+              "samples": 378,
+              "mean": 24.6039082010582,
+              "p50": 23.871,
+              "p95": 29.8282,
+              "p99": 33.2985,
+              "max": 34.9483
+            },
+            "decode.rebind_resources": {
+              "samples": 378,
+              "mean": 0.3875970899470899,
+              "p50": 0.3741,
+              "p95": 0.5441,
+              "p99": 0.6391,
+              "max": 0.8092
+            },
+            "decode.total": {
+              "samples": 378,
+              "mean": 25.051429365079365,
+              "p50": 24.3188,
+              "p95": 30.333,
+              "p99": 33.7625,
+              "max": 35.4854
+            },
+            "document.prepare": {
+              "samples": 378,
+              "mean": 0.3358243386243386,
+              "p50": 0.2521,
+              "p95": 0.3495,
+              "p99": 0.417,
+              "max": 28.5634
+            },
+            "from_bytes.check_resources": {
+              "samples": 379,
+              "mean": 0.003863324538258575,
+              "p50": 0.0038,
+              "p95": 0.0047,
+              "p99": 0.0056,
+              "max": 0.0089
+            },
+            "from_bytes.json_parse": {
+              "samples": 379,
+              "mean": 24.722671503957784,
+              "p50": 23.981,
+              "p95": 29.734,
+              "p99": 34.8495,
+              "max": 37.0412
+            },
+            "from_bytes.total": {
+              "samples": 379,
+              "mean": 26.04666517150396,
+              "p50": 25.282,
+              "p95": 31.258,
+              "p99": 36.2795,
+              "max": 38.4191
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "62388fe080ab787c7429dab23c1dc1795d4c45d9cdf742eeb11536440464c6c6",
+        "frames.json": "fbbc538e0c72cf9a5efe9253e05d87352e1af5492120fc08fdbcea91f818fce7",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-nvidia-local-typed-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"NVIDIA GeForce RTX 4060 Laptop GPU\", vendor: 4318, device: 10464, device_type: DiscreteGpu, device_pci_bus_id: \"0000:01:00.0\", driver: \"32.0.16.1088\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 32, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 3.9015,
+            "p50": 0.0117,
+            "p95": 0.9756,
+            "p99": 2.548,
+            "samples": 241
+          },
+          "distinct_content": 120,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 40.043700000005344,
+            "p50": 25.504699999999048,
+            "p95": 32.85720000000225,
+            "p99": 36.23949999999354,
+            "samples": 119
+          },
+          "estimated_missed_content_refreshes": 369,
+          "estimated_missed_display_refreshes": 274,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 56.53110000000083,
+            "p50": 47.43930000000063,
+            "p95": 52.46749999999878,
+            "p99": 55.88949999999926,
+            "samples": 120
+          },
+          "os_frame_interval_ms": {
+            "max": 36.23949999999354,
+            "p50": 12.989199999999812,
+            "p95": 25.784900000004995,
+            "p99": 34.54669999999993,
+            "samples": 214
+          },
+          "os_presented": 215,
+          "prepare_ms": {
+            "max": 8.758999999999999,
+            "p50": 6.3689,
+            "p95": 7.2937,
+            "p99": 8.081,
+            "samples": 119
+          },
+          "present_calls": 241,
+          "update_ms": {
+            "max": 29.992,
+            "p50": 1.2927,
+            "p95": 24.5826,
+            "p99": 26.6808,
+            "samples": 241
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 1577,
+        "inputs": 1588,
+        "loaded": {
+          "acquire_ms": {
+            "max": 36.3772,
+            "p50": 0.0112,
+            "p95": 0.0224,
+            "p99": 2.232,
+            "samples": 1152
+          },
+          "distinct_content": 600,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 66.59510000000068,
+            "p50": 25.268699999998034,
+            "p95": 33.12030000000021,
+            "p99": 43.33480000000023,
+            "samples": 599
+          },
+          "estimated_missed_content_refreshes": 1820,
+          "estimated_missed_display_refreshes": 1374,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 105.09980000000141,
+            "p50": 44.991599999999465,
+            "p95": 53.353100000002485,
+            "p99": 60.45880000000281,
+            "samples": 600
+          },
+          "os_frame_interval_ms": {
+            "max": 64.96319999999756,
+            "p50": 13.920399999999944,
+            "p95": 25.77619999999925,
+            "p99": 33.858699999999686,
+            "samples": 1030
+          },
+          "os_presented": 1031,
+          "prepare_ms": {
+            "max": 35.88,
+            "p50": 6.2642,
+            "p95": 7.5950999999999995,
+            "p99": 8.3335,
+            "samples": 607
+          },
+          "present_calls": 1152,
+          "update_ms": {
+            "max": 52.0712,
+            "p50": 20.2352,
+            "p95": 24.511100000000003,
+            "p99": 27.2681,
+            "samples": 1152
+          }
+        },
+        "max_imports": 0,
+        "mode": "local",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": false,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": null,
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 6.9893,
+            "p50": 0.0124,
+            "p95": 0.0213,
+            "p99": 5.1266,
+            "samples": 1134
+          },
+          "distinct_content": 598,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 104.45979999999899,
+            "p50": 25.10400000000068,
+            "p95": 34.43840000000087,
+            "p99": 46.76150000000057,
+            "samples": 597
+          },
+          "estimated_missed_content_refreshes": 1840,
+          "estimated_missed_display_refreshes": 1360,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 64.50699999999986,
+            "p50": 44.80210000000007,
+            "p95": 53.060100000003274,
+            "p99": 59.77759999999943,
+            "samples": 598
+          },
+          "os_frame_interval_ms": {
+            "max": 49.96519999999993,
+            "p50": 13.507799999999293,
+            "p95": 26.38770000000079,
+            "p99": 35.468099999999225,
+            "samples": 1063
+          },
+          "os_presented": 1064,
+          "prepare_ms": {
+            "max": 9.0615,
+            "p50": 6.3542,
+            "p95": 7.503100000000001,
+            "p99": 8.6663,
+            "samples": 602
+          },
+          "present_calls": 1134,
+          "update_ms": {
+            "max": 32.8284,
+            "p50": 20.5515,
+            "p95": 24.5987,
+            "p99": 27.2679,
+            "samples": 1134
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.9126177024482109,
+      "frames": 2655,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-nvidia-local-typed-final4/stages-40036.jsonl",
+          "sha256": "8dd1a47e6bdf14edcbe16664fa6f8b160f29ce2e9d7a318473824c8dd600fc1a",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 1457,
+              "mean": 0.08360844200411804,
+              "p50": 0.0817,
+              "p95": 0.1055,
+              "p99": 0.1237,
+              "max": 0.4947
+            },
+            "document.prepare": {
+              "samples": 1457,
+              "mean": 0.27264797529169527,
+              "p50": 0.2241,
+              "p95": 0.3599,
+              "p99": 0.4431,
+              "max": 29.9819
+            },
+            "typed.capture": {
+              "samples": 1458,
+              "mean": 6.1135,
+              "p50": 6.0003,
+              "p95": 7.1437,
+              "p99": 7.9419,
+              "max": 8.5575
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "9b48cfac01a1bf11155ff89b7813728fdca23cd4f3503a1fd3eaa4b4c1f09bb7",
+        "frames.json": "09d867a3299ff9bc33242356fca3dbd994fe29c46ccbe9853a6557866a10e2cd",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-nvidia-process-bytes-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"NVIDIA GeForce RTX 4060 Laptop GPU\", vendor: 4318, device: 10464, device_type: DiscreteGpu, device_pci_bus_id: \"0000:01:00.0\", driver: \"32.0.16.1088\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 32, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 11.511199999999999,
+            "p50": 4.5786999999999995,
+            "p95": 5.3522,
+            "p99": 5.4609000000000005,
+            "samples": 377
+          },
+          "distinct_content": 19,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 198.37299999999658,
+            "p50": 161.8625999999992,
+            "p95": 198.37299999999658,
+            "p99": 198.37299999999658,
+            "samples": 18
+          },
+          "estimated_missed_content_refreshes": 467,
+          "estimated_missed_display_refreshes": 122,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 345.4656999999983,
+            "p50": 325.31039999999933,
+            "p95": 345.4656999999983,
+            "p99": 345.4656999999983,
+            "samples": 19
+          },
+          "os_frame_interval_ms": {
+            "max": 40.729100000000074,
+            "p50": 6.064700000003143,
+            "p95": 25.945100000001275,
+            "p99": 40.66449999999833,
+            "samples": 358
+          },
+          "os_presented": 359,
+          "prepare_ms": {
+            "max": 50.4889,
+            "p50": 48.2442,
+            "p95": 50.4889,
+            "p99": 50.4889,
+            "samples": 18
+          },
+          "present_calls": 377,
+          "update_ms": {
+            "max": 51.7202,
+            "p50": 0.0061,
+            "p95": 6.982600000000001,
+            "p99": 50.3792,
+            "samples": 377
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 1646,
+        "inputs": 1653,
+        "loaded": {
+          "acquire_ms": {
+            "max": 53.4073,
+            "p50": 4.7302,
+            "p95": 5.3532,
+            "p99": 5.4605,
+            "samples": 1807
+          },
+          "distinct_content": 95,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 198.43820000000179,
+            "p50": 159.5979000000014,
+            "p95": 182.21989999999977,
+            "p99": 198.43820000000179,
+            "samples": 94
+          },
+          "estimated_missed_content_refreshes": 2376,
+          "estimated_missed_display_refreshes": 736,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 448.6093000000011,
+            "p50": 315.4564999999998,
+            "p95": 352.56680000000176,
+            "p99": 448.6093000000011,
+            "samples": 95
+          },
+          "os_frame_interval_ms": {
+            "max": 84.86100000000008,
+            "p50": 6.063600000000946,
+            "p95": 26.13820000000544,
+            "p99": 40.691299999998876,
+            "samples": 1703
+          },
+          "os_presented": 1704,
+          "prepare_ms": {
+            "max": 95.3566,
+            "p50": 50.626999999999995,
+            "p95": 59.217,
+            "p99": 95.3566,
+            "samples": 94
+          },
+          "present_calls": 1807,
+          "update_ms": {
+            "max": 97.3975,
+            "p50": 0.0054,
+            "p95": 46.9435,
+            "p99": 56.1762,
+            "samples": 1807
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": false,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          0,
+          0,
+          0
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "byte-control",
+        "steady": {
+          "acquire_ms": {
+            "max": 8.2729,
+            "p50": 4.8725000000000005,
+            "p95": 5.315099999999999,
+            "p99": 5.3802,
+            "samples": 1803
+          },
+          "distinct_content": 98,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 199.37069999999935,
+            "p50": 151.38739999999905,
+            "p95": 177.82129999999972,
+            "p99": 199.37069999999935,
+            "samples": 97
+          },
+          "estimated_missed_content_refreshes": 2371,
+          "estimated_missed_display_refreshes": 719,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 427.75569999999965,
+            "p50": 302.5610000000007,
+            "p95": 344.6620000000031,
+            "p99": 427.75569999999965,
+            "samples": 98
+          },
+          "os_frame_interval_ms": {
+            "max": 40.935900000000025,
+            "p50": 6.064099999999684,
+            "p95": 40.137200000000206,
+            "p99": 40.48899999999911,
+            "samples": 1702
+          },
+          "os_presented": 1703,
+          "prepare_ms": {
+            "max": 61.2611,
+            "p50": 50.5041,
+            "p95": 53.7269,
+            "p99": 61.2611,
+            "samples": 97
+          },
+          "present_calls": 1803,
+          "update_ms": {
+            "max": 62.77910000000001,
+            "p50": 0.0054,
+            "p95": 49.7701,
+            "p99": 53.8485,
+            "samples": 1803
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.944225873640361,
+      "frames": 4321,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-nvidia-process-bytes-final4/stages-42648.jsonl",
+          "sha256": "3b505e1864113dabd42c176fbf8c2c00d6b0b93589f41dc7c7ddd674b6491ebf",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "capture.check_resources": {
+              "samples": 229,
+              "mean": 0.0015275109170305677,
+              "p50": 0.0013,
+              "p95": 0.0023,
+              "p99": 0.0036,
+              "max": 0.0213
+            },
+            "capture.json_encode": {
+              "samples": 229,
+              "mean": 24.999242358078604,
+              "p50": 24.6888,
+              "p95": 28.2637,
+              "p99": 30.1411,
+              "max": 43.7516
+            },
+            "capture.total": {
+              "samples": 229,
+              "mean": 50.70000480349345,
+              "p50": 50.1699,
+              "p95": 56.9169,
+              "p99": 60.5874,
+              "max": 70.0758
+            },
+            "document.prepare": {
+              "samples": 228,
+              "mean": 0.42940745614035086,
+              "p50": 0.2507,
+              "p95": 0.3764,
+              "p99": 0.4926,
+              "max": 38.3922
+            },
+            "from_bytes.check_resources": {
+              "samples": 229,
+              "mean": 0.0038353711790393014,
+              "p50": 0.0038,
+              "p95": 0.0045,
+              "p99": 0.0073,
+              "max": 0.0091
+            },
+            "from_bytes.json_parse": {
+              "samples": 229,
+              "mean": 24.364226637554587,
+              "p50": 24.0482,
+              "p95": 27.936,
+              "p99": 29.8555,
+              "max": 34.4356
+            },
+            "from_bytes.total": {
+              "samples": 229,
+              "mean": 25.629693449781662,
+              "p50": 25.3357,
+              "p95": 29.3747,
+              "p99": 31.354,
+              "max": 36.1
+            }
+          }
+        },
+        {
+          "file": "windows-collected4/windows-nvidia-process-bytes-final4/stages-7340.jsonl",
+          "sha256": "e1735b9e49c734c746f89ebdb617da2b39dc609ded924b78faa074399ead916f",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.check_resources": {
+              "samples": 228,
+              "mean": 0.004092543859649123,
+              "p50": 0.0039,
+              "p95": 0.0051,
+              "p99": 0.0054,
+              "max": 0.0127
+            },
+            "decode.json_parse": {
+              "samples": 228,
+              "mean": 25.422895614035085,
+              "p50": 24.8817,
+              "p95": 29.8063,
+              "p99": 32.4453,
+              "max": 33.8299
+            },
+            "decode.rebind_resources": {
+              "samples": 228,
+              "mean": 0.4174684210526316,
+              "p50": 0.4005,
+              "p95": 0.6359,
+              "p99": 0.8014,
+              "max": 0.8756
+            },
+            "decode.total": {
+              "samples": 228,
+              "mean": 25.90551798245614,
+              "p50": 25.3469,
+              "p95": 30.2672,
+              "p99": 33.0181,
+              "max": 34.4383
+            },
+            "from_bytes.check_resources": {
+              "samples": 228,
+              "mean": 0.00401578947368421,
+              "p50": 0.0039,
+              "p95": 0.005,
+              "p99": 0.0069,
+              "max": 0.0096
+            },
+            "from_bytes.json_parse": {
+              "samples": 228,
+              "mean": 25.348511403508773,
+              "p50": 24.5561,
+              "p95": 30.214,
+              "p99": 31.8769,
+              "max": 43.7927
+            },
+            "from_bytes.total": {
+              "samples": 228,
+              "mean": 26.636104385964913,
+              "p50": 25.9639,
+              "p95": 31.4667,
+              "p99": 34.2677,
+              "max": 45.0489
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "ad310de21ebf5b86d4bd83baa1296ce4bb2df46c609a8d206de4327d12a14d59",
+        "frames.json": "70d8607591f768ca861a97435e9d51a32e8b1c79cfb4854559e11d9409db0792",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    },
+    {
+      "host": "windows",
+      "run": "windows-nvidia-process-typed-final4",
+      "source_manifest": "source4.json",
+      "binary_hashes": {
+        "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+        "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+      },
+      "summary": {
+        "adapter": "AdapterInfo { name: \"NVIDIA GeForce RTX 4060 Laptop GPU\", vendor: 4318, device: 10464, device_type: DiscreteGpu, device_pci_bus_id: \"0000:01:00.0\", driver: \"32.0.16.1088\", driver_info: \"\", backend: Dx12, subgroup_min_size: 32, subgroup_max_size: 32, transient_saves_memory: Some(false), limit_bucket: None }",
+        "custody": {
+          "acquire_ms": {
+            "max": 5.4590000000000005,
+            "p50": 4.854,
+            "p95": 5.2101,
+            "p99": 5.2896,
+            "samples": 494
+          },
+          "distinct_content": 21,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 188.09800000000365,
+            "p50": 145.66630000000202,
+            "p95": 182.03819999999382,
+            "p99": 188.09800000000365,
+            "samples": 20
+          },
+          "estimated_missed_content_refreshes": 473,
+          "estimated_missed_display_refreshes": 0,
+          "expected_content_frames": 180,
+          "input_to_os_presentation_ms": {
+            "max": 377.25369999999714,
+            "p50": 301.4964000000049,
+            "p95": 372.2069000000019,
+            "p99": 377.25369999999714,
+            "samples": 21
+          },
+          "os_frame_interval_ms": {
+            "max": 6.213400000000036,
+            "p50": 6.067000000001599,
+            "p95": 6.103699999997048,
+            "p99": 6.158599999999126,
+            "samples": 493
+          },
+          "os_presented": 494,
+          "prepare_ms": {
+            "max": 7.7196,
+            "p50": 6.684200000000001,
+            "p95": 7.6029,
+            "p99": 7.7196,
+            "samples": 20
+          },
+          "present_calls": 494,
+          "update_ms": {
+            "max": 9.5932,
+            "p50": 0.0066,
+            "p95": 2.8573,
+            "p99": 9.0041,
+            "samples": 494
+          }
+        },
+        "display_refresh_hz": 165.0,
+        "error": null,
+        "final_imports": 0,
+        "fixture_font": "sans-serif",
+        "handled_inputs": 2153,
+        "inputs": 2155,
+        "loaded": {
+          "acquire_ms": {
+            "max": 34.6141,
+            "p50": 4.5814,
+            "p95": 5.295,
+            "p99": 5.383500000000001,
+            "samples": 2457
+          },
+          "distinct_content": 252,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 97.09219999999874,
+            "p50": 54.62919999999727,
+            "p95": 72.84059999999926,
+            "p99": 90.95259999999783,
+            "samples": 251
+          },
+          "estimated_missed_content_refreshes": 2196,
+          "estimated_missed_display_refreshes": 17,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 216.54439999999653,
+            "p50": 119.75820000000326,
+            "p95": 152.2634000000025,
+            "p99": 176.75369999999901,
+            "samples": 252
+          },
+          "os_frame_interval_ms": {
+            "max": 36.34010000000032,
+            "p50": 6.066999999998046,
+            "p95": 6.082599999999161,
+            "p99": 6.15009999999927,
+            "samples": 2444
+          },
+          "os_presented": 2445,
+          "prepare_ms": {
+            "max": 39.5073,
+            "p50": 6.404100000000001,
+            "p95": 7.574199999999999,
+            "p99": 8.5944,
+            "samples": 252
+          },
+          "present_calls": 2457,
+          "update_ms": {
+            "max": 41.2917,
+            "p50": 0.006,
+            "p95": 8.1262,
+            "p99": 9.2594,
+            "samples": 2457
+          }
+        },
+        "max_imports": 2,
+        "mode": "process",
+        "observation_limit": "Host-dispatched scroll to OS presentation feedback where available. No physical input, photon or scanout instrumentation. Windows timestamps are reconstructed from DXGI counters.",
+        "os_feedback_coverage": true,
+        "pacing_target_met": false,
+        "resource_table_entries_bytes_packets": [
+          2,
+          2035964,
+          574
+        ],
+        "schema": "cue-window-pacing-v1",
+        "snapshot_delivery": "typed",
+        "steady": {
+          "acquire_ms": {
+            "max": 9.0005,
+            "p50": 4.464799999999999,
+            "p95": 5.2736,
+            "p99": 5.368,
+            "samples": 2473
+          },
+          "distinct_content": 253,
+          "distinct_content_60hz_target_met": false,
+          "distinct_content_interval_ms": {
+            "max": 175.95960000000053,
+            "p50": 54.63599999999991,
+            "p95": 72.81319999999968,
+            "p99": 109.18589999999995,
+            "samples": 252
+          },
+          "estimated_missed_content_refreshes": 2212,
+          "estimated_missed_display_refreshes": 3,
+          "expected_content_frames": 900,
+          "input_to_os_presentation_ms": {
+            "max": 244.29349999999948,
+            "p50": 119.60210000000072,
+            "p95": 146.99579999999912,
+            "p99": 202.07849999999982,
+            "samples": 253
+          },
+          "os_frame_interval_ms": {
+            "max": 12.133099999999786,
+            "p50": 6.06690000000043,
+            "p95": 6.083999999999534,
+            "p99": 6.170799999999588,
+            "samples": 2467
+          },
+          "os_presented": 2468,
+          "prepare_ms": {
+            "max": 8.230400000000001,
+            "p50": 6.562799999999999,
+            "p95": 7.5017,
+            "p99": 8.0912,
+            "samples": 253
+          },
+          "present_calls": 2473,
+          "update_ms": {
+            "max": 10.107,
+            "p50": 0.0062,
+            "p95": 8.1744,
+            "p99": 9.201300000000002,
+            "samples": 2473
+          }
+        },
+        "surface_timeouts_or_occlusions": 0,
+        "target_hz": 60,
+        "validation_errors": [],
+        "viewport_history": [
+          [
+            800,
+            600
+          ],
+          [
+            1894,
+            1020
+          ],
+          [
+            800,
+            600
+          ],
+          [
+            960,
+            640
+          ]
+        ],
+        "workload_completed": true
+      },
+      "feedback_basis": "DXGI PresentCount and PresentRefreshCount; timestamps reconstructed from SyncQPCTime and display refresh",
+      "timestamp_coverage_fraction": 0.9966078697421981,
+      "frames": 5896,
+      "profile": [
+        {
+          "file": "windows-collected4/windows-nvidia-process-typed-final4/stages-35412.jsonl",
+          "sha256": "c5a7f6b290b9644c73b2306bbbf99ff835fe690f88df30535785d454e14681c1",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 574,
+              "mean": 0.09336655052264808,
+              "p50": 0.0908,
+              "p95": 0.1171,
+              "p99": 0.1343,
+              "max": 0.1877
+            },
+            "document.prepare": {
+              "samples": 574,
+              "mean": 0.35654216027874563,
+              "p50": 0.2649,
+              "p95": 0.4641,
+              "p99": 0.5796,
+              "max": 33.2606
+            },
+            "resources.prepare_packet": {
+              "samples": 574,
+              "mean": 0.30207822299651566,
+              "p50": 0.3014,
+              "p95": 0.4152,
+              "p99": 0.4726,
+              "max": 1.0195
+            },
+            "typed.capture": {
+              "samples": 575,
+              "mean": 6.183972,
+              "p50": 6.1277,
+              "p95": 7.1035,
+              "p99": 7.6322,
+              "max": 9.2638
+            }
+          }
+        },
+        {
+          "file": "windows-collected4/windows-nvidia-process-typed-final4/stages-42088.jsonl",
+          "sha256": "c0745f474681a05e457a19b3ee8f72662eccc439fb1d31ee2193d3ee74a99927",
+          "mode": "native-window-all-phases-and-startup",
+          "stages_ms": {
+            "decode.total": {
+              "samples": 574,
+              "mean": 0.1088397212543554,
+              "p50": 0.1054,
+              "p95": 0.1411,
+              "p99": 0.1672,
+              "max": 0.2405
+            },
+            "resources.receive_packet": {
+              "samples": 574,
+              "mean": 8.226712717770035,
+              "p50": 8.082,
+              "p95": 9.8381,
+              "p99": 10.5658,
+              "max": 12.3329
+            },
+            "typed.capture": {
+              "samples": 574,
+              "mean": 6.1972484320557495,
+              "p50": 6.0682,
+              "p95": 7.4942,
+              "p99": 8.1476,
+              "max": 10.3399
+            }
+          }
+        }
+      ],
+      "input_resources": {
+        "font_entry_sizes": [
+          0,
+          1045956,
+          990008
+        ],
+        "font_family": "sans-serif",
+        "font_palette_entries": 3,
+        "font_source_bytes": 2035964,
+        "resource_budget_bytes": 33554432,
+        "sections": 120,
+        "unique_font_backing_bytes": 2035964,
+        "unique_font_backings": 3
+      },
+      "raw_sha256": {
+        "summary.json": "9f59abc3b4fab68493cb3a3656b5678f3eaebd724748b89aba0590d7a91dbf06",
+        "frames.json": "12081fcac515cd51e3073f9524d27d2247e5cd9b280d520db0f2ffa76ce1ea1e",
+        "input-resources.json": "45169db2bd4d4b6b1fa31612914f171c9be405d14cd993f2467a15d75ecf10f7"
+      }
+    }
+  ],
+  "positive_test_executions": {
+    "mac": 43,
+    "linux": 28,
+    "windows": 39
+  },
+  "all_pacing_targets_met": false,
+  "final_source_manifest": {
+    "Cargo.lock": "497668968f6916c13315f878449b682eddac7b974fe48484f47061026cbd9e22",
+    "adapters/netrender/Cargo.toml": "80cc096597434104d99ea76403853b1c371a4517565d7e4d767d6d076f397a19",
+    "adapters/netrender/src/cpu.rs": "7a54e525c418274507c499f8da4c69fcbd747d07b5cb389c70dbbef06c839096",
+    "adapters/netrender/src/lib.rs": "765d42d6af6a21e50aea300cba44cc257fecd7e8741e13ccde8cebdff86cc707",
+    "adapters/netrender/src/render_session.rs": "3477324fd7f9acf2c5fc77ed27f6d6a636a36346e319486db4b2f256798d27aa",
+    "adapters/netrender/src/scene_job.rs": "acfc1ee81b5c5871ff8584a7815770e12c7a4ef746bffcbd86f5b5505fd77166",
+    "support/execution-proof/src/dx12_handoff/mod.rs": "9244fecfa161b3f9d983d63178cfe4505669a4a5accab155459ebabc637a4ad6",
+    "support/execution-proof/src/dx12_handoff/worker.rs": "798bfe6f01cdcfdbf698e3947a7b1303d90b24a17cf8fb62edbcaeb1b8ac41e8",
+    "support/execution-proof/src/metal_handoff.rs": "533ae8161efb0d4ccdd482349088083fdf41d045120c399f7b1f40cac2fbeb40",
+    "support/execution-proof/src/receiver/config.rs": "b61b260e22bc87b57118d4300268f915a9b5c7f3c4070d015c70129b5817f89e",
+    "support/execution-proof/src/receiver/mod.rs": "aad8379105d9b86e14b31318ec740a00234fae102825b9555c1d17023463887c",
+    "support/execution-proof/src/receiver/renderer.rs": "b423bf363f8ab80884ffe3a7d615d3b5611fd439b27cac8329d6294a43fb5185",
+    "support/execution-proof/src/receiver/report.rs": "21ef03c1c216ae739a695f2356dcdc31ff9f3773d39213bad8a7093e479f9c8e",
+    "support/execution-proof/src/render_wire.rs": "32b812832aa0008e71a1c67276f8a49297afa23c4d630230acedf2fe9e9694a4",
+    "support/execution-proof/src/vulkan_handoff.rs": "b2df77f7741a18f1249540b09a4564ae833020d1e09133b556922a502a6e19ea",
+    "support/execution-proof/tests/dx12_handoff.rs": "d6492505d1727ed3ba1d16a0a0ec9bf966315d9d5f79b4192215f9b2b0b2dd71",
+    "support/execution-proof/tests/hybrid.rs": "d861127d8b72eca31fb27fd1debd37e1ad1e57de370da1a7e329f952fb941fbf",
+    "support/execution-proof/tests/metal_handoff.rs": "de1179d815cd7cb432784e71d4f42afec347de96c1b896283eef11fecc9556e9",
+    "support/execution-proof/tests/vulkan_handoff.rs": "ded627e24bd2f7fd88b69b2c847d64f80d65904c08a02614958ba04af4029275",
+    "adapters/netrender/src/resource_table.rs": "1631ce4443ac7058902387a1cc52ad586c331fcee6356036316798089d3fcfd7",
+    "adapters/netrender/src/typed_scene.rs": "9c20be1e67d25d5217c5926c3c910ab673ac7858c79381cca2a1bac95d1afa94",
+    "adapters/netrender/tests/resource_table.rs": "b5c7ae0ed06a141c865494c099ff6cd80169cc6a579c99903a59802f3b8ecf51",
+    "adapters/netrender/tests/typed_scene.rs": "d9ed4c32e5695ff2a64c65a1315b3f1979d3fb942675196f40d9380a1b403fb3"
+  },
+  "linux_final_build": {
+    "build": 0,
+    "clippy": 0,
+    "binaries_identical_to_measured_source4": true,
+    "hashes": {
+      "cue-window-receiver": "9e61ec9c470e13235cecbddf98ae7ee954ec152935fe811906fb0b38b4508465",
+      "cue-execution-proof": "484facc3075ad9073b4b2dd5c75728c782c44fb04ea23a59f38c2caab6b22cf1"
+    }
+  },
+  "windows_final_build": {
+    "hashes": {
+      "cue-execution-proof": "c2cbe5594d8999b99a70102b45c24b182dd31f63c89b06bb60c1754a3558a64c",
+      "cue-window-receiver": "83b19529eb3dd1fbc769ee8243e223ed81a4f9bfe9d0eb1407da2a572fdff8d3"
+    },
+    "binaries_identical_to_measured_source4": true,
+    "build": 0,
+    "clippy": 0
+  },
+  "controls": {
+    "byte-path-failing-control": {
+      "exit": 101,
+      "expected_failure": true,
+      "tests_failed": 1,
+      "binary": "/Users/markik/Code/targets/lanes/cue-execution-host/build/debug/deps/typed_scene-6ee94ed4a13985af",
+      "sha256": "407245440d50b4ed448e0c8ba4ca3110641f5dffa6459e11f90cb8c4153ece5f",
+      "control": "Select legacy byte capture in the no-copy/lazy-encoding test; the same binary passes with the control unset."
+    },
+    "alias-failing-control": {
+      "exit": 101,
+      "failed_tests": 1,
+      "source_sha256": "42383461f3763d1a994efe03656acc0a535c5fe6ebed6e4924195a4cf1b895ca",
+      "test": "many_aliases_share_one_bounded_resource_entry",
+      "reason": "reference-count cap incorrectly rejected 300 aliases of one four-byte resource"
+    },
+    "metal-release-order-control": {
+      "source_manifest": "source4.json",
+      "failed_run": "mac-process-typed-final4",
+      "completed": false,
+      "error": "invalid Metal offer",
+      "last_frame_revision": 510,
+      "final_imports_at_failure": 1,
+      "raw_summary_sha256": "04a6b9b37cf7a8f97c77c207fac8aec60f859102e03a5e762dc5ef91921bf6fd",
+      "frozen_binaries": "/Users/markik/Code/output/cue-typed-resources/mac-process-typed-final4.app",
+      "diagnosis": "poll queued Released as a response but kept the old slot in offers until poll finished; a following Offer for the reused slot was rejected before release could consume that response."
+    }
+  },
+  "locked_identities": {
+    "packages": 565,
+    "unchanged_records": 564,
+    "changed_records": [
+      [
+        "cue-netrender",
+        "0.1.2",
+        null
+      ]
+    ],
+    "sha256": "497668968f6916c13315f878449b682eddac7b974fe48484f47061026cbd9e22"
+  }
+}

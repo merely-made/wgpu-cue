@@ -4,7 +4,7 @@ use crate::scene_profile::measure;
 use netrender::{Scene, SceneOp};
 use std::{
     io::{self, Write},
-    sync::Arc,
+    sync::{Arc, OnceLock},
 };
 use webcue::*;
 
@@ -56,7 +56,7 @@ pub(crate) fn frame_bytes(width: u32, height: u32, limits: RenderLimits) -> Rend
     Ok(bytes)
 }
 
-fn closed_resources(scene: &Scene, limits: RenderLimits) -> RenderResult<usize> {
+pub(crate) fn closed_resources(scene: &Scene, limits: RenderLimits) -> RenderResult<usize> {
     frame_bytes(scene.viewport_width, scene.viewport_height, limits)?;
     if !scene.compositor_surfaces.is_empty() {
         return Err(RenderError::UnresolvedResource("native compositor surface"));
@@ -121,12 +121,37 @@ impl Write for Limited {
 /// not a hostile-data parser sandbox or a stable cross-version wire standard.
 #[derive(Clone, Debug)]
 pub struct SceneSnapshot {
-    bytes: Arc<[u8]>,
+    bytes: OnceLock<Arc<[u8]>>,
+    typed: Option<Arc<Scene>>,
+    structure: Option<Arc<[u8]>>,
+    encoded_len: usize,
     width: u32,
     height: u32,
     resource_bytes: usize,
 }
 impl SceneSnapshot {
+    /// Own a validated scene. Payload buffers remain shared and immutable. The
+    /// resource-free structure still round-trips through the pinned parser so
+    /// malformed fields cannot bypass the byte path's checks. Exact full-wire
+    /// accounting is retained; full resource JSON is created only on bytes().
+    /// IDs are minted on capture; decoded clones share those immutable owners.
+    /// Byte snapshots continue to mint IDs on each decode.
+    pub fn capture_owned(mut scene: Scene, limits: RenderLimits) -> RenderResult<Self> {
+        measure("typed.capture", 0, || {
+            let resource_bytes = closed_resources(&scene, limits)?;
+            crate::typed_scene::rebind_shared(&mut scene);
+            let (structure, encoded_len) = crate::typed_scene::validate_structure(&scene, limits)?;
+            Ok(Self {
+                width: scene.viewport_width,
+                height: scene.viewport_height,
+                resource_bytes,
+                encoded_len,
+                structure: Some(structure.into()),
+                typed: Some(Arc::new(scene)),
+                bytes: OnceLock::new(),
+            })
+        })
+    }
     pub fn capture(scene: &Scene, limits: RenderLimits) -> RenderResult<Self> {
         measure("capture.total", 0, || {
             measure("capture.check_resources", 0, || {
@@ -156,7 +181,10 @@ impl SceneSnapshot {
                 closed_resources(&scene, limits)
             })?;
             Ok(Self {
-                bytes: bytes.into(),
+                encoded_len: bytes.len(),
+                bytes: OnceLock::from(Arc::<[u8]>::from(bytes)),
+                typed: None,
+                structure: None,
                 width: scene.viewport_width,
                 height: scene.viewport_height,
                 resource_bytes,
@@ -164,7 +192,26 @@ impl SceneSnapshot {
         })
     }
     pub fn bytes(&self) -> &[u8] {
-        &self.bytes
+        self.bytes.get_or_init(|| {
+            let bytes =
+                serde_json::to_vec(self.typed.as_ref().expect("validated typed scene").as_ref())
+                    .expect("validated pinned scene serializer");
+            assert_eq!(bytes.len(), self.encoded_len, "typed byte accounting");
+            bytes.into()
+        })
+    }
+    /// Exact full JSON size, including resources, without forcing serialization.
+    pub fn accounted_bytes(&self) -> usize {
+        self.encoded_len
+    }
+    pub fn is_typed(&self) -> bool {
+        self.typed.is_some()
+    }
+    pub fn encoded_materialized(&self) -> bool {
+        self.bytes.get().is_some()
+    }
+    pub(crate) fn structure(&self) -> Option<&[u8]> {
+        self.structure.as_deref()
     }
     pub fn size(&self) -> FrameSize {
         FrameSize::new(self.width, self.height)
@@ -173,15 +220,20 @@ impl SceneSnapshot {
         self.resource_bytes
     }
     pub fn decode(&self, limits: RenderLimits) -> RenderResult<Scene> {
-        measure("decode.total", self.bytes.len(), || {
-            if self.bytes.len() > limits.snapshot_bytes {
+        measure("decode.total", self.encoded_len, || {
+            if self.encoded_len > limits.snapshot_bytes {
                 return Err(RenderError::Budget("snapshot bytes"));
             }
-            let mut scene: Scene = measure("decode.json_parse", self.bytes.len(), || {
-                serde_json::from_slice(&self.bytes)
+            if let Some(scene) = &self.typed {
+                closed_resources(scene, limits)?;
+                return Ok(scene.as_ref().clone());
+            }
+            let bytes = self.bytes();
+            let mut scene: Scene = measure("decode.json_parse", bytes.len(), || {
+                serde_json::from_slice(bytes)
             })
             .map_err(|e| RenderError::Snapshot(e.to_string()))?;
-            measure("decode.check_resources", self.bytes.len(), || {
+            measure("decode.check_resources", self.encoded_len, || {
                 closed_resources(&scene, limits)
             })?;
             measure("decode.rebind_resources", self.resource_bytes, || {

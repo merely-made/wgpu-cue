@@ -115,7 +115,7 @@ impl CpuSceneSource {
         if snapshot.size() != FrameSize::new(self.viewport.width, self.viewport.height) {
             return Err(Error::Invalid("scene extent differs from viewport".into()).into());
         }
-        if snapshot.bytes().len() > self.limits.snapshot_bytes {
+        if snapshot.accounted_bytes() > self.limits.snapshot_bytes {
             return Err(RenderError::Budget("snapshot bytes"));
         }
         if snapshot.resource_bytes() > self.limits.resource_bytes {
