@@ -15,6 +15,8 @@ pub mod hybrid;
 pub mod render_session;
 #[cfg(feature = "scene-jobs")]
 pub mod scene_job;
+#[cfg(feature = "scene-jobs")]
+pub mod scene_profile;
 use std::{
     future::Future,
     pin::Pin,

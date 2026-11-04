@@ -369,3 +369,9 @@ pub mod dx12_handoff;
 
 #[cfg(feature = "window-receiver")]
 pub mod receiver;
+
+#[cfg(feature = "scene-profile")]
+pub mod profile;
+
+#[cfg(feature = "hybrid-raster")]
+pub mod scene_fixture;

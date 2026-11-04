@@ -115,6 +115,12 @@ DXGI polling also falls below the required timestamp coverage. This is a
 reproducible performance baseline, with native correctness gates recorded
 separately from pacing. See the [run instructions](support/execution-proof/WINDOW_RECEIVER.md).
 
+The opt-in [`scene-profile` diagnostics](docs/2026-11-04-scene-stage-profile.md)
+separate retained document preparation, snapshot encoding/validation, decoding
+and resource-ID rebinding. Repeated CPU probes and native process traces identify
+JSON processing of embedded font payloads as the dominant snapshot cost. The
+diagnostics preserve the existing codec, resource checks and supplier pins.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the

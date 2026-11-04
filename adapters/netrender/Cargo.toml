@@ -13,6 +13,7 @@ name = "wgpu_cue_netrender"
 
 [features]
 default = []
+scene-profile = ["scene-jobs"]
 scene-jobs = ["netrender/serde", "dep:serde_json"]
 cpu = ["scene-jobs", "netrender/vello-cpu"]
 hybrid = ["scene-jobs", "netrender/vello-hybrid"]

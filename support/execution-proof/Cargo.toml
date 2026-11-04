@@ -6,6 +6,7 @@ license.workspace = true
 publish = false
 
 [features]
+scene-profile = ["hybrid-raster", "cue-netrender/scene-profile"]
 window-receiver = ["metal-handoff", "vulkan-handoff", "dx12-handoff", "dep:winit", "dep:raw-window-handle", "dep:pollster", "dep:ash", "dep:wayland-client", "dep:wayland-backend", "dep:wayland-protocols"]
 cpu-raster = ["dep:cue-netrender", "cue-netrender/cpu"]
 hybrid-raster = ["dep:cue-netrender", "cue-netrender/hybrid"]
@@ -56,3 +57,8 @@ windows = { version = "0.62", optional = true, features = ["Win32_Foundation", "
 name = "cue-window-receiver"
 path = "src/bin/window_receiver.rs"
 required-features = ["window-receiver"]
+
+[[bin]]
+name = "cue-scene-profile"
+path = "src/bin/scene_profile.rs"
+required-features = ["scene-profile"]

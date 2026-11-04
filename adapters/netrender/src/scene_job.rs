@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 //! Complete owned scenes at the boundary before renderer-specific preparation.
+use crate::scene_profile::measure;
 use netrender::{Scene, SceneOp};
 use std::{
     io::{self, Write},
@@ -127,27 +128,39 @@ pub struct SceneSnapshot {
 }
 impl SceneSnapshot {
     pub fn capture(scene: &Scene, limits: RenderLimits) -> RenderResult<Self> {
-        closed_resources(scene, limits)?;
-        let mut writer = Limited {
-            bytes: Vec::new(),
-            limit: limits.snapshot_bytes,
-        };
-        serde_json::to_writer(&mut writer, scene)
+        measure("capture.total", 0, || {
+            measure("capture.check_resources", 0, || {
+                closed_resources(scene, limits)
+            })?;
+            let mut writer = Limited {
+                bytes: Vec::new(),
+                limit: limits.snapshot_bytes,
+            };
+            measure("capture.json_encode", 0, || {
+                serde_json::to_writer(&mut writer, scene)
+            })
             .map_err(|e| RenderError::Snapshot(e.to_string()))?;
-        Self::from_bytes(writer.bytes, limits)
+            Self::from_bytes(writer.bytes, limits)
+        })
     }
     pub fn from_bytes(bytes: Vec<u8>, limits: RenderLimits) -> RenderResult<Self> {
-        if bytes.len() > limits.snapshot_bytes {
-            return Err(RenderError::Budget("snapshot bytes"));
-        }
-        let scene: Scene =
-            serde_json::from_slice(&bytes).map_err(|e| RenderError::Snapshot(e.to_string()))?;
-        let resource_bytes = closed_resources(&scene, limits)?;
-        Ok(Self {
-            bytes: bytes.into(),
-            width: scene.viewport_width,
-            height: scene.viewport_height,
-            resource_bytes,
+        measure("from_bytes.total", bytes.len(), || {
+            if bytes.len() > limits.snapshot_bytes {
+                return Err(RenderError::Budget("snapshot bytes"));
+            }
+            let scene: Scene = measure("from_bytes.json_parse", bytes.len(), || {
+                serde_json::from_slice(&bytes)
+            })
+            .map_err(|e| RenderError::Snapshot(e.to_string()))?;
+            let resource_bytes = measure("from_bytes.check_resources", bytes.len(), || {
+                closed_resources(&scene, limits)
+            })?;
+            Ok(Self {
+                bytes: bytes.into(),
+                width: scene.viewport_width,
+                height: scene.viewport_height,
+                resource_bytes,
+            })
         })
     }
     pub fn bytes(&self) -> &[u8] {
@@ -160,26 +173,36 @@ impl SceneSnapshot {
         self.resource_bytes
     }
     pub fn decode(&self, limits: RenderLimits) -> RenderResult<Scene> {
-        if self.bytes.len() > limits.snapshot_bytes {
-            return Err(RenderError::Budget("snapshot bytes"));
-        }
-        let mut scene: Scene = serde_json::from_slice(&self.bytes)
-            .map_err(|e| RenderError::Snapshot(e.to_string()))?;
-        closed_resources(&scene, limits)?;
-        // Netrender capture preserves Blob IDs for deterministic replay. A new
-        // execution namespace must mint fresh IDs before using renderer caches.
-        // Font slot zero is the provider's reserved empty sentinel.
-        for (index, font) in scene.fonts.iter_mut().enumerate() {
-            if index == 0 && font.index == 0 && font.data.as_ref().is_empty() {
-                *font = Scene::new(1, 1).fonts[0].clone();
-            } else {
-                font.data = netrender::peniko::Blob::new(Arc::new(font.data.as_ref().to_vec()));
+        measure("decode.total", self.bytes.len(), || {
+            if self.bytes.len() > limits.snapshot_bytes {
+                return Err(RenderError::Budget("snapshot bytes"));
             }
-        }
-        for image in scene.image_sources.values_mut() {
-            image.data = netrender::peniko::Blob::new(Arc::new(image.data.as_ref().to_vec()));
-        }
-        Ok(scene)
+            let mut scene: Scene = measure("decode.json_parse", self.bytes.len(), || {
+                serde_json::from_slice(&self.bytes)
+            })
+            .map_err(|e| RenderError::Snapshot(e.to_string()))?;
+            measure("decode.check_resources", self.bytes.len(), || {
+                closed_resources(&scene, limits)
+            })?;
+            measure("decode.rebind_resources", self.resource_bytes, || {
+                // Netrender capture preserves Blob IDs for deterministic replay. A new
+                // execution namespace must mint fresh IDs before using renderer caches.
+                // Font slot zero is the provider's reserved empty sentinel.
+                for (index, font) in scene.fonts.iter_mut().enumerate() {
+                    if index == 0 && font.index == 0 && font.data.as_ref().is_empty() {
+                        *font = Scene::new(1, 1).fonts[0].clone();
+                    } else {
+                        font.data =
+                            netrender::peniko::Blob::new(Arc::new(font.data.as_ref().to_vec()));
+                    }
+                }
+                for image in scene.image_sources.values_mut() {
+                    image.data =
+                        netrender::peniko::Blob::new(Arc::new(image.data.as_ref().to_vec()));
+                }
+            });
+            Ok(scene)
+        })
     }
 }
 

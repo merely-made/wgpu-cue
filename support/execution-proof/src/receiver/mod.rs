@@ -175,11 +175,7 @@ impl Receiver {
         }));
         surface.configure(cx.device, &config);
         let blit = blit::Blit::new(cx.device, format);
-        let rows=(0..120).map(|i|format!("<section style='background:#{:02x}4060;padding:12px;margin:6px;border:2px solid #90b0d0'><b>Record {i}</b> — owned document, native frame transfer, glyphs and borders. <span>Scroll this retained document.</span></section>",32+i%80)).collect::<String>();
-        let html = format!(
-            "<!doctype html><style>body{{margin:0;background:#203050;color:white;font:16px {}}}h1{{margin:12px}}</style><h1>Genet renderer process → receiving window</h1>{rows}",
-            cfg.font
-        );
+        let html = crate::scene_fixture::html(&cfg.font);
         let mut document = GenetDocument::new(
             viewport,
             "https://fixture.invalid/receiver".into(),
@@ -344,7 +340,9 @@ impl Receiver {
             && (self.revision == 0 || self.current_note.content != self.content_sequence)
         {
             let prepare = Instant::now();
-            let scene = self.document.prepare(self.viewport)?;
+            let scene = wgpu_cue_netrender::scene_profile::measure("document.prepare", 0, || {
+                self.document.prepare(self.viewport)
+            })?;
             let snapshot = SceneSnapshot::capture(&scene, RenderLimits::default())?;
             prepare_ms = prepare.elapsed().as_secs_f64() * 1000.;
             self.revision += 1;

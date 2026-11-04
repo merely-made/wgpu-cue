@@ -3,6 +3,8 @@ use cue_execution_proof::{Executor, Request, encode, read_frame, write_frame};
 use std::io;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    #[cfg(feature = "scene-profile")]
+    cue_execution_proof::profile::install()?;
     #[cfg(all(feature = "dx12-handoff", target_os = "windows"))]
     if std::env::args().any(|arg| arg == "--dx12-handoff") {
         return cue_execution_proof::dx12_handoff::helper();

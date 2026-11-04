@@ -85,3 +85,10 @@ cargo +1.99.1 clippy --locked -p cue-execution-proof --features window-receiver 
 
 Read the [qualification record](../../docs/2026-11-04-window-presentation-pacing.md)
 for the exact executed environments, timestamp semantics and failed target.
+
+For CPU attribution, additionally build with `scene-profile`. The
+`cue-scene-profile ABSOLUTE_FRESH_OUTPUT FONT_FAMILY` binary runs the exact
+document through repeated preparation/capture/decode plus a resource-payload
+ablation that is never rendered. `CUE_SCENE_PROFILE_DIR` enables per-PID stage
+logs in the receiving host and helper. See the [stage profiling record](../../docs/2026-11-04-scene-stage-profile.md)
+for the instrumentation boundaries, summarizer and results.

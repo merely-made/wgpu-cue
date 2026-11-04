@@ -1,0 +1,2139 @@
+{
+  "schema": "cue-scene-attribution-v1",
+  "source_manifest_sha256": "8b704af9da6a289da2dcb3c348a27d16e821b76891620796ec963b1f5c8103ff",
+  "cpu": {
+    "mac": {
+      "runs": [
+        {
+          "file": "cpu0/stages-40851.jsonl",
+          "sha256": "0a0a5a524a0212c798c077264096abcfcff9a338f4c9c45432d62e0435c1d0ad",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 1.626481328125,
+              "p50": 1.609064,
+              "p95": 1.874348,
+              "p99": 2.143645,
+              "max": 2.143645
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 2.55149459375,
+              "p50": 2.552849,
+              "p95": 2.686028,
+              "p99": 2.969672,
+              "max": 2.969672
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.00275646875,
+              "p50": 0.002202,
+              "p95": 0.005225,
+              "p99": 0.006199,
+              "max": 0.006199
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 27.270477593749998,
+              "p50": 26.643879,
+              "p95": 29.887157,
+              "p99": 30.238184,
+              "max": 30.238184
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 57.121393453125,
+              "p50": 56.436795,
+              "p95": 61.192233,
+              "p99": 61.958889,
+              "max": 61.958889
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.00636671875,
+              "p50": 0.00639,
+              "p95": 0.007004,
+              "p99": 0.007461,
+              "max": 0.007461
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 27.249225828125,
+              "p50": 27.133819,
+              "p95": 28.381162,
+              "p99": 29.995636,
+              "max": 29.995636
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.5055525,
+              "p50": 0.29097,
+              "p95": 1.109171,
+              "p99": 1.534754,
+              "max": 1.534754
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 27.8413389375,
+              "p50": 27.688716,
+              "p95": 28.982579,
+              "p99": 31.130766,
+              "max": 31.130766
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.006346171875,
+              "p50": 0.006346,
+              "p95": 0.007045,
+              "p99": 0.007378,
+              "max": 0.007378
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 27.41705215625,
+              "p50": 27.368081,
+              "p95": 28.649336,
+              "p99": 29.128084,
+              "max": 29.128084
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 29.756687203125,
+              "p50": 29.548648,
+              "p95": 31.502052,
+              "p99": 32.658431,
+              "max": 32.658431
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 1.24946509375,
+              "p50": 0.561486,
+              "p95": 1.366663,
+              "p99": 40.099,
+              "max": 40.099
+            }
+          }
+        },
+        {
+          "file": "cpu1/stages-40867.jsonl",
+          "sha256": "868c8e243f549c6f2fe6666a5d03ac625e7e7052409e1991e3f28ec0810a6501",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 1.815480625,
+              "p50": 1.643344,
+              "p95": 2.775472,
+              "p99": 3.126896,
+              "max": 3.126896
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 2.8121788125,
+              "p50": 2.623774,
+              "p95": 4.696223,
+              "p99": 5.382573,
+              "max": 5.382573
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.002935453125,
+              "p50": 0.001932,
+              "p95": 0.006259,
+              "p99": 0.012128,
+              "max": 0.012128
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 30.759710734375,
+              "p50": 27.257347,
+              "p95": 47.481676,
+              "p99": 102.108091,
+              "max": 102.108091
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 65.308436609375,
+              "p50": 57.700277,
+              "p95": 104.345444,
+              "p99": 182.987956,
+              "max": 182.987956
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.0067091875,
+              "p50": 0.006596,
+              "p95": 0.008038,
+              "p99": 0.008447,
+              "max": 0.008447
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 32.464352890625,
+              "p50": 27.594934,
+              "p95": 47.09272,
+              "p99": 162.815416,
+              "max": 162.815416
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 1.1142478281250001,
+              "p50": 0.284721,
+              "p95": 1.431912,
+              "p99": 40.356121,
+              "max": 40.356121
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 33.718547171875,
+              "p50": 28.08714,
+              "p95": 47.40818,
+              "p99": 206.643873,
+              "max": 206.643873
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.0067090625,
+              "p50": 0.006574,
+              "p95": 0.008263,
+              "p99": 0.010177,
+              "max": 0.010177
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 31.825762203125,
+              "p50": 27.707801,
+              "p95": 50.590664,
+              "p99": 101.358095,
+              "max": 101.358095
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 34.43585878125,
+              "p50": 29.894811,
+              "p95": 54.784174,
+              "p99": 105.569456,
+              "max": 105.569456
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 1.311793546875,
+              "p50": 0.431835,
+              "p95": 1.394508,
+              "p99": 47.100524,
+              "max": 47.100524
+            }
+          }
+        },
+        {
+          "file": "cpu2/stages-41211.jsonl",
+          "sha256": "cc45626b5bd3e1ef4a2fecb7b48a52f322bce3628774ef0d2d898fb4342e0926",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 1.7180479375,
+              "p50": 1.6182,
+              "p95": 2.240117,
+              "p99": 3.328638,
+              "max": 3.328638
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 2.559742515625,
+              "p50": 2.561539,
+              "p95": 2.683983,
+              "p99": 2.71716,
+              "max": 2.71716
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.003045140625,
+              "p50": 0.002611,
+              "p95": 0.005584,
+              "p99": 0.007229,
+              "max": 0.007229
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 27.09608525,
+              "p50": 26.573017,
+              "p95": 30.048587,
+              "p99": 30.995953,
+              "max": 30.995953
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 56.951777484375,
+              "p50": 56.130297,
+              "p95": 62.12506,
+              "p99": 63.258502,
+              "max": 63.258502
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.006386328125,
+              "p50": 0.006393,
+              "p95": 0.007076,
+              "p99": 0.007173,
+              "max": 0.007173
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 27.46667559375,
+              "p50": 27.306357,
+              "p95": 28.430047,
+              "p99": 33.438496,
+              "max": 33.438496
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.420431578125,
+              "p50": 0.276767,
+              "p95": 0.951404,
+              "p99": 1.247063,
+              "max": 1.247063
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 27.970315625,
+              "p50": 27.78212,
+              "p95": 29.026875,
+              "p99": 33.944454,
+              "max": 33.944454
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.006376453125,
+              "p50": 0.006318,
+              "p95": 0.006906,
+              "p99": 0.008979,
+              "max": 0.008979
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 27.430481484375,
+              "p50": 27.24949,
+              "p95": 28.96297,
+              "p99": 29.499489,
+              "max": 29.499489
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 29.765124015625002,
+              "p50": 29.373174,
+              "p95": 31.553108,
+              "p99": 34.245082,
+              "max": 34.245082
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 1.3236940156249999,
+              "p50": 0.616391,
+              "p95": 1.437819,
+              "p99": 41.889253,
+              "max": 41.889253
+            }
+          }
+        }
+      ],
+      "combined_ms": {
+        "ablation.no_resource_bytes.encode": {
+          "samples": 192,
+          "mean": 1.720003296875,
+          "p50": 1.621266,
+          "p95": 2.587717,
+          "p99": 3.126896,
+          "max": 3.328638
+        },
+        "ablation.no_resource_bytes.parse": {
+          "samples": 192,
+          "mean": 2.641138640625,
+          "p50": 2.573821,
+          "p95": 2.969672,
+          "p99": 4.996688,
+          "max": 5.382573
+        },
+        "capture.check_resources": {
+          "samples": 192,
+          "mean": 0.002912354166666667,
+          "p50": 0.002236,
+          "p95": 0.005922,
+          "p99": 0.007229,
+          "max": 0.012128
+        },
+        "capture.json_encode": {
+          "samples": 192,
+          "mean": 28.375424526041666,
+          "p50": 26.868389,
+          "p95": 31.44008,
+          "p99": 50.968059,
+          "max": 102.108091
+        },
+        "capture.total": {
+          "samples": 192,
+          "mean": 59.793869182291665,
+          "p50": 56.797795,
+          "p95": 63.258502,
+          "p99": 151.474194,
+          "max": 182.987956
+        },
+        "decode.check_resources": {
+          "samples": 192,
+          "mean": 0.006487411458333334,
+          "p50": 0.006445,
+          "p95": 0.007342,
+          "p99": 0.008345,
+          "max": 0.008447
+        },
+        "decode.json_parse": {
+          "samples": 192,
+          "mean": 29.06008477083333,
+          "p50": 27.376507,
+          "p95": 30.304675,
+          "p99": 119.09565,
+          "max": 162.815416
+        },
+        "decode.rebind_resources": {
+          "samples": 192,
+          "mean": 0.6800773020833333,
+          "p50": 0.284627,
+          "p95": 1.247063,
+          "p99": 1.673343,
+          "max": 40.356121
+        },
+        "decode.total": {
+          "samples": 192,
+          "mean": 29.843400578125,
+          "p50": 27.898627,
+          "p95": 31.148547,
+          "p99": 120.601329,
+          "max": 206.643873
+        },
+        "from_bytes.check_resources": {
+          "samples": 192,
+          "mean": 0.006477229166666667,
+          "p50": 0.006413,
+          "p95": 0.007378,
+          "p99": 0.008979,
+          "max": 0.010177
+        },
+        "from_bytes.json_parse": {
+          "samples": 192,
+          "mean": 28.89109861458333,
+          "p50": 27.430231,
+          "p95": 29.499489,
+          "p99": 87.07097,
+          "max": 101.358095
+        },
+        "from_bytes.total": {
+          "samples": 192,
+          "mean": 31.319223333333337,
+          "p50": 29.687766,
+          "p95": 33.331066,
+          "p99": 92.108079,
+          "max": 105.569456
+        },
+        "probe.document_prepare": {
+          "samples": 192,
+          "mean": 1.29498421875,
+          "p50": 0.502193,
+          "p95": 1.396073,
+          "p99": 41.889253,
+          "max": 47.100524
+        }
+      },
+      "fixture": {
+        "capture_ns": 55196018,
+        "document_prepare_ns": 860299,
+        "fonts": 3,
+        "handled": true,
+        "iteration": 20,
+        "ops": 602,
+        "resource_bytes": 1524220,
+        "snapshot_bytes": 5065999,
+        "viewport": [
+          800,
+          600
+        ],
+        "warmup": false,
+        "without_resources_bytes": 598581
+      },
+      "repeats": 3,
+      "measured_iterations": 192,
+      "binary_hashes": {
+        "cue-scene-profile": "69445f6f445ce269f08989593442e5639d0bad6a30b6ae6f2c6f21ec3b0a8b21",
+        "cue-window-receiver": "d59ad61db1c940ad09b8d6ce7af34e42bd09aafb790459e50e6e84a3313ee5dd",
+        "cue-execution-proof": "07f62fbe3b97e0ad18afced9374f3e6babcf2781e483c0700e7eaeb364e41612"
+      }
+    },
+    "linux": {
+      "runs": [
+        {
+          "file": "linux-collected1/cpu0/stages-68437.jsonl",
+          "sha256": "b86f2c1305c77335cd519d7b96cb933dbda02aa31423e3e3bb0f2d44b1fe073d",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 1.624088515625,
+              "p50": 1.622564,
+              "p95": 1.690352,
+              "p99": 1.743021,
+              "max": 1.743021
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 2.7785573125,
+              "p50": 2.752921,
+              "p95": 2.942539,
+              "p99": 2.958398,
+              "max": 2.958398
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.001253359375,
+              "p50": 0.001243,
+              "p95": 0.001583,
+              "p99": 0.001834,
+              "max": 0.001834
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 22.744243578125,
+              "p50": 22.722771,
+              "p95": 23.583081,
+              "p99": 25.836793,
+              "max": 25.836793
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 48.830839859375,
+              "p50": 48.6688,
+              "p95": 50.75171,
+              "p99": 52.635086,
+              "max": 52.635086
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.0059825,
+              "p50": 0.005741,
+              "p95": 0.007434,
+              "p99": 0.008145,
+              "max": 0.008145
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 25.002064,
+              "p50": 25.002783,
+              "p95": 26.455968,
+              "p99": 26.750804,
+              "max": 26.750804
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.171010625,
+              "p50": 0.16981,
+              "p95": 0.202551,
+              "p99": 0.22869,
+              "max": 0.22869
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 25.222483984375,
+              "p50": 25.233266,
+              "p95": 26.673267,
+              "p99": 26.999682,
+              "max": 26.999682
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.0059485625,
+              "p50": 0.005921,
+              "p95": 0.007043,
+              "p99": 0.012113,
+              "max": 0.012113
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 25.30007984375,
+              "p50": 25.154248,
+              "p95": 26.524658,
+              "p99": 26.611451,
+              "max": 26.611451
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 26.025714125,
+              "p50": 25.884513,
+              "p95": 27.183608,
+              "p99": 27.852336,
+              "max": 27.852336
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 0.6975129531250001,
+              "p50": 0.198684,
+              "p95": 0.239841,
+              "p99": 31.911818,
+              "max": 31.911818
+            }
+          }
+        },
+        {
+          "file": "linux-collected1/cpu1/stages-68441.jsonl",
+          "sha256": "3c3af2af92871a30302e2b027b28052e65a7f9e577b35a85416cae9549920dc6",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 1.593363828125,
+              "p50": 1.583581,
+              "p95": 1.651428,
+              "p99": 1.701433,
+              "max": 1.701433
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 2.73314140625,
+              "p50": 2.708428,
+              "p95": 2.889519,
+              "p99": 3.714401,
+              "max": 3.714401
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.001239546875,
+              "p50": 0.001192,
+              "p95": 0.001673,
+              "p99": 0.001983,
+              "max": 0.001983
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 22.3883864375,
+              "p50": 22.229573,
+              "p95": 23.306971,
+              "p99": 24.940326,
+              "max": 24.940326
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 48.047950671875,
+              "p50": 47.623382,
+              "p95": 50.614572,
+              "p99": 50.834827,
+              "max": 50.834827
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.0058485312499999996,
+              "p50": 0.00578,
+              "p95": 0.006933,
+              "p99": 0.007935,
+              "max": 0.007935
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 24.72504396875,
+              "p50": 24.440975,
+              "p95": 25.932152,
+              "p99": 29.6712,
+              "max": 29.6712
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.16904425,
+              "p50": 0.169398,
+              "p95": 0.182834,
+              "p99": 0.22321,
+              "max": 0.22321
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 24.942025390625,
+              "p50": 24.646131,
+              "p95": 26.137178,
+              "p99": 29.930909,
+              "max": 29.930909
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.005988828125,
+              "p50": 0.005871,
+              "p95": 0.006993,
+              "p99": 0.007594,
+              "max": 0.007594
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 24.8994539375,
+              "p50": 24.568145,
+              "p95": 26.58448,
+              "p99": 27.369858,
+              "max": 27.369858
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 25.59715740625,
+              "p50": 25.254486,
+              "p95": 27.389666,
+              "p99": 28.080265,
+              "max": 28.080265
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 0.69883759375,
+              "p50": 0.197892,
+              "p95": 0.227328,
+              "p99": 32.03003,
+              "max": 32.03003
+            }
+          }
+        },
+        {
+          "file": "linux-collected1/cpu2/stages-68444.jsonl",
+          "sha256": "b4c5fa45dc07282d0de0619891d15712456b3327d34a59921fc8cc7277236deb",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 1.59052684375,
+              "p50": 1.573632,
+              "p95": 1.670284,
+              "p99": 1.685293,
+              "max": 1.685293
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 2.714924109375,
+              "p50": 2.723827,
+              "p95": 2.812645,
+              "p99": 2.826971,
+              "max": 2.826971
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.00138990625,
+              "p50": 0.001193,
+              "p95": 0.001833,
+              "p99": 0.006563,
+              "max": 0.006563
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 22.35968540625,
+              "p50": 22.324942,
+              "p95": 23.215028,
+              "p99": 23.411047,
+              "max": 23.411047
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 48.169395625,
+              "p50": 47.72842,
+              "p95": 50.24623,
+              "p99": 51.620906,
+              "max": 51.620906
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.005855109375,
+              "p50": 0.005791,
+              "p95": 0.006793,
+              "p99": 0.006934,
+              "max": 0.006934
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 24.91831253125,
+              "p50": 24.7141,
+              "p95": 26.15957,
+              "p99": 26.336634,
+              "max": 26.336634
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.1631478125,
+              "p50": 0.16442,
+              "p95": 0.1808,
+              "p99": 0.183525,
+              "max": 0.183525
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 25.130314828125,
+              "p50": 24.952348,
+              "p95": 26.380215,
+              "p99": 26.550717,
+              "max": 26.550717
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.0060496875,
+              "p50": 0.006011,
+              "p95": 0.006833,
+              "p99": 0.008997,
+              "max": 0.008997
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 25.03429303125,
+              "p50": 24.695394,
+              "p95": 26.192512,
+              "p99": 27.369778,
+              "max": 27.369778
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 25.7487039375,
+              "p50": 25.5432,
+              "p95": 27.157248,
+              "p99": 28.147672,
+              "max": 28.147672
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 0.68774596875,
+              "p50": 0.195538,
+              "p95": 0.243539,
+              "p99": 31.465026,
+              "max": 31.465026
+            }
+          }
+        }
+      ],
+      "combined_ms": {
+        "ablation.no_resource_bytes.encode": {
+          "samples": 192,
+          "mean": 1.6026597291666667,
+          "p50": 1.597206,
+          "p95": 1.685293,
+          "p99": 1.716612,
+          "max": 1.743021
+        },
+        "ablation.no_resource_bytes.parse": {
+          "samples": 192,
+          "mean": 2.7422076093750003,
+          "p50": 2.726371,
+          "p95": 2.932019,
+          "p99": 3.049791,
+          "max": 3.714401
+        },
+        "capture.check_resources": {
+          "samples": 192,
+          "mean": 0.0012942708333333333,
+          "p50": 0.001213,
+          "p95": 0.001673,
+          "p99": 0.006543,
+          "max": 0.006563
+        },
+        "capture.json_encode": {
+          "samples": 192,
+          "mean": 22.497438473958336,
+          "p50": 22.372672,
+          "p95": 23.411047,
+          "p99": 24.940326,
+          "max": 25.836793
+        },
+        "capture.total": {
+          "samples": 192,
+          "mean": 48.34939538541667,
+          "p50": 48.170141,
+          "p95": 50.630342,
+          "p99": 51.620906,
+          "max": 52.635086
+        },
+        "decode.check_resources": {
+          "samples": 192,
+          "mean": 0.005895380208333333,
+          "p50": 0.00578,
+          "p95": 0.007023,
+          "p99": 0.007935,
+          "max": 0.008145
+        },
+        "decode.json_parse": {
+          "samples": 192,
+          "mean": 24.881806833333332,
+          "p50": 24.827373,
+          "p95": 26.250431,
+          "p99": 26.750804,
+          "max": 29.6712
+        },
+        "decode.rebind_resources": {
+          "samples": 192,
+          "mean": 0.16773422916666667,
+          "p50": 0.168858,
+          "p95": 0.187483,
+          "p99": 0.22321,
+          "max": 0.22869
+        },
+        "decode.total": {
+          "samples": 192,
+          "mean": 25.098274734375,
+          "p50": 25.01747,
+          "p95": 26.459334,
+          "p99": 26.999682,
+          "max": 29.930909
+        },
+        "from_bytes.check_resources": {
+          "samples": 192,
+          "mean": 0.005995692708333333,
+          "p50": 0.005951,
+          "p95": 0.006993,
+          "p99": 0.008997,
+          "max": 0.012113
+        },
+        "from_bytes.json_parse": {
+          "samples": 192,
+          "mean": 25.077942270833333,
+          "p50": 25.020226,
+          "p95": 26.524658,
+          "p99": 27.369778,
+          "max": 27.369858
+        },
+        "from_bytes.total": {
+          "samples": 192,
+          "mean": 25.79052515625,
+          "p50": 25.701778,
+          "p95": 27.254281,
+          "p99": 28.080265,
+          "max": 28.147672
+        },
+        "probe.document_prepare": {
+          "samples": 192,
+          "mean": 0.6946988385416666,
+          "p50": 0.197412,
+          "p95": 0.239841,
+          "p99": 31.911818,
+          "max": 32.03003
+        }
+      },
+      "fixture": {
+        "capture_ns": 50322382,
+        "document_prepare_ns": 206239,
+        "fonts": 3,
+        "handled": true,
+        "iteration": 20,
+        "ops": 724,
+        "resource_bytes": 1592256,
+        "snapshot_bytes": 5247325,
+        "viewport": [
+          800,
+          600
+        ],
+        "warmup": false,
+        "without_resources_bytes": 614660
+      },
+      "repeats": 3,
+      "measured_iterations": 192,
+      "binary_hashes": {
+        "cue-scene-profile": "1e56bd1e1abd94516a556cfd1ad683e28e05b1fedcaeed072c5d2dd85170d5c0",
+        "cue-window-receiver": "56f1427c765388f844fba7b03fc7ca360902d31775185fab8c08cc916b6be1d0",
+        "cue-execution-proof": "6c8c3c468fd3b2a5fa8b82da7f6a5c93ca17b0f52860cf3754ea3d115ac6eefc"
+      }
+    },
+    "windows": {
+      "runs": [
+        {
+          "file": "windows-collected1/cpu0/stages-39928.jsonl",
+          "sha256": "957885fcc4da49096066e24745209f81a31d086c3a5c551a7ebfb0d5bbf82a83",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 2.136278125,
+              "p50": 2.0867,
+              "p95": 2.8107,
+              "p99": 3.0056,
+              "max": 3.0056
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 3.4316921875,
+              "p50": 3.4514,
+              "p95": 4.4695,
+              "p99": 4.6635,
+              "max": 4.6635
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.001321875,
+              "p50": 0.0012,
+              "p95": 0.0023,
+              "p99": 0.0026,
+              "max": 0.0026
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 39.3539265625,
+              "p50": 39.9265,
+              "p95": 44.4695,
+              "p99": 45.8009,
+              "max": 45.8009
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 81.2188671875,
+              "p50": 82.4949,
+              "p95": 90.9871,
+              "p99": 96.1581,
+              "max": 96.1581
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.0040875,
+              "p50": 0.0041,
+              "p95": 0.0047,
+              "p99": 0.0054,
+              "max": 0.0054
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 41.4062296875,
+              "p50": 41.7283,
+              "p95": 47.9779,
+              "p99": 50.6964,
+              "max": 50.6964
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.5417515625,
+              "p50": 0.5283,
+              "p95": 0.6335,
+              "p99": 0.9127,
+              "max": 0.9127
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 42.0226140625,
+              "p50": 42.3702,
+              "p95": 48.6553,
+              "p99": 51.2184,
+              "max": 51.2184
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.0045078125,
+              "p50": 0.0043,
+              "p95": 0.0058,
+              "p99": 0.0191,
+              "max": 0.0191
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 40.1864734375,
+              "p50": 40.4242,
+              "p95": 48.2002,
+              "p99": 52.6932,
+              "max": 52.6932
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 41.779753125,
+              "p50": 41.9014,
+              "p95": 50.097,
+              "p99": 54.5356,
+              "max": 54.5356
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 1.1987328125,
+              "p50": 0.4256,
+              "p95": 0.5832,
+              "p99": 48.6846,
+              "max": 48.6846
+            }
+          }
+        },
+        {
+          "file": "windows-collected1/cpu1/stages-32600.jsonl",
+          "sha256": "728ac79abe1045154086bd1fbb8f7f773d4a75a01c38a2d8677b681d27022f36",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 2.1217984375,
+              "p50": 2.2213,
+              "p95": 2.5377,
+              "p99": 2.8738,
+              "max": 2.8738
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 3.29381875,
+              "p50": 3.6444,
+              "p95": 4.0653,
+              "p99": 4.2167,
+              "max": 4.2167
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.0011140625,
+              "p50": 0.001,
+              "p95": 0.0018,
+              "p99": 0.0031,
+              "max": 0.0031
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 37.037715625,
+              "p50": 37.4408,
+              "p95": 42.389,
+              "p99": 43.465,
+              "max": 43.465
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 79.09561875,
+              "p50": 80.0813,
+              "p95": 90.8837,
+              "p99": 92.2523,
+              "max": 92.2523
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.003909375,
+              "p50": 0.0039,
+              "p95": 0.0048,
+              "p99": 0.0074,
+              "max": 0.0074
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 39.5972265625,
+              "p50": 39.8461,
+              "p95": 47.437,
+              "p99": 47.8218,
+              "max": 47.8218
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.49849375,
+              "p50": 0.505,
+              "p95": 0.6021,
+              "p99": 0.6341,
+              "max": 0.6341
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 40.172609375,
+              "p50": 40.4755,
+              "p95": 48.0245,
+              "p99": 48.39,
+              "max": 48.39
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.0042015625000000004,
+              "p50": 0.0041,
+              "p95": 0.005,
+              "p99": 0.0083,
+              "max": 0.0083
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 40.4783015625,
+              "p50": 42.0167,
+              "p95": 47.8503,
+              "p99": 48.681,
+              "max": 48.681
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 41.9735203125,
+              "p50": 43.393,
+              "p95": 49.5336,
+              "p99": 50.3817,
+              "max": 50.3817
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 1.0996,
+              "p50": 0.4075,
+              "p95": 0.548,
+              "p99": 43.8334,
+              "max": 43.8334
+            }
+          }
+        },
+        {
+          "file": "windows-collected1/cpu2/stages-28800.jsonl",
+          "sha256": "a356e19c77b62227a68de2e89fdd9c612ab7e623d7fcac5ce06522204b464b20",
+          "mode": "cpu-probe-warmup-excluded",
+          "stages_ms": {
+            "ablation.no_resource_bytes.encode": {
+              "samples": 64,
+              "mean": 2.0466890625,
+              "p50": 2.0745,
+              "p95": 2.5163,
+              "p99": 2.7408,
+              "max": 2.7408
+            },
+            "ablation.no_resource_bytes.parse": {
+              "samples": 64,
+              "mean": 3.1976265625,
+              "p50": 3.1499,
+              "p95": 4.1173,
+              "p99": 4.2758,
+              "max": 4.2758
+            },
+            "capture.check_resources": {
+              "samples": 64,
+              "mean": 0.0012625,
+              "p50": 0.0012,
+              "p95": 0.0023,
+              "p99": 0.0027,
+              "max": 0.0027
+            },
+            "capture.json_encode": {
+              "samples": 64,
+              "mean": 37.936496875,
+              "p50": 37.978,
+              "p95": 43.3917,
+              "p99": 45.7267,
+              "max": 45.7267
+            },
+            "capture.total": {
+              "samples": 64,
+              "mean": 78.9489296875,
+              "p50": 79.385,
+              "p95": 88.7547,
+              "p99": 92.6201,
+              "max": 92.6201
+            },
+            "decode.check_resources": {
+              "samples": 64,
+              "mean": 0.004190625,
+              "p50": 0.004,
+              "p95": 0.006,
+              "p99": 0.0091,
+              "max": 0.0091
+            },
+            "decode.json_parse": {
+              "samples": 64,
+              "mean": 38.156371875,
+              "p50": 37.4916,
+              "p95": 46.5122,
+              "p99": 50.5649,
+              "max": 50.5649
+            },
+            "decode.rebind_resources": {
+              "samples": 64,
+              "mean": 0.4997125,
+              "p50": 0.4896,
+              "p95": 0.6338,
+              "p99": 0.6821,
+              "max": 0.6821
+            },
+            "decode.total": {
+              "samples": 64,
+              "mean": 38.7402203125,
+              "p50": 38.1383,
+              "p95": 47.1292,
+              "p99": 51.1957,
+              "max": 51.1957
+            },
+            "from_bytes.check_resources": {
+              "samples": 64,
+              "mean": 0.0042828125,
+              "p50": 0.0042,
+              "p95": 0.0053,
+              "p99": 0.008,
+              "max": 0.008
+            },
+            "from_bytes.json_parse": {
+              "samples": 64,
+              "mean": 39.37938125,
+              "p50": 39.286,
+              "p95": 47.5583,
+              "p99": 48.6437,
+              "max": 48.6437
+            },
+            "from_bytes.total": {
+              "samples": 64,
+              "mean": 40.930315625,
+              "p50": 40.5441,
+              "p95": 49.4128,
+              "p99": 49.9551,
+              "max": 49.9551
+            },
+            "probe.document_prepare": {
+              "samples": 64,
+              "mean": 1.243696875,
+              "p50": 0.4622,
+              "p95": 0.6614,
+              "p99": 49.3383,
+              "max": 49.3383
+            }
+          }
+        }
+      ],
+      "combined_ms": {
+        "ablation.no_resource_bytes.encode": {
+          "samples": 192,
+          "mean": 2.1015885416666666,
+          "p50": 2.1885,
+          "p95": 2.6333,
+          "p99": 2.8738,
+          "max": 3.0056
+        },
+        "ablation.no_resource_bytes.parse": {
+          "samples": 192,
+          "mean": 3.3077124999999996,
+          "p50": 3.4599,
+          "p95": 4.1731,
+          "p99": 4.5487,
+          "max": 4.6635
+        },
+        "capture.check_resources": {
+          "samples": 192,
+          "mean": 0.0012328125,
+          "p50": 0.0012,
+          "p95": 0.0023,
+          "p99": 0.0027,
+          "max": 0.0031
+        },
+        "capture.json_encode": {
+          "samples": 192,
+          "mean": 38.1093796875,
+          "p50": 38.2893,
+          "p95": 43.8614,
+          "p99": 45.7267,
+          "max": 45.8009
+        },
+        "capture.total": {
+          "samples": 192,
+          "mean": 79.754471875,
+          "p50": 80.555,
+          "p95": 90.5177,
+          "p99": 95.6095,
+          "max": 96.1581
+        },
+        "decode.check_resources": {
+          "samples": 192,
+          "mean": 0.0040625,
+          "p50": 0.004,
+          "p95": 0.0051,
+          "p99": 0.0074,
+          "max": 0.0091
+        },
+        "decode.json_parse": {
+          "samples": 192,
+          "mean": 39.719942708333335,
+          "p50": 40.0367,
+          "p95": 47.5833,
+          "p99": 50.5649,
+          "max": 50.6964
+        },
+        "decode.rebind_resources": {
+          "samples": 192,
+          "mean": 0.5133192708333333,
+          "p50": 0.5115,
+          "p95": 0.6334,
+          "p99": 0.7363,
+          "max": 0.9127
+        },
+        "decode.total": {
+          "samples": 192,
+          "mean": 40.31181458333334,
+          "p50": 40.6768,
+          "p95": 48.1695,
+          "p99": 51.1957,
+          "max": 51.2184
+        },
+        "from_bytes.check_resources": {
+          "samples": 192,
+          "mean": 0.004330729166666667,
+          "p50": 0.0042,
+          "p95": 0.0056,
+          "p99": 0.0083,
+          "max": 0.0191
+        },
+        "from_bytes.json_parse": {
+          "samples": 192,
+          "mean": 40.01471875,
+          "p50": 40.4486,
+          "p95": 47.8503,
+          "p99": 49.4267,
+          "max": 52.6932
+        },
+        "from_bytes.total": {
+          "samples": 192,
+          "mean": 41.56119635416667,
+          "p50": 42.1091,
+          "p95": 49.6807,
+          "p99": 51.1302,
+          "max": 54.5356
+        },
+        "probe.document_prepare": {
+          "samples": 192,
+          "mean": 1.1806765625,
+          "p50": 0.4403,
+          "p95": 0.6028,
+          "p99": 48.6846,
+          "max": 49.3383
+        }
+      },
+      "fixture": {
+        "capture_ns": 84551900,
+        "document_prepare_ns": 449600,
+        "fonts": 3,
+        "handled": true,
+        "iteration": 20,
+        "ops": 602,
+        "resource_bytes": 2035964,
+        "snapshot_bytes": 6401381,
+        "viewport": [
+          800,
+          600
+        ],
+        "warmup": false,
+        "without_resources_bytes": 598581
+      },
+      "repeats": 3,
+      "measured_iterations": 192,
+      "binary_hashes": {
+        "cue-execution-proof": "cd65d67c75749d602ac09f1600eec9e957f23712599b6b81aa94a513ff615d0a",
+        "cue-scene-profile": "96289b55846bf0332dcff8ac3bf266034d835bce7cc2e36a651f0d98a85ce703",
+        "cue-window-receiver": "db2d0a096258c4bf8f03f183bf36598e28f52a58bbb2e5bb7de7a059b03e06aa"
+      }
+    }
+  },
+  "native": {
+    "mac": {
+      "local": {
+        "summary_sha256": "3c3d5487030a2147dceefdaad5be46ce60f1830074579ab2f03dd0bbf1b129d3",
+        "workload_completed": true,
+        "final_imports": 0,
+        "pacing_target_met": false,
+        "profiles": [
+          {
+            "file": "profile-local/stages-41583.jsonl",
+            "sha256": "7df0dd5bc948a215e84eb5e0c20da7f7d4b482f5b9fd94f871cee7bef168c29a",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "capture.check_resources": {
+                "samples": 294,
+                "mean": 0.002887125850340136,
+                "p50": 0.002033,
+                "p95": 0.005831,
+                "p99": 0.006562,
+                "max": 0.009151
+              },
+              "capture.json_encode": {
+                "samples": 294,
+                "mean": 27.772307462585033,
+                "p50": 26.958924,
+                "p95": 30.530261,
+                "p99": 36.722894,
+                "max": 41.731556
+              },
+              "capture.total": {
+                "samples": 294,
+                "mean": 60.62372167006802,
+                "p50": 59.649823,
+                "p95": 64.890059,
+                "p99": 78.176298,
+                "max": 85.557001
+              },
+              "decode.check_resources": {
+                "samples": 293,
+                "mean": 0.005985296928327645,
+                "p50": 0.005946,
+                "p95": 0.006872,
+                "p99": 0.007846,
+                "max": 0.008716
+              },
+              "decode.json_parse": {
+                "samples": 293,
+                "mean": 30.259087648464163,
+                "p50": 29.979816,
+                "p95": 31.998027,
+                "p99": 35.229861,
+                "max": 38.551767
+              },
+              "decode.rebind_resources": {
+                "samples": 293,
+                "mean": 0.447188795221843,
+                "p50": 0.257321,
+                "p95": 1.384518,
+                "p99": 1.755914,
+                "max": 2.155294
+              },
+              "decode.total": {
+                "samples": 293,
+                "mean": 31.21841337883959,
+                "p50": 30.491812,
+                "p95": 32.896047,
+                "p99": 39.465473,
+                "max": 125.020125
+              },
+              "document.prepare": {
+                "samples": 293,
+                "mean": 0.7860533720136519,
+                "p50": 0.265846,
+                "p95": 1.799239,
+                "p99": 2.005179,
+                "max": 45.799869
+              },
+              "from_bytes.check_resources": {
+                "samples": 294,
+                "mean": 0.006190343537414966,
+                "p50": 0.006062,
+                "p95": 0.006947,
+                "p99": 0.009214,
+                "max": 0.015868
+              },
+              "from_bytes.json_parse": {
+                "samples": 294,
+                "mean": 30.369179503401362,
+                "p50": 30.060661,
+                "p95": 31.932687,
+                "p99": 36.548827,
+                "max": 39.232186
+              },
+              "from_bytes.total": {
+                "samples": 294,
+                "mean": 32.696574316326526,
+                "p50": 32.173365,
+                "p95": 35.205677,
+                "p99": 41.660357,
+                "max": 51.394254
+              }
+            }
+          }
+        ]
+      },
+      "process": {
+        "summary_sha256": "4d61adc21c625a89389fdd0a7133b424a15499a726ce1d737df326848a181034",
+        "workload_completed": true,
+        "final_imports": 0,
+        "pacing_target_met": false,
+        "profiles": [
+          {
+            "file": "profile-process/stages-42265.jsonl",
+            "sha256": "49d644e72c2cdf2b3db1fefcfe312d4290cb449a505cc510ea65775273fc34de",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "capture.check_resources": {
+                "samples": 176,
+                "mean": 0.003638761363636364,
+                "p50": 0.002898,
+                "p95": 0.006954,
+                "p99": 0.008215,
+                "max": 0.009066
+              },
+              "capture.json_encode": {
+                "samples": 176,
+                "mean": 30.325985857954546,
+                "p50": 28.707667,
+                "p95": 38.534233,
+                "p99": 42.571068,
+                "max": 43.38731
+              },
+              "capture.total": {
+                "samples": 176,
+                "mean": 66.93274188636363,
+                "p50": 65.017158,
+                "p95": 84.04068,
+                "p99": 91.498715,
+                "max": 93.261592
+              },
+              "document.prepare": {
+                "samples": 175,
+                "mean": 1.30697452,
+                "p50": 1.050681,
+                "p95": 2.03056,
+                "p99": 2.540615,
+                "max": 51.323711
+              },
+              "from_bytes.check_resources": {
+                "samples": 176,
+                "mean": 0.006594693181818182,
+                "p50": 0.006249,
+                "p95": 0.008358,
+                "p99": 0.011557,
+                "max": 0.011654
+              },
+              "from_bytes.json_parse": {
+                "samples": 176,
+                "mean": 33.65050757386364,
+                "p50": 32.147176,
+                "p95": 42.825795,
+                "p99": 45.70237,
+                "max": 46.491224
+              },
+              "from_bytes.total": {
+                "samples": 176,
+                "mean": 36.3524519375,
+                "p50": 34.806516,
+                "p95": 45.560669,
+                "p99": 49.783691,
+                "max": 64.057251
+              }
+            }
+          },
+          {
+            "file": "profile-process/stages-42268.jsonl",
+            "sha256": "d5e418036617baf71d6428d1e12a3e9138fd3e7a1dbd3263c7b0eaf161ad3b87",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "decode.check_resources": {
+                "samples": 175,
+                "mean": 0.006823822857142858,
+                "p50": 0.006387,
+                "p95": 0.00855,
+                "p99": 0.015862,
+                "max": 0.023267
+              },
+              "decode.json_parse": {
+                "samples": 175,
+                "mean": 31.037854285714285,
+                "p50": 29.548556,
+                "p95": 39.972574,
+                "p99": 44.145753,
+                "max": 46.085374
+              },
+              "decode.rebind_resources": {
+                "samples": 175,
+                "mean": 0.8828495542857143,
+                "p50": 0.650758,
+                "p95": 2.365019,
+                "p99": 2.746472,
+                "max": 3.275551
+              },
+              "decode.total": {
+                "samples": 175,
+                "mean": 32.00015951428571,
+                "p50": 30.726755,
+                "p95": 40.711625,
+                "p99": 46.450932,
+                "max": 48.06119
+              },
+              "from_bytes.check_resources": {
+                "samples": 176,
+                "mean": 0.0076539375,
+                "p50": 0.006385,
+                "p95": 0.008869,
+                "p99": 0.016778,
+                "max": 0.16114
+              },
+              "from_bytes.json_parse": {
+                "samples": 176,
+                "mean": 33.26690214772727,
+                "p50": 29.362567,
+                "p95": 43.83162,
+                "p99": 111.832395,
+                "max": 136.826718
+              },
+              "from_bytes.total": {
+                "samples": 176,
+                "mean": 36.325942948863634,
+                "p50": 32.935999,
+                "p95": 48.020495,
+                "p99": 115.7783,
+                "max": 147.964162
+              }
+            }
+          }
+        ]
+      }
+    },
+    "linux": {
+      "local": {
+        "summary_sha256": "278afa9623e4c909aae4993c3451f75c63f51c7c4c5d3089fd91ec23d8ecdef8",
+        "workload_completed": true,
+        "final_imports": 0,
+        "pacing_target_met": false,
+        "profiles": [
+          {
+            "file": "linux-collected1/window-local/stages-68447.jsonl",
+            "sha256": "fe07cd6cbaeda16416e8e493585610f2c6b544b0de1056afcf13de4b48a817d7",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "capture.check_resources": {
+                "samples": 368,
+                "mean": 0.0015507038043478263,
+                "p50": 0.001382,
+                "p95": 0.002474,
+                "p99": 0.002865,
+                "max": 0.003136
+              },
+              "capture.json_encode": {
+                "samples": 368,
+                "mean": 25.272755361413044,
+                "p50": 24.979469,
+                "p95": 26.618174,
+                "p99": 27.669853,
+                "max": 35.038564
+              },
+              "capture.total": {
+                "samples": 368,
+                "mean": 50.83596713043478,
+                "p50": 50.193429,
+                "p95": 53.495656,
+                "p99": 54.919235,
+                "max": 61.985736
+              },
+              "decode.check_resources": {
+                "samples": 367,
+                "mean": 0.006036792915531335,
+                "p50": 0.005971,
+                "p95": 0.007214,
+                "p99": 0.007925,
+                "max": 0.013535
+              },
+              "decode.json_parse": {
+                "samples": 367,
+                "mean": 24.77928259400545,
+                "p50": 24.55515,
+                "p95": 26.348667,
+                "p99": 26.914812,
+                "max": 29.164697
+              },
+              "decode.rebind_resources": {
+                "samples": 367,
+                "mean": 0.1580946485013624,
+                "p50": 0.156594,
+                "p95": 0.217018,
+                "p99": 0.235754,
+                "max": 0.325934
+              },
+              "decode.total": {
+                "samples": 367,
+                "mean": 25.07393166212534,
+                "p50": 24.770155,
+                "p95": 26.575293,
+                "p99": 27.205069,
+                "max": 57.00982
+              },
+              "document.prepare": {
+                "samples": 367,
+                "mean": 0.34277753405994554,
+                "p50": 0.231075,
+                "p95": 0.381999,
+                "p99": 0.419529,
+                "max": 31.682567
+              },
+              "from_bytes.check_resources": {
+                "samples": 368,
+                "mean": 0.006170763586956522,
+                "p50": 0.006041,
+                "p95": 0.007374,
+                "p99": 0.009318,
+                "max": 0.013085
+              },
+              "from_bytes.json_parse": {
+                "samples": 368,
+                "mean": 24.789510260869566,
+                "p50": 24.534261,
+                "p95": 26.14335,
+                "p99": 26.477549,
+                "max": 28.130621
+              },
+              "from_bytes.total": {
+                "samples": 368,
+                "mean": 25.502162676630434,
+                "p50": 25.22987,
+                "p95": 26.881259,
+                "p99": 27.45531,
+                "max": 28.816422
+              }
+            }
+          }
+        ]
+      },
+      "process": {
+        "summary_sha256": "846365190ed38db6f0d8eba84ba2014a49a69f285a0b82fc344581cadb860bc0",
+        "workload_completed": true,
+        "final_imports": 0,
+        "pacing_target_met": false,
+        "profiles": [
+          {
+            "file": "linux-collected1/window-process/stages-68562.jsonl",
+            "sha256": "e9eaa107a8e2d77a359b32becb354bafdfa3d033e8d4fa6a290d246f27f89463",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "capture.check_resources": {
+                "samples": 226,
+                "mean": 0.0013682654867256637,
+                "p50": 0.001252,
+                "p95": 0.001784,
+                "p99": 0.002234,
+                "max": 0.012784
+              },
+              "capture.json_encode": {
+                "samples": 226,
+                "mean": 26.12599936283186,
+                "p50": 24.870214,
+                "p95": 28.165476,
+                "p99": 35.060905,
+                "max": 40.879929
+              },
+              "capture.total": {
+                "samples": 226,
+                "mean": 52.12779123008849,
+                "p50": 50.180616,
+                "p95": 56.394171,
+                "p99": 63.830298,
+                "max": 75.015413
+              },
+              "document.prepare": {
+                "samples": 225,
+                "mean": 0.35287420444444445,
+                "p50": 0.198604,
+                "p95": 0.307509,
+                "p99": 0.353024,
+                "max": 31.962223
+              },
+              "from_bytes.check_resources": {
+                "samples": 226,
+                "mean": 0.005963601769911504,
+                "p50": 0.005901,
+                "p95": 0.007003,
+                "p99": 0.008536,
+                "max": 0.011853
+              },
+              "from_bytes.json_parse": {
+                "samples": 226,
+                "mean": 24.098773884955754,
+                "p50": 23.994525,
+                "p95": 25.039021,
+                "p99": 27.56709,
+                "max": 32.450522
+              },
+              "from_bytes.total": {
+                "samples": 226,
+                "mean": 25.942462212389383,
+                "p50": 25.385503,
+                "p95": 28.186936,
+                "p99": 30.538172,
+                "max": 37.216563
+              }
+            }
+          },
+          {
+            "file": "linux-collected1/window-process/stages-68588.jsonl",
+            "sha256": "c6924cbba43e36154a6d7c5e7706e8df91282cabefd4796c3b50792ef7439222",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "decode.check_resources": {
+                "samples": 225,
+                "mean": 0.00562727111111111,
+                "p50": 0.00536,
+                "p95": 0.007174,
+                "p99": 0.015479,
+                "max": 0.018244
+              },
+              "decode.json_parse": {
+                "samples": 225,
+                "mean": 24.45045818222222,
+                "p50": 24.058205,
+                "p95": 26.905715,
+                "p99": 35.671435,
+                "max": 37.7358
+              },
+              "decode.rebind_resources": {
+                "samples": 225,
+                "mean": 0.1624466,
+                "p50": 0.151476,
+                "p95": 0.18579,
+                "p99": 0.529086,
+                "max": 0.896668
+              },
+              "decode.total": {
+                "samples": 225,
+                "mean": 24.66356552,
+                "p50": 24.266497,
+                "p95": 27.092487,
+                "p99": 36.690843,
+                "max": 37.950364
+              },
+              "from_bytes.check_resources": {
+                "samples": 225,
+                "mean": 0.005710168888888889,
+                "p50": 0.005541,
+                "p95": 0.008075,
+                "p99": 0.01021,
+                "max": 0.013886
+              },
+              "from_bytes.json_parse": {
+                "samples": 225,
+                "mean": 23.875276671111113,
+                "p50": 23.515724,
+                "p95": 25.231543,
+                "p99": 34.663337,
+                "max": 39.726718
+              },
+              "from_bytes.total": {
+                "samples": 225,
+                "mean": 24.53224504888889,
+                "p50": 24.160227,
+                "p95": 25.947301,
+                "p99": 35.278645,
+                "max": 40.389075
+              }
+            }
+          }
+        ]
+      }
+    },
+    "windows": {
+      "local": {
+        "summary_sha256": "77fdfabe23d3c5d946be22daa29851ba70ef27a369594884b6a4c65ba89108c7",
+        "workload_completed": true,
+        "final_imports": 0,
+        "pacing_target_met": false,
+        "profiles": [
+          {
+            "file": "windows-collected1/window-local/stages-8796.jsonl",
+            "sha256": "c83f69ac03b973e674f2cbb3953300881f1ff97a3a5eb9e02363eefc3e6befe4",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "capture.check_resources": {
+                "samples": 418,
+                "mean": 0.0008906698564593302,
+                "p50": 0.0007,
+                "p95": 0.0016,
+                "p99": 0.0027,
+                "max": 0.0229
+              },
+              "capture.json_encode": {
+                "samples": 418,
+                "mean": 24.02567966507177,
+                "p50": 24.0059,
+                "p95": 25.7579,
+                "p99": 27.4446,
+                "max": 31.2553
+              },
+              "capture.total": {
+                "samples": 418,
+                "mean": 46.975498086124404,
+                "p50": 46.8945,
+                "p95": 49.9649,
+                "p99": 55.0786,
+                "max": 64.3783
+              },
+              "decode.check_resources": {
+                "samples": 417,
+                "mean": 0.002899760191846523,
+                "p50": 0.0032,
+                "p95": 0.004,
+                "p99": 0.0048,
+                "max": 0.0191
+              },
+              "decode.json_parse": {
+                "samples": 417,
+                "mean": 21.80638800959233,
+                "p50": 21.8289,
+                "p95": 23.8241,
+                "p99": 27.9015,
+                "max": 34.2863
+              },
+              "decode.rebind_resources": {
+                "samples": 417,
+                "mean": 0.28420959232613907,
+                "p50": 0.28,
+                "p95": 0.3384,
+                "p99": 0.3849,
+                "max": 0.435
+              },
+              "decode.total": {
+                "samples": 417,
+                "mean": 22.144635491606714,
+                "p50": 22.1589,
+                "p95": 24.2038,
+                "p99": 28.2335,
+                "max": 34.741
+              },
+              "document.prepare": {
+                "samples": 417,
+                "mean": 0.2793980815347722,
+                "p50": 0.1912,
+                "p95": 0.3127,
+                "p99": 0.5284,
+                "max": 29.7414
+              },
+              "from_bytes.check_resources": {
+                "samples": 418,
+                "mean": 0.0032318181818181816,
+                "p50": 0.0033,
+                "p95": 0.004,
+                "p99": 0.0044,
+                "max": 0.005
+              },
+              "from_bytes.json_parse": {
+                "samples": 418,
+                "mean": 21.888072966507178,
+                "p50": 21.8716,
+                "p95": 23.7839,
+                "p99": 27.2797,
+                "max": 32.0474
+              },
+              "from_bytes.total": {
+                "samples": 418,
+                "mean": 22.885373684210524,
+                "p50": 22.8744,
+                "p95": 24.8079,
+                "p99": 28.4354,
+                "max": 33.3281
+              }
+            }
+          }
+        ]
+      },
+      "process": {
+        "summary_sha256": "aa770b7b5312f312765e880cf3a2a4b5c1d7a82a028b0df416a3b6726a654308",
+        "workload_completed": true,
+        "final_imports": 0,
+        "pacing_target_met": false,
+        "profiles": [
+          {
+            "file": "windows-collected1/window-process/stages-21292.jsonl",
+            "sha256": "b7c1a9a1ac9d3c7a036106277f8181e1fd887c8c046adf12962f6726ce2ea418",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "capture.check_resources": {
+                "samples": 215,
+                "mean": 0.0012734883720930232,
+                "p50": 0.0011,
+                "p95": 0.0021,
+                "p99": 0.0028,
+                "max": 0.0039
+              },
+              "capture.json_encode": {
+                "samples": 215,
+                "mean": 27.188042790697672,
+                "p50": 26.5424,
+                "p95": 32.2315,
+                "p99": 33.9675,
+                "max": 34.2244
+              },
+              "capture.total": {
+                "samples": 215,
+                "mean": 55.11724186046512,
+                "p50": 53.5589,
+                "p95": 67.0337,
+                "p99": 72.5541,
+                "max": 73.3565
+              },
+              "document.prepare": {
+                "samples": 214,
+                "mean": 0.4485172897196261,
+                "p50": 0.2638,
+                "p95": 0.5515,
+                "p99": 0.647,
+                "max": 30.4256
+              },
+              "from_bytes.check_resources": {
+                "samples": 215,
+                "mean": 0.003726511627906977,
+                "p50": 0.0036,
+                "p95": 0.0048,
+                "p99": 0.0058,
+                "max": 0.0067
+              },
+              "from_bytes.json_parse": {
+                "samples": 215,
+                "mean": 26.731843720930236,
+                "p50": 25.3619,
+                "p95": 34.8511,
+                "p99": 36.8338,
+                "max": 40.1321
+              },
+              "from_bytes.total": {
+                "samples": 215,
+                "mean": 27.855211627906975,
+                "p50": 26.3524,
+                "p95": 35.9001,
+                "p99": 38.2255,
+                "max": 41.3886
+              }
+            }
+          },
+          {
+            "file": "windows-collected1/window-process/stages-35572.jsonl",
+            "sha256": "f93d2d32045d50923b8bbba514220905e09efe27a19b677b1f03d525658e74a9",
+            "mode": "native-window-all-phases-and-startup",
+            "stages_ms": {
+              "decode.check_resources": {
+                "samples": 214,
+                "mean": 0.006687383177570094,
+                "p50": 0.0052,
+                "p95": 0.0116,
+                "p99": 0.0325,
+                "max": 0.0377
+              },
+              "decode.json_parse": {
+                "samples": 214,
+                "mean": 28.98468177570094,
+                "p50": 28.6945,
+                "p95": 36.2385,
+                "p99": 39.5268,
+                "max": 40.1622
+              },
+              "decode.rebind_resources": {
+                "samples": 214,
+                "mean": 0.4858345794392523,
+                "p50": 0.4709,
+                "p95": 0.808,
+                "p99": 1.0234,
+                "max": 1.1423
+              },
+              "decode.total": {
+                "samples": 214,
+                "mean": 29.56761401869159,
+                "p50": 29.1287,
+                "p95": 36.9546,
+                "p99": 40.2089,
+                "max": 40.5996
+              },
+              "from_bytes.check_resources": {
+                "samples": 214,
+                "mean": 0.005623831775700935,
+                "p50": 0.0045,
+                "p95": 0.0095,
+                "p99": 0.0105,
+                "max": 0.0107
+              },
+              "from_bytes.json_parse": {
+                "samples": 214,
+                "mean": 28.458254672897194,
+                "p50": 27.9745,
+                "p95": 36.2842,
+                "p99": 37.6558,
+                "max": 38.1742
+              },
+              "from_bytes.total": {
+                "samples": 214,
+                "mean": 29.998821962616823,
+                "p50": 29.3792,
+                "p95": 38.0619,
+                "p99": 39.116,
+                "max": 39.4853
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "source_hashes": {
+    "adapters/netrender/Cargo.toml": "01bb2be114da42f7d7a61375beffb200830382ab6c3627bd19341bd5928a37a6",
+    "adapters/netrender/src/lib.rs": "cfc93c044c190f0b046d06cda2fc51949bcbc2638a57b8fb1145a8301d4e10fd",
+    "adapters/netrender/src/scene_job.rs": "3767a2ce7f5c926282092868af4f28d4075ff17c931d65273beb59b3064c6092",
+    "support/execution-proof/Cargo.toml": "efaa3f2352650b053c4b50883f5d412a84cd1b8382ab636e8d30eec60cb9ba48",
+    "support/execution-proof/src/bin/window_receiver.rs": "ac2c5079a17544f5f81e4faf3505d23af2f2b19ee42aa8516b54cac2e09af55f",
+    "support/execution-proof/src/lib.rs": "aa93fd842464d51d9fab428fb711f05c6af53cb60b8bcb91a5006a536f7ced2c",
+    "support/execution-proof/src/main.rs": "d4b5f8935e5058e43e333f7a0a2847e7f9117d2b3f323164bfa61cb2b80aa0e1",
+    "support/execution-proof/src/receiver/mod.rs": "ae6457552f29a7c6807bfdf1d2b6852e8f6d793b7323a18e6adfd704f6e71f75",
+    "adapters/netrender/src/scene_profile.rs": "58c474038d597710068d7918bc453f63e0611e16f78dd8beb572e25a8799d377",
+    "adapters/netrender/tests/scene_profile.rs": "4115d9c57868f235410b3bf2e60706d11fc6784f39f0de766bb7c26a3aec724f",
+    "support/execution-proof/src/bin/scene_profile.rs": "be8a4db53b2c7908c0255e31a45abff50aad75252aee51e795657e8bfda02d69",
+    "support/execution-proof/src/profile.rs": "701f1a119f31d9e66c10d3076bd295c58ad4180cd26bb2a10f27c4063f45cde4",
+    "support/execution-proof/src/scene_fixture.rs": "830fa957cbd647c4c9ce733259b9dfddc9e0a716bf8e3ad4154c4792441c5566"
+  },
+  "qualification_limit": "Wall-clock stage attribution for this fixture. All native pacing gates remain false. Not a new rendering optimization."
+}
