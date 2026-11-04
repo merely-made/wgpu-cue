@@ -9,6 +9,7 @@ publish = false
 cpu-raster = ["dep:cue-netrender", "cue-netrender/cpu"]
 hybrid-raster = ["dep:cue-netrender", "cue-netrender/hybrid"]
 vulkan-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:grafting", "dep:libc", "dep:pollster"]
+dx12-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:grafting", "dep:pollster", "dep:windows"]
 metal-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:genet-presenter", "dep:grafting"]
 
 [dependencies]
@@ -36,3 +37,9 @@ pollster = {version = "=1.0.1", optional = true}
 pollster = "=1.0.1"
 wgpu-cue = { path = "../../crates/wgpu-cue" }
 genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "82ef34d97c2f5c8000b782c681e4cf7532f28a04" }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
+grafting = { version = "=0.6.1", default-features = false, features = ["wgpu-30"], optional = true }
+pollster = {version = "=1.0.1", optional = true}
+windows = { version = "0.62", optional = true, features = ["Win32_Foundation", "Win32_Graphics_Direct3D12", "Win32_System_Threading", "Win32_Security", "Win32_System_Com", "Win32_Security_Cryptography"] }

@@ -333,3 +333,8 @@ pub use metal::{GraftIoSurfaceImporter, GraftMetalImporter};
 mod vulkan;
 #[cfg(target_os = "linux")]
 pub use vulkan::{GraftVulkanImporter, GraftVulkanSurfaceImporter};
+
+#[cfg(target_os = "windows")]
+mod dx12;
+#[cfg(target_os = "windows")]
+pub use dx12::GraftDx12SurfaceImporter;

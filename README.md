@@ -26,7 +26,7 @@ does not inherit dependency patch tables.
 | Package | Boundary |
 | --- | --- |
 | `webcue` | Controls, canonical retained input/IME, ordered events, correlated requests, semantic publications and actions, complete capability reports, owned native/CPU frame delivery. No wgpu or renderer dependency. |
-| `wgpu-cue` | Host-device rendering, retained presentation, CPU upload, and non-blocking macOS Metal / Linux Vulkan DMA-BUF importers through Graft. |
+| `wgpu-cue` | Host-device rendering, retained presentation, CPU upload, and non-blocking macOS Metal, Linux Vulkan DMA-BUF and Windows DX12 importers through Graft. |
 | `cue-netrender` | Private retained renderer and deferred quality/error-scope polling on the host device; independent producers never consume one another's quality results. |
 | `cue-genet` | Concrete retained Livery sessions, held resources, document semantics, logical input/IME, and deferred GPU quality checks. |
 | `cue-scry` | Concrete macOS WKWebView adapter, asynchronous snapshots, native Metal handoff, navigation observations, script results, native keys, and typed editable-state forwarding where supplied. |
@@ -99,6 +99,13 @@ linear RGBA8 DMA-BUF storage, explicit ownership release, and a private Linux
 process fixture under `vulkan-handoff`. Its qualification is recorded separately
 from the existing CPU and Metal paths.
 
+The [Windows DX12 handoff](docs/2026-11-04-windows-dx12-handoff.md) adds shared
+resource/fence custody, an independent consumer completion witness and a private
+persistent process fixture under `dx12-handoff`. `GraftDx12SurfaceImporter`
+requires final texture/view destruction before a lease can be returned. The
+fixture selects the same adapter LUID in both processes; qualification records
+AMD and NVIDIA runs separately from public pin availability and presentation.
+
 Capabilities describe the installed adapter, including limitations; they do
 not inherit a supplier's theoretical maximum. Every feature requires an
 explicit supported, partial, or unavailable answer. The report also names the
@@ -123,10 +130,12 @@ cargo test -p cue-genet --test retained --locked -- --ignored --nocapture
 cargo run -p cue-scry --example wk_receiver --locked
 # Linux: hardware Vulkan, EGL DMA-BUF import and GBM are required.
 cargo test -p wgpu-cue --test vulkan --locked -- --ignored --nocapture
+# Windows: hardware DX12 and the D3D12 debug layer are required.
+cargo test -p cue-execution-proof --features dx12-handoff,cpu-raster --test dx12_handoff --locked -- --include-ignored --test-threads=1
 ```
 
-The first two execute real Metal work on macOS. The last creates a temporary
-private WKWebView window and exits after checking its receiving host. It uses
+The first two execute real Metal work on macOS. The Scry example creates a
+temporary private WKWebView window and exits after checking its receiving host. It uses
 asynchronous CPU snapshots and needs no screen-capture permission. Scry's
 native capture path is implemented but has not been qualified by that example.
 The initial 0.1.0 proof excluded product receiving. Inker/Pelt/Graphshell
