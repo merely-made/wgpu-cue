@@ -2,8 +2,9 @@
 
 This slice maps the existing persistent renderer session onto a same-adapter
 DX12 resource/fence handoff. The exact Git-pin native gates pass on the AMD Radeon 780M and NVIDIA RTX 4060
-Laptop GPU on O-PC (Windows 11 Home Insider Preview, build 26220). Public pin availability and publication are still pending;
-the presence of an importer does not qualify other Windows devices.
+Laptop GPU on O-PC (Windows 11 Home Insider Preview, build 26220). The Graft pin is publicly available and a fresh Linux regression fetched it
+directly from GitHub. The presence of an importer does not qualify other
+Windows devices.
 
 Graft owns shared allocation, native shape validation, COMMON-state transitions,
 GPU fence ordering, and actual imported-resource destruction. Cue validates
@@ -115,16 +116,21 @@ Evidence root: `/Users/markik/Code/output/cue-dx12-handoff/` (native logs and
 control source snapshots copied from O-PC; receipt budget 100 MB on Windows).
 Windows compiler artifacts use `C:/t/cargo-targets/wgpu-cue`; no separate
 Windows worktree or Cargo home was created. Source-bearing Mac worktrees are
-retained until publication/integration. Linux was not rerun in this slice:
-T-PC requires a fresh Djinn unlock. Linux and Metal native implementations are
-unchanged; the Mac runtime gate above is fresh evidence.
+retained through publication/integration.
+The fresh Linux gate on T-PC passes two native Vulkan handoff tests, four
+proof unit tests, three CPU stream tests and nine renderer-session tests.
+Strict targeted all-target Clippy also passes. The AMD Radeon Graphics
+(RADV RENOIR, Mesa 26.2.5) run loads the Vulkan validation layer and records
+zero validation diagnostics. Linux and Metal native implementations are unchanged.
 
-The exact Git source may be supplied through a local Git transport mirror for
-pre-publication pin checks. That is not a Cargo path patch, and it does not
-prove public GitHub availability. The receipt distinguishes development-source
-runs, exact-pin runs, and remote publication state. The lockfile contains 565
-packages; only the two Graft Git source records and the proof package Windows
-dependency edge change. All 557 other supplier records are unchanged. The
-identical Mac/Windows lock SHA-256 is
-`c0d5eb110b5be6b3c53b119b68ed52b452b5314f8b08577c79900c3809827f17`. A fresh clone cannot use an
-unpublished revision until it is pushed.
+The initial exact-pin Windows and Mac checks supplied the Graft source through
+per-command local Git transport mirrors before publication. Those are Git source
+checks, not Cargo path patches. The subsequent Linux gate fetched the published
+Graft revision directly from GitHub with the same locked identities. The lockfile
+contains 565 packages; only the two Graft Git source records and the proof package
+Windows dependency edge change. All 557 other supplier records are unchanged.
+The identical Mac/Windows/Linux lock SHA-256 is
+`c0d5eb110b5be6b3c53b119b68ed52b452b5314f8b08577c79900c3809827f17`.
+
+The implementation is Cue commit `4c8e8ecff2286cb3eb0d658cfc63d6ee107e6d3e`;
+the following documentation-only commit records the fresh Linux qualification.
