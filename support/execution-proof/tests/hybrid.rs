@@ -526,6 +526,16 @@ fn classic_and_hybrid_use_the_same_render_session_vocabulary() {
 #[test]
 #[ignore = "requires native Metal; run explicitly"]
 fn typed_local_matches_byte_controls_for_genet_glyphs_images_and_alpha() {
+    #[cfg(feature = "scene-profile")]
+    let records = {
+        let records = Arc::new(std::sync::Mutex::new(Vec::new()));
+        let observed = records.clone();
+        wgpu_cue_netrender::scene_profile::install(Arc::new(move |sample| {
+            observed.lock().unwrap().push(sample.stage);
+        }))
+        .unwrap();
+        records
+    };
     let core = core();
     let gpu_host = host(&core);
     let cx = gpu_host.context(viewport()).unwrap();
@@ -549,5 +559,23 @@ fn typed_local_matches_byte_controls_for_genet_glyphs_images_and_alpha() {
         settle(&mut source);
         assert_eq!(actual, expected);
         assert!(!typed.encoded_materialized());
+    }
+    #[cfg(feature = "scene-profile")]
+    {
+        let records = records.lock().unwrap();
+        for stage in [
+            "hybrid.submit_total",
+            "hybrid.decode",
+            "hybrid.clear_images",
+            "hybrid.clear_text",
+            "hybrid.create_target",
+            "hybrid.create_encoder",
+            "hybrid.session_render",
+            "hybrid.finish_encoder",
+            "hybrid.queue_submit",
+            "hybrid.track_completion",
+        ] {
+            assert!(records.contains(&stage), "missing {stage}");
+        }
     }
 }

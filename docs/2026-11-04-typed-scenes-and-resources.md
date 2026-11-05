@@ -157,6 +157,14 @@ Each table statistic is `[entries, retained_source_bytes, committed_packets]`.
 The tuple records the sender's incarnation-owned table, retained until its
 transport object is dropped; it is separate from final imported frame-slot count.
 
+Subsequent renderer profiling found that table receive calls `capture_owned`,
+which remints snapshot-local Blob IDs after looking up table-owned buffers.
+The table therefore preserves payload backing and avoids retransmission, but
+currently does not preserve renderer cache keys across snapshots. That narrower
+identity lifetime is intentional in the general capture API; a table-specific
+stable identity path remains unimplemented. See the
+[renderer profile](2026-11-04-renderer-submission-profile.md) for measured controls.
+
 The table removes repeated font-payload transfer and resource-bearing JSON
 parsing. Structural encoding/validation and renderer preparation remain. In
 particular, image/text cache clears in `HybridSceneSource::submit` are unchanged;

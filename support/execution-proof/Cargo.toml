@@ -62,3 +62,8 @@ required-features = ["window-receiver"]
 name = "cue-scene-profile"
 path = "src/bin/scene_profile.rs"
 required-features = ["scene-profile"]
+
+[[bin]]
+name = "cue-renderer-profile"
+path = "src/bin/renderer_profile.rs"
+required-features = ["window-receiver", "scene-profile"]

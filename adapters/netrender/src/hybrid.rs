@@ -2,6 +2,7 @@
 //! Host-device Hybrid rendering. Submission owns its encoder and target; frame
 //! polling never submits another draw or waits for GPU completion.
 use crate::scene_job::{RenderError, RenderLimits, RenderResult, SceneSnapshot, frame_bytes};
+use crate::scene_profile::measure;
 use netrender::vello_backends::{HybridSession, SparseResourceLimits, SparseTextLimits};
 use std::{
     future::Future,
@@ -234,6 +235,16 @@ impl HybridSceneSource {
         revision: u64,
         snapshot: &SceneSnapshot,
     ) -> RenderResult<FrameStamp> {
+        measure("hybrid.submit_total", snapshot.resource_bytes(), || {
+            self.submit_inner(cx, revision, snapshot)
+        })
+    }
+    fn submit_inner(
+        &mut self,
+        cx: &RenderContext<'_>,
+        revision: u64,
+        snapshot: &SceneSnapshot,
+    ) -> RenderResult<FrameStamp> {
         self.live()?;
         self.context(cx)?;
         if !self.visible {
@@ -260,39 +271,45 @@ impl HybridSceneSource {
         let allocation = self.allocation.checked_add(1).ok_or(Error::Exhausted)?;
         let submissions = self.submissions.checked_add(1).ok_or(Error::Exhausted)?;
         frame_bytes(self.viewport.width, self.viewport.height, self.limits)?;
-        let scene = snapshot.decode(self.limits)?;
+        let scene = measure("hybrid.decode", snapshot.resource_bytes(), || {
+            snapshot.decode(self.limits)
+        })?;
         if scene.viewport_width > self.device.limits().max_texture_dimension_2d
             || scene.viewport_height > self.device.limits().max_texture_dimension_2d
         {
             return Err(Error::Invalid("Hybrid scene exceeds device texture limits".into()).into());
         }
-        self.session.clear_images();
-        self.session.clear_text_cache();
+        measure("hybrid.clear_images", 0, || self.session.clear_images());
+        measure("hybrid.clear_text", 0, || self.session.clear_text_cache());
         let guards = scopes(&self.device);
-        let texture = self.device.create_texture(&wgpu::TextureDescriptor {
-            label: Some("Cue Hybrid scene"),
-            size: wgpu::Extent3d {
-                width: scene.viewport_width,
-                height: scene.viewport_height,
-                depth_or_array_layers: 1,
-            },
-            mip_level_count: 1,
-            sample_count: 1,
-            dimension: wgpu::TextureDimension::D2,
-            format: wgpu::TextureFormat::Rgba8Unorm,
-            usage: wgpu::TextureUsages::RENDER_ATTACHMENT
-                | wgpu::TextureUsages::TEXTURE_BINDING
-                | wgpu::TextureUsages::COPY_SRC,
-            view_formats: &[],
+        let texture = measure("hybrid.create_target", 0, || {
+            self.device.create_texture(&wgpu::TextureDescriptor {
+                label: Some("Cue Hybrid scene"),
+                size: wgpu::Extent3d {
+                    width: scene.viewport_width,
+                    height: scene.viewport_height,
+                    depth_or_array_layers: 1,
+                },
+                mip_level_count: 1,
+                sample_count: 1,
+                dimension: wgpu::TextureDimension::D2,
+                format: wgpu::TextureFormat::Rgba8Unorm,
+                usage: wgpu::TextureUsages::RENDER_ATTACHMENT
+                    | wgpu::TextureUsages::TEXTURE_BINDING
+                    | wgpu::TextureUsages::COPY_SRC,
+                view_formats: &[],
+            })
         });
-        let mut encoder = self
-            .device
-            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Cue Hybrid submission"),
-            });
-        let result = self
-            .session
-            .render(&scene, &self.device, &self.queue, &mut encoder, &texture);
+        let mut encoder = measure("hybrid.create_encoder", 0, || {
+            self.device
+                .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+                    label: Some("Cue Hybrid submission"),
+                })
+        });
+        let result = measure("hybrid.session_render", 0, || {
+            self.session
+                .render(&scene, &self.device, &self.queue, &mut encoder, &texture)
+        });
         let stamp = FrameStamp {
             scope: self.scope,
             allocation_epoch: allocation,
@@ -308,8 +325,11 @@ impl HybridSceneSource {
         }
         // This MUST precede another HybridSession::render: provider queue writes
         // mutate shared buffers used by the encoder just recorded.
-        self.queue.submit([encoder.finish()]);
-        self.track(texture, stamp, guards, true);
+        let commands = measure("hybrid.finish_encoder", 0, || encoder.finish());
+        measure("hybrid.queue_submit", 0, || self.queue.submit([commands]));
+        measure("hybrid.track_completion", 0, || {
+            self.track(texture, stamp, guards, true)
+        });
         self.ready = None;
         self.allocation = allocation;
         self.submissions = submissions;
