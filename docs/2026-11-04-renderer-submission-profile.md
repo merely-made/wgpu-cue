@@ -8,6 +8,10 @@ image reuse effective. Production cache policy, validation and frame custody are
 unchanged by this profiling slice. Cargo.lock and all supplier revisions remain
 unchanged.
 
+The subsequent [distinct-font admission change](2026-11-05-font-admission.md)
+implements and qualifies the font-admission improvement separately. Measurements
+in this report remain the original cohort's profiling evidence.
+
 ## Production-path attribution
 
 On the measured Linux host, native local `HybridSceneSource::submit` takes a

@@ -403,7 +403,7 @@ dependencies = [
 [[package]]
 name = "buckram"
 version = "0.0.3"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "genet-flow",
  "genet-taffy",
@@ -469,7 +469,7 @@ checksum = "fc652a48c352aef3ea3aed32080501cf3ef6ed5da78602a020c991775b0aff04"
 [[package]]
 name = "cadency"
 version = "0.0.1"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "cssparser",
 ]
@@ -764,6 +764,7 @@ dependencies = [
  "cc",
  "cue-genet",
  "cue-netrender",
+ "flate2",
  "genet-presenter",
  "grafting",
  "libc",
@@ -927,7 +928,7 @@ dependencies = [
 [[package]]
 name = "document-session-api"
 version = "0.1.1"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "serde",
 ]
@@ -1004,7 +1005,7 @@ dependencies = [
 [[package]]
 name = "engine-observables-api"
 version = "0.2.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "genet-paint-types",
  "serde",
@@ -1137,7 +1138,7 @@ dependencies = [
 [[package]]
 name = "fleece"
 version = "0.5.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "layout-dom-api",
  "sha2",
@@ -1272,7 +1273,7 @@ dependencies = [
 [[package]]
 name = "genet-browsing"
 version = "0.1.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "url",
 ]
@@ -1280,7 +1281,7 @@ dependencies = [
 [[package]]
 name = "genet-document-resources"
 version = "0.2.1"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "genet-host-api",
  "layout-dom-api",
@@ -1289,7 +1290,7 @@ dependencies = [
 [[package]]
 name = "genet-documents"
 version = "0.1.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "data-url",
  "document-session-api",
@@ -1312,12 +1313,12 @@ dependencies = [
 [[package]]
 name = "genet-flow"
 version = "0.1.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 
 [[package]]
 name = "genet-fontique"
 version = "0.10.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "hashbrown 0.17.1",
  "linebender_resource_handle",
@@ -1338,7 +1339,7 @@ dependencies = [
 [[package]]
 name = "genet-host-api"
 version = "0.2.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "serde",
 ]
@@ -1346,7 +1347,7 @@ dependencies = [
 [[package]]
 name = "genet-livery"
 version = "0.0.4"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "buckram",
  "cssparser",
@@ -1368,7 +1369,7 @@ dependencies = [
 [[package]]
 name = "genet-paint-types"
 version = "0.2.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "app_units",
  "euclid",
@@ -1378,7 +1379,7 @@ dependencies = [
 [[package]]
 name = "genet-parley"
 version = "0.10.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "genet-fontique",
  "harfrust",
@@ -1395,7 +1396,7 @@ dependencies = [
 [[package]]
 name = "genet-presenter"
 version = "0.2.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "gloo-timers",
  "js-sys",
@@ -1410,7 +1411,7 @@ dependencies = [
 [[package]]
 name = "genet-render"
 version = "0.2.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "document-session-api",
  "genet-livery",
@@ -1424,7 +1425,7 @@ dependencies = [
 [[package]]
 name = "genet-scripted-dom"
 version = "0.1.2"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "encoding_rs",
  "engine-observables-api",
@@ -1441,7 +1442,7 @@ dependencies = [
 [[package]]
 name = "genet-static-dom"
 version = "0.1.1"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "html5ever",
  "layout-dom-api",
@@ -1462,7 +1463,7 @@ dependencies = [
 [[package]]
 name = "genet-text"
 version = "0.1.0"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "unicode-segmentation",
 ]
@@ -2118,7 +2119,7 @@ dependencies = [
 [[package]]
 name = "layout-dom-api"
 version = "0.1.1"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "markup5ever",
  "serde",
@@ -2289,7 +2290,7 @@ checksum = "4744e383959f0db86ede514b809b1c53251889093803c05267acc7d4e7030d70"
 [[package]]
 name = "livery"
 version = "0.0.5"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "cadency",
  "cssparser",
@@ -2497,7 +2498,7 @@ dependencies = [
 [[package]]
 name = "netrender"
 version = "0.1.2"
-source = "git+https://github.com/merely-made/netrender.git?rev=79c9487ba9fc23daeee60f235ba4d3f1cbc1594d#79c9487ba9fc23daeee60f235ba4d3f1cbc1594d"
+source = "git+https://github.com/merely-made/netrender.git?rev=21b73901bbcb46556bb6f54511f5d2499d4269f0#21b73901bbcb46556bb6f54511f5d2499d4269f0"
 dependencies = [
  "glifo",
  "log",
@@ -2537,7 +2538,7 @@ dependencies = [
 [[package]]
 name = "netrender_device"
 version = "0.1.2"
-source = "git+https://github.com/merely-made/netrender.git?rev=79c9487ba9fc23daeee60f235ba4d3f1cbc1594d#79c9487ba9fc23daeee60f235ba4d3f1cbc1594d"
+source = "git+https://github.com/merely-made/netrender.git?rev=21b73901bbcb46556bb6f54511f5d2499d4269f0#21b73901bbcb46556bb6f54511f5d2499d4269f0"
 dependencies = [
  "log",
  "pollster",
@@ -3195,7 +3196,7 @@ dependencies = [
 [[package]]
 name = "paint_list_api"
 version = "0.1.2"
-source = "git+https://github.com/merely-made/netrender.git?rev=79c9487ba9fc23daeee60f235ba4d3f1cbc1594d#79c9487ba9fc23daeee60f235ba4d3f1cbc1594d"
+source = "git+https://github.com/merely-made/netrender.git?rev=21b73901bbcb46556bb6f54511f5d2499d4269f0#21b73901bbcb46556bb6f54511f5d2499d4269f0"
 dependencies = [
  "euclid",
  "serde",
@@ -3204,7 +3205,7 @@ dependencies = [
 [[package]]
 name = "paint_list_render"
 version = "0.1.2"
-source = "git+https://github.com/merely-made/netrender.git?rev=79c9487ba9fc23daeee60f235ba4d3f1cbc1594d#79c9487ba9fc23daeee60f235ba4d3f1cbc1594d"
+source = "git+https://github.com/merely-made/netrender.git?rev=21b73901bbcb46556bb6f54511f5d2499d4269f0#21b73901bbcb46556bb6f54511f5d2499d4269f0"
 dependencies = [
  "log",
  "netrender",
@@ -3851,7 +3852,7 @@ checksum = "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4"
 [[package]]
 name = "regress"
 version = "0.11.1"
-source = "git+https://github.com/merely-made/genet.git?rev=82ef34d97c2f5c8000b782c681e4cf7532f28a04#82ef34d97c2f5c8000b782c681e4cf7532f28a04"
+source = "git+https://github.com/merely-made/genet.git?rev=aead381ee7ce75705e281c41774f4e71b7efa0d7#aead381ee7ce75705e281c41774f4e71b7efa0d7"
 dependencies = [
  "hashbrown 0.16.1",
  "memchr",

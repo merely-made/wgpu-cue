@@ -3,6 +3,7 @@
 //! CPU render/submit spans exclude completion wait, readback and pixel checks.
 use serde_json::{Value, json};
 use std::{
+    io::{Read, Write},
     path::PathBuf,
     time::{Duration, Instant},
 };
@@ -200,10 +201,18 @@ fn main() -> Result<()> {
     let mut only = None;
     let mut frames = 40usize;
     let mut reverse = false;
+    let mut export_pixels = false;
+    let mut compare_pixels: Option<PathBuf> = None;
     while let Some(arg) = args.next() {
         match arg.as_str() {
             "--only" => only = Some(args.next().ok_or("case required")?),
             "--reverse" => reverse = true,
+            "--export-pixels" => export_pixels = true,
+            "--compare-pixels" => {
+                compare_pixels = Some(PathBuf::from(
+                    args.next().ok_or("reference directory required")?,
+                ))
+            }
             "--frames" => frames = args.next().ok_or("frames required")?.parse()?,
             _ => return Err("unknown argument".into()),
         }
@@ -214,6 +223,15 @@ fn main() -> Result<()> {
         || !(16..=4096).contains(&frames)
     {
         return Err("fresh absolute output, supported font and 16..4096 frames required".into());
+    }
+    if export_pixels && compare_pixels.is_some() {
+        return Err("choose export or comparison, not both".into());
+    }
+    if compare_pixels
+        .as_ref()
+        .is_some_and(|p| !p.is_absolute() || !p.is_dir())
+    {
+        return Err("reference pixels require an existing absolute directory".into());
     }
     // Long stack-sampling runs must be restricted to one selected case.
     if frames > 72 && only.is_none() {
@@ -228,6 +246,9 @@ fn main() -> Result<()> {
     );
     let seed = scenes(&font)?;
     std::fs::create_dir(&output)?;
+    if export_pixels {
+        std::fs::create_dir(output.join("pixels"))?;
+    }
     let mut rows = vec![];
     let mut cases = vec![];
     for name in ["document", "geometry", "images", "mixed"] {
@@ -356,23 +377,55 @@ fn main() -> Result<()> {
                             "pixel mismatch {case} variant={variant}"
                         );
                     } else {
-                        // --only retained runs still compare against an actual,
-                        // independent clear-both render rather than self-reference.
-                        let mut control = HybridSession::new(
-                            cx.device,
-                            cx.queue,
-                            SparseResourceLimits::default(),
-                        )?;
-                        let target = target(cx.device, &scene);
-                        let mut encoder = cx.device.create_command_encoder(&Default::default());
-                        control.render(&scene, cx.device, cx.queue, &mut encoder, &target)?;
-                        let index = cx.queue.submit([encoder.finish()]);
-                        cx.device.poll(wgpu::PollType::Wait {
-                            submission_index: Some(index),
-                            timeout: Some(Duration::from_secs(30)),
-                        })?;
-                        let expected = read(cx.device, cx.queue, &target)?;
-                        assert!(pixels == expected, "independent cleared control differs");
+                        let expected = if let Some(directory) = &compare_pixels {
+                            let file = std::fs::File::open(
+                                directory.join(format!("{name}-{variant}.rgba.gz")),
+                            )?;
+                            let decoder = flate2::read::GzDecoder::new(file);
+                            let expected_bytes =
+                                scene.viewport_width as u64 * scene.viewport_height as u64 * 4;
+                            let mut bytes = Vec::new();
+                            decoder.take(expected_bytes + 1).read_to_end(&mut bytes)?;
+                            if bytes.len() as u64 != expected_bytes {
+                                return Err("reference pixel size differs".into());
+                            }
+                            bytes
+                        } else {
+                            // --only retained runs still compare against an actual,
+                            // independent clear-both render rather than self-reference.
+                            let mut control = HybridSession::new(
+                                cx.device,
+                                cx.queue,
+                                SparseResourceLimits::default(),
+                            )?;
+                            let target = target(cx.device, &scene);
+                            let mut encoder = cx.device.create_command_encoder(&Default::default());
+                            control.render(&scene, cx.device, cx.queue, &mut encoder, &target)?;
+                            let index = cx.queue.submit([encoder.finish()]);
+                            cx.device.poll(wgpu::PollType::Wait {
+                                submission_index: Some(index),
+                                timeout: Some(Duration::from_secs(30)),
+                            })?;
+                            read(cx.device, cx.queue, &target)?
+                        };
+                        assert!(
+                            pixels == expected,
+                            "reference pixels differ: {case} variant={variant}"
+                        );
+                        if export_pixels {
+                            let file = std::fs::OpenOptions::new()
+                                .write(true)
+                                .create_new(true)
+                                .open(
+                                    output
+                                        .join("pixels")
+                                        .join(format!("{name}-{variant}.rgba.gz")),
+                                )?;
+                            let mut encoder =
+                                flate2::write::GzEncoder::new(file, flate2::Compression::fast());
+                            encoder.write_all(&expected)?;
+                            encoder.finish()?;
+                        }
                         reference[variant] = Some(expected);
                     }
                     equal += 1;
@@ -412,7 +465,7 @@ fn main() -> Result<()> {
         ))?;
     }
     let summary: Value = json!({"schema":"cue-renderer-probe-v1","adapter":format!("{info:?}"),"font":font,
-        "reverse_policy_order":reverse,"frames_per_case":frames,"warmup":WARMUP,"variants":VARIANTS,"cases":cases,
+        "pixel_reference":compare_pixels,"exported_pixels":export_pixels,"reverse_policy_order":reverse,"frames_per_case":frames,"warmup":WARMUP,"variants":VARIANTS,"cases":cases,
         "note":"Same pinned supplier; opt-in cache ablations only. CPU spans exclude wait/readback/checks. Completion wait is CPU-observed, not GPU timestamp. Fresh/table delivery measured separately. No presentation or 60Hz qualification."});
     std::fs::write(
         output.join("summary.json"),

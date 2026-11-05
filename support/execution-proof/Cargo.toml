@@ -6,7 +6,7 @@ license.workspace = true
 publish = false
 
 [features]
-scene-profile = ["hybrid-raster", "cue-netrender/scene-profile"]
+scene-profile = ["hybrid-raster", "cue-netrender/scene-profile", "dep:flate2"]
 window-receiver = ["metal-handoff", "vulkan-handoff", "dx12-handoff", "dep:winit", "dep:raw-window-handle", "dep:pollster", "dep:ash", "dep:wayland-client", "dep:wayland-backend", "dep:wayland-protocols"]
 cpu-raster = ["dep:cue-netrender", "cue-netrender/cpu"]
 hybrid-raster = ["dep:cue-netrender", "cue-netrender/hybrid"]
@@ -15,6 +15,7 @@ dx12-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:grafting", "dep:pollster",
 metal-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:genet-presenter", "dep:grafting"]
 
 [dependencies]
+flate2 = { version = "=1.1.10", optional = true }
 winit = { version = "=0.30.13", optional = true }
 raw-window-handle = { version = "0.6", optional = true }
 cue-genet = { path = "../../adapters/genet" }
@@ -29,7 +30,7 @@ cc = "=1.9.0"
 [target.'cfg(target_os = "macos")'.dependencies]
 pollster = { version = "=1.0.1", optional = true }
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
-genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "82ef34d97c2f5c8000b782c681e4cf7532f28a04", optional = true }
+genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "aead381ee7ce75705e281c41774f4e71b7efa0d7", optional = true }
 grafting = { version = "=0.6.1", default-features = false, features = ["wgpu-30"], optional = true }
 
 [target.'cfg(target_os = "linux")'.dependencies]
@@ -45,7 +46,7 @@ pollster = {version = "=1.0.1", optional = true}
 [dev-dependencies]
 pollster = "=1.0.1"
 wgpu-cue = { path = "../../crates/wgpu-cue" }
-genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "82ef34d97c2f5c8000b782c681e4cf7532f28a04" }
+genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "aead381ee7ce75705e281c41774f4e71b7efa0d7" }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
