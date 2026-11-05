@@ -440,7 +440,7 @@ fn main() -> Result<()> {
                         "target_ns":target_ns,"encoder_ns":encoder_ns,"render_ns":render_ns,"finish_ns":finish_ns,
                         "submit_ns":submit_ns,"completion_wait_ns":completion_wait_ns,"readback_ns":readback_ns,
                         "cpu_submission_ns":clear_images_ns+clear_text_ns+target_ns+encoder_ns+render_ns+finish_ns+submit_ns,
-                        "prepared_glyphs_delta":text.prepared_glyphs-before.prepared_glyphs,"cache_resets_delta":text.cache_resets-before.cache_resets,
+                        "prepared_glyphs_delta":text.prepared_glyphs-before.prepared_glyphs,"culled_glyphs_delta":text.culled_glyphs-before.culled_glyphs,"cache_resets_delta":text.cache_resets-before.cache_resets,
                         "font_count":text.font_count,"font_bytes":text.font_bytes,"cached_glyphs":text.cached_glyphs,
                         "hydrated_images_delta":images.hydrated_images-images_before.hydrated_images,
                         "uploaded_images_delta":images.uploaded_images-images_before.uploaded_images,

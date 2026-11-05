@@ -30,7 +30,7 @@ cc = "=1.9.0"
 [target.'cfg(target_os = "macos")'.dependencies]
 pollster = { version = "=1.0.1", optional = true }
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
-genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "aead381ee7ce75705e281c41774f4e71b7efa0d7", optional = true }
+genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "de14e67cff9b802c63528a3df1c2653dd9379e5e", optional = true }
 grafting = { version = "=0.6.1", default-features = false, features = ["wgpu-30"], optional = true }
 
 [target.'cfg(target_os = "linux")'.dependencies]
@@ -46,7 +46,7 @@ pollster = {version = "=1.0.1", optional = true}
 [dev-dependencies]
 pollster = "=1.0.1"
 wgpu-cue = { path = "../../crates/wgpu-cue" }
-genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "aead381ee7ce75705e281c41774f4e71b7efa0d7" }
+genet-presenter = { git = "https://github.com/merely-made/genet.git", rev = "de14e67cff9b802c63528a3df1c2653dd9379e5e" }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
