@@ -12,7 +12,7 @@ name = "wgpu_cue_scry"
 webcue.workspace = true
 wgpu-cue = { path = "../../crates/wgpu-cue" }
 [target.'cfg(target_os = "macos")'.dependencies]
-scrying = {git = "https://github.com/merely-made/wgpu-scry.git", rev = "6100df6889c736917987cc6363a822f742cae97e"}
+scrying = {git = "https://github.com/merely-made/wgpu-scry.git", branch = "main"}
 dpi = "0.1"
 objc2 = "0.6.3"
 objc2-metal = "0.3.2"

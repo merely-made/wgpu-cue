@@ -20,8 +20,8 @@ wgpu = { version = "=30.0.1", default-features = false, features = ["std", "wgsl
 [patch.crates-io]
 webcue = { path = "crates/webcue" }
 wgpu-cue = { path = "crates/wgpu-cue" }
-document-session-api = { git = "https://github.com/merely-made/genet.git", rev = "de14e67cff9b802c63528a3df1c2653dd9379e5e" }
+document-session-api = { git = "https://github.com/merely-made/genet.git", branch = "main" }
 
 # Keep native descriptor types on the same exact Graft source.
-grafting = { git = "https://github.com/merely-made/wgpu-graft.git", rev = "d903cfacf6ee663ddcc31e14539448dae3794c48" }
-grafting-frame = { git = "https://github.com/merely-made/wgpu-graft.git", rev = "d903cfacf6ee663ddcc31e14539448dae3794c48" }
+grafting = { git = "https://github.com/merely-made/wgpu-graft.git", branch = "main" }
+grafting-frame = { git = "https://github.com/merely-made/wgpu-graft.git", branch = "main" }
