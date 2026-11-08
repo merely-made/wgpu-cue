@@ -11,10 +11,10 @@ authors = ["Mark AB (markik)"]
 repository = "https://github.com/merely-made/wgpu-cue"
 
 [workspace.dependencies]
-webcue = { version = "=0.1.2", path = "crates/webcue" }
+webcue = { version = "=0.1.3", path = "crates/webcue" }
 grafting-frame = "=0.1.1"
 accesskit = { version = "=0.25.1", features = ["serde"] }
-document-session-api = "=0.1.1"
+document-session-api = "=0.1.2"
 wgpu = { version = "=30.0.1", default-features = false, features = ["std", "wgsl", "metal", "vulkan", "dx12"] }
 
 [patch.crates-io]
