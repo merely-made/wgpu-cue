@@ -139,7 +139,19 @@ impl SceneRasterizer {
         &mut self,
         cx: &RenderContext<'_>,
         scene: &Scene,
+        stamp: FrameStamp,
+    ) -> Result<Rendered> {
+        self.render_with(cx, scene, stamp, |_| Ok(()))
+    }
+
+    /// Stage same-device image sources inside the submission's GPU error
+    /// scopes, immediately before rasterizing a new scene.
+    pub fn render_with(
+        &mut self,
+        cx: &RenderContext<'_>,
+        scene: &Scene,
         mut stamp: FrameStamp,
+        prepare: impl FnOnce(&netrender::Renderer) -> Result<()>,
     ) -> Result<Rendered> {
         if self.pending.as_ref().is_some_and(|pending| {
             pending.frame.stamp.scope != stamp.scope
@@ -166,6 +178,12 @@ impl SceneRasterizer {
             wgpu::ErrorFilter::Validation,
         ]
         .map(|filter| cx.device.push_error_scope(filter));
+        if let Err(error) = prepare(&self.renderer) {
+            for scope in scopes.into_iter().rev() {
+                drop(scope.pop());
+            }
+            return Err(error);
+        }
         let texture = cx.device.create_texture(&wgpu::TextureDescriptor {
             label: Some("Cue retained content"),
             size: wgpu::Extent3d {
