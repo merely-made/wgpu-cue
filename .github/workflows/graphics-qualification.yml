@@ -1,0 +1,78 @@
+name: Graphics family patch tests
+on:
+  push:
+    branches: [qualify/graphics-family-20261120]
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include: [{"name": "wgpu-cue", "repo": "merely-made/wgpu-cue", "sha": "e24342ac8f4317bdc05cf76aaf7b24fded96777e", "sub": ".", "opts": "-p wgpu-cue"}, {"name": "wgpu-weld", "repo": "merely-made/wgpu-weld", "sha": "e991684bab23d0eaea42d418e216317173ace2a9", "sub": ".", "opts": "-p welding"}, {"name": "genet", "repo": "merely-made/genet", "sha": "e4e1302b33df76959e7906d33515918088f4bbc0", "sub": ".", "opts": "-p genet-webgl -p genet-bole -p genet-vano"}, {"name": "netrender", "repo": "mark-ik/netrender", "sha": "8bc4b6c4006a4b01751b5e949fdcb52fd6928d5b", "sub": ".", "opts": "-p netrender_device -p netrender"}, {"name": "emblem", "repo": "merely-made/emblem", "sha": "c8aa4b41a9097791da5f3c44ce59096091d57244", "sub": ".", "opts": "-p emblem"}, {"name": "seiche", "repo": "merely-made/seiche", "sha": "c8b8c0747309a23526869bb1bb5f21fa1f1add28", "sub": ".", "opts": "-p seiche --features gpu"}, {"name": "woodshed", "repo": "merely-made/woodshed", "sha": "7cf25b2407ee3eae319fa69bce3c52a4659fbc77", "sub": "ports/hocket", "opts": "-p hocket-engine"}, {"name": "inker", "repo": "merely-made/inker", "sha": "ea03455baf9f499225c2f4b0081782a9bcf90ec6", "sub": ".", "opts": "-p graft-engine -p scrying-engine -p weld-engine"}]
+    runs-on: macos-15
+    timeout-minutes: 70
+    env:
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.1 --profile minimal
+      - name: Select the candidate revisions for owned git dependencies
+        shell: bash
+        run: |
+          set -eu
+          git init -q --bare "$RUNNER_TEMP/wgpu-cue.git"
+          git -C "$RUNNER_TEMP/wgpu-cue.git" fetch -q --depth 1 https://github.com/merely-made/wgpu-cue.git e24342ac8f4317bdc05cf76aaf7b24fded96777e:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/wgpu-cue.git".insteadOf https://github.com/merely-made/wgpu-cue.git
+          git init -q --bare "$RUNNER_TEMP/genet.git"
+          git -C "$RUNNER_TEMP/genet.git" fetch -q --depth 1 https://github.com/merely-made/genet.git e4e1302b33df76959e7906d33515918088f4bbc0:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/genet.git".insteadOf https://github.com/merely-made/genet.git
+          git init -q --bare "$RUNNER_TEMP/murm.git"
+          git -C "$RUNNER_TEMP/murm.git" fetch -q --depth 1 https://github.com/merely-made/murm.git ab79371fcf41644a2d4581a145b0d1167eb36d17:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/murm.git".insteadOf https://github.com/merely-made/murm.git
+          git init -q --bare "$RUNNER_TEMP/eidetic.git"
+          git -C "$RUNNER_TEMP/eidetic.git" fetch -q --depth 1 https://github.com/merely-made/eidetic.git 669e0da2b6f5455a91f520dbc51469dd0c82d4fd:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/eidetic.git".insteadOf https://github.com/merely-made/eidetic.git
+          git init -q --bare "$RUNNER_TEMP/mere.git"
+          git -C "$RUNNER_TEMP/mere.git" fetch -q --depth 1 https://github.com/merely-made/mere.git 16aaf8c8c43f1efc800b620c81f2d5e89660c9bb:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/mere.git".insteadOf https://github.com/merely-made/mere.git
+          git init -q --bare "$RUNNER_TEMP/graphshell.git"
+          git -C "$RUNNER_TEMP/graphshell.git" fetch -q --depth 1 https://github.com/merely-made/graphshell.git 0acef509950412aa45f9d5ff9d71934ca233470b:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/graphshell.git".insteadOf https://github.com/merely-made/graphshell.git
+          git init -q --bare "$RUNNER_TEMP/turnstone.git"
+          git -C "$RUNNER_TEMP/turnstone.git" fetch -q --depth 1 https://github.com/merely-made/turnstone.git c8ba8e79a81a6dae43ea0063013752231cb7369d:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/turnstone.git".insteadOf https://github.com/merely-made/turnstone.git
+          git init -q --bare "$RUNNER_TEMP/distillery.git"
+          git -C "$RUNNER_TEMP/distillery.git" fetch -q --depth 1 https://github.com/merely-made/distillery.git f9ffedcdc58f3a24600998c86ae67a4d304845ed:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/distillery.git".insteadOf https://github.com/merely-made/distillery.git
+          git init -q --bare "$RUNNER_TEMP/knot-editor.git"
+          git -C "$RUNNER_TEMP/knot-editor.git" fetch -q --depth 1 https://github.com/merely-made/knot-editor.git 9d5ce5d932a2960de0dffe599feb42ae29dcdd8b:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/knot-editor.git".insteadOf https://github.com/merely-made/knot-editor.git
+          git init -q --bare "$RUNNER_TEMP/netrender.git"
+          git -C "$RUNNER_TEMP/netrender.git" fetch -q --depth 1 https://github.com/mark-ik/netrender.git 8bc4b6c4006a4b01751b5e949fdcb52fd6928d5b:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/netrender.git".insteadOf https://github.com/mark-ik/netrender.git
+          git init -q --bare "$RUNNER_TEMP/wgpu-graft.git"
+          git -C "$RUNNER_TEMP/wgpu-graft.git" fetch -q --depth 1 https://github.com/merely-made/wgpu-graft.git df803e0e12d8e429f1a77db9ecc68668f8049434:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/wgpu-graft.git".insteadOf https://github.com/merely-made/wgpu-graft.git
+          git init -q --bare "$RUNNER_TEMP/inker.git"
+          git -C "$RUNNER_TEMP/inker.git" fetch -q --depth 1 https://github.com/merely-made/inker.git ea03455baf9f499225c2f4b0081782a9bcf90ec6:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/inker.git".insteadOf https://github.com/merely-made/inker.git
+          git init -q --bare "$RUNNER_TEMP/bole.git"
+          git -C "$RUNNER_TEMP/bole.git" fetch -q --depth 1 https://github.com/merely-made/bole.git 6720864576fb2068e4afe6bfa5d60897bb650a19:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/bole.git".insteadOf https://github.com/merely-made/bole.git
+          git init -q --bare "$RUNNER_TEMP/vano.git"
+          git -C "$RUNNER_TEMP/vano.git" fetch -q --depth 1 https://github.com/merely-made/vano.git a4eff25b7715775a9e1077df0b7a7f1379945e8a:refs/heads/main
+          git config --global url."file://$RUNNER_TEMP/vano.git".insteadOf https://github.com/merely-made/vano.git
+      - working-directory: ${{ matrix.sub }}
+        run: cargo +1.99.1 test --no-fail-fast ${{ matrix.opts }}
+      - working-directory: ${{ matrix.sub }}
+        run: cargo +1.99.1 tree --locked -i wgpu@30.0.2 --depth 0
