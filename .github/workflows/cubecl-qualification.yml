@@ -1,0 +1,42 @@
+name: Stable CubeCL patch tests
+on:
+  push:
+    branches: [qualify/stable-cubecl-20261120]
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include: [{"name": "reduce", "repo": "merely-made/distillery", "sha": "10b28cb6f98835c7b062363559eab139113629ae", "sub": "support/patches/cubek-reduce"}, {"name": "matmul", "repo": "merely-made/graphshell", "sha": "8d1237e6587ea9fe9dc51c489a4d80296e5849c7", "sub": "host/support/patches/cubek-matmul"}, {"name": "extrema", "repo": "merely-made/distillery", "sha": "10b28cb6f98835c7b062363559eab139113629ae", "sub": "crates/distillery/probe/repros/cubek_browser_extrema"}, {"name": "embedding", "repo": "merely-made/distillery", "sha": "10b28cb6f98835c7b062363559eab139113629ae", "sub": "crates/distillery/probe/repros/burn_browser_embedding"}]
+    runs-on: macos-15
+    timeout-minutes: 70
+    env:
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.1 --profile minimal
+      - run: rustup target add --toolchain 1.99.1 wasm32-unknown-unknown
+      - working-directory: ${{ matrix.sub }}
+        shell: bash
+        run: |
+          cargo +1.99.1 test --no-fail-fast
+          case "${{ matrix.name }}" in
+            extrema|embedding)
+              cargo +1.99.1 build --locked --target wasm32-unknown-unknown
+              cargo +1.99.1 tree --locked --target wasm32-unknown-unknown -i cubecl@0.11.4 --depth 0
+              ;;
+            *)
+              cargo +1.99.1 tree --locked -i cubecl@0.11.4 --depth 0
+              ;;
+          esac
