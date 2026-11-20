@@ -1,0 +1,32 @@
+name: Locked graphics patch tests
+on:
+  push:
+    branches: [qualify/graphics-locked-20261120]
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include: [{"name": "wgpu-cue", "repo": "merely-made/wgpu-cue", "sha": "e24342ac8f4317bdc05cf76aaf7b24fded96777e", "sub": ".", "opts": "-p wgpu-cue"}, {"name": "wgpu-weld", "repo": "merely-made/wgpu-weld", "sha": "e991684bab23d0eaea42d418e216317173ace2a9", "sub": ".", "opts": "-p welding"}, {"name": "netrender", "repo": "mark-ik/netrender", "sha": "8bc4b6c4006a4b01751b5e949fdcb52fd6928d5b", "sub": ".", "opts": "-p netrender_device -p netrender"}, {"name": "emblem", "repo": "merely-made/emblem", "sha": "c8aa4b41a9097791da5f3c44ce59096091d57244", "sub": ".", "opts": "-p emblem"}]
+    runs-on: macos-15
+    timeout-minutes: 70
+    env:
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.1 --profile minimal
+      - working-directory: ${{ matrix.sub }}
+        run: cargo +1.99.1 test --locked --no-fail-fast ${{ matrix.opts }}
+      - working-directory: ${{ matrix.sub }}
+        run: cargo +1.99.1 tree --locked -i wgpu@30.0.2 --depth 0
