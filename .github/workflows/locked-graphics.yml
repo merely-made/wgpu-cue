@@ -1,0 +1,32 @@
+name: Native Metal presentation tests
+on:
+  push:
+    branches: [qualify/graphics-metal-20261120]
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include: [{"name": "wgpu-cue", "repo": "merely-made/wgpu-cue", "sha": "e24342ac8f4317bdc05cf76aaf7b24fded96777e", "sub": ".", "opts": "-p wgpu-cue -p webcue -- --include-ignored"}]
+    runs-on: macos-15
+    timeout-minutes: 70
+    env:
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.1 --profile minimal
+      - working-directory: ${{ matrix.sub }}
+        run: cargo +1.99.1 test --locked --no-fail-fast ${{ matrix.opts }}
+      - working-directory: ${{ matrix.sub }}
+        run: cargo +1.99.1 tree --locked -i wgpu@30.0.2 --depth 0
