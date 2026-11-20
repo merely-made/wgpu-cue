@@ -15,7 +15,7 @@ webcue = { version = "=0.1.3", path = "crates/webcue" }
 grafting-frame = { git = "https://github.com/merely-made/wgpu-graft.git", branch = "main" }
 accesskit = { version = "=0.25.1", features = ["serde"] }
 document-session-api = { version = "0.1.2", git = "https://github.com/merely-made/genet.git", branch = "main" }
-wgpu = { version = "=30.0.1", default-features = false, features = ["std", "wgsl", "metal", "vulkan", "dx12"] }
+wgpu = { version = "=30.0.2", default-features = false, features = ["std", "wgsl", "metal", "vulkan", "dx12"] }
 
 [patch.crates-io]
 webcue = { path = "crates/webcue" }
