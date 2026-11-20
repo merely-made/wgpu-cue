@@ -1,0 +1,69 @@
+name: Turnstone integration tests
+on:
+  push:
+    branches: [qualify/turnstone-integration-20261120]
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include: [{"name": "turnstone", "repo": "merely-made/turnstone", "sha": "57071e97c41fcf6a4fc54d7a954a90cdd8ad28a0", "sub": ".", "opts": "-p graphshell --features personal-sync"}]
+    runs-on: macos-15
+    timeout-minutes: 70
+    env:
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.1 --profile minimal
+      - name: Select the candidate revisions for owned git dependencies
+        shell: bash
+        run: |
+          set -eu
+          mkdir -p "$RUNNER_TEMP/graphics-tools"
+          export SYSTEM_GIT="$(command -v git)"
+          echo "SYSTEM_GIT=$SYSTEM_GIT" >> "$GITHUB_ENV"
+          cat > "$RUNNER_TEMP/graphics-tools/git" <<'PYGIT'
+          #!/usr/bin/env python3
+          import os,sys
+          pins={'eidetic': '669e0da2b6f5455a91f520dbc51469dd0c82d4fd', 'murm': 'ab79371fcf41644a2d4581a145b0d1167eb36d17', 'gemot': 'b94a6940d0483716536a5bc057746c54dd2bbc7a', 'mere': '16aaf8c8c43f1efc800b620c81f2d5e89660c9bb', 'knot-editor': '9d5ce5d932a2960de0dffe599feb42ae29dcdd8b', 'graphshell': '8d1237e6587ea9fe9dc51c489a4d80296e5849c7', 'isocosm': '6d285d088415d75341d9c20bb15934562b4aa2d6', 'turnstone': '57071e97c41fcf6a4fc54d7a954a90cdd8ad28a0', 'distillery': '10b28cb6f98835c7b062363559eab139113629ae', 'genet': 'e4e1302b33df76959e7906d33515918088f4bbc0', 'wgpu-cue': 'e24342ac8f4317bdc05cf76aaf7b24fded96777e', 'wgpu-weld': 'e991684bab23d0eaea42d418e216317173ace2a9', 'wgpu-graft': 'df803e0e12d8e429f1a77db9ecc68668f8049434', 'wgpu-scry': '5f79ba79dd6ee54e4c6606a3cc3c7b7b5e119881', 'inker': 'ea03455baf9f499225c2f4b0081782a9bcf90ec6', 'netrender': '8bc4b6c4006a4b01751b5e949fdcb52fd6928d5b', 'seiche': 'c8b8c0747309a23526869bb1bb5f21fa1f1add28', 'woodshed': '7cf25b2407ee3eae319fa69bce3c52a4659fbc77', 'emblem': 'c8aa4b41a9097791da5f3c44ce59096091d57244', 'bole': '6720864576fb2068e4afe6bfa5d60897bb650a19', 'vano': 'a4eff25b7715775a9e1077df0b7a7f1379945e8a'}
+          args=sys.argv[1:]
+          if 'fetch' in args:
+              url=next((a for a in args if a.startswith('https://github.com/')), '')
+              repo=url.removesuffix('.git').split('/')[-1]
+              if repo in pins and any(x in url for x in ('/merely-made/', '/mark-ik/')):
+                  args=[('+'+pins[repo]+':'+a.split(':',1)[1]) if a.startswith('+refs/heads/main:') else a for a in args]
+          os.execv(os.environ['SYSTEM_GIT'], [os.environ['SYSTEM_GIT'], *args])
+          PYGIT
+          chmod +x "$RUNNER_TEMP/graphics-tools/git"
+          echo "$RUNNER_TEMP/graphics-tools" >> "$GITHUB_PATH"
+          python3 - <<'PYLOCK'
+          from pathlib import Path
+          import re
+          pins={'eidetic': '669e0da2b6f5455a91f520dbc51469dd0c82d4fd', 'murm': 'ab79371fcf41644a2d4581a145b0d1167eb36d17', 'gemot': 'b94a6940d0483716536a5bc057746c54dd2bbc7a', 'mere': '16aaf8c8c43f1efc800b620c81f2d5e89660c9bb', 'knot-editor': '9d5ce5d932a2960de0dffe599feb42ae29dcdd8b', 'graphshell': '8d1237e6587ea9fe9dc51c489a4d80296e5849c7', 'isocosm': '6d285d088415d75341d9c20bb15934562b4aa2d6', 'turnstone': '57071e97c41fcf6a4fc54d7a954a90cdd8ad28a0', 'distillery': '10b28cb6f98835c7b062363559eab139113629ae', 'genet': 'e4e1302b33df76959e7906d33515918088f4bbc0', 'wgpu-cue': 'e24342ac8f4317bdc05cf76aaf7b24fded96777e', 'wgpu-weld': 'e991684bab23d0eaea42d418e216317173ace2a9', 'wgpu-graft': 'df803e0e12d8e429f1a77db9ecc68668f8049434', 'wgpu-scry': '5f79ba79dd6ee54e4c6606a3cc3c7b7b5e119881', 'inker': 'ea03455baf9f499225c2f4b0081782a9bcf90ec6', 'netrender': '8bc4b6c4006a4b01751b5e949fdcb52fd6928d5b', 'seiche': 'c8b8c0747309a23526869bb1bb5f21fa1f1add28', 'woodshed': '7cf25b2407ee3eae319fa69bce3c52a4659fbc77', 'emblem': 'c8aa4b41a9097791da5f3c44ce59096091d57244', 'bole': '6720864576fb2068e4afe6bfa5d60897bb650a19', 'vano': 'a4eff25b7715775a9e1077df0b7a7f1379945e8a'}
+          for p in (Path('Cargo.lock'), Path('ports/hocket/Cargo.lock')):
+              if p.is_file():
+                  rx=r'(git\+https://github.com/(?:merely-made|mark-ik)/([^?#]+?)(?:\.git)?\?branch=main#)([a-f0-9]{40})'
+                  p.write_text(re.sub(rx, lambda m: m[1]+pins.get(m[2],m[3]), p.read_text()))
+          PYLOCK
+      - working-directory: ${{ matrix.sub }}
+        run: cargo +1.99.1 test --no-fail-fast ${{ matrix.opts }}
+      - working-directory: ${{ matrix.sub }}
+        shell: bash
+        run: |
+          cargo +1.99.1 check --locked -p graphshell --no-default-features --features caller-owned-toolkit-bench,image-decode --example caller_owned_toolkits
+          cargo +1.99.1 tree --locked --workspace -i p2mere-core@0.12.1 --depth 0
+          if [ "${{ matrix.name }}" = remote-fixture ]; then
+            cargo +1.99.1 tree --locked -i cubecl@0.11.4 --depth 0
+            cargo +1.99.1 tree --locked -i wgpu@30.0.2 --depth 0
+          fi
