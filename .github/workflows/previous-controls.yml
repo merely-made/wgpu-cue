@@ -1,0 +1,60 @@
+name: Previous consumer failure controls
+on:
+  push:
+    branches: [qualify/previous-consumers-20261120]
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include: [{"name": "graphshell", "repo": "merely-made/graphshell", "sha": "033e90b1397de7774210975029a62d3fd2e6bd47", "sub": "host", "opts": "-p mere-resident --test quarantine_review wrong_persona_stale_revision_and_ordinary_app_cannot_mutate"}, {"name": "isocosm", "repo": "merely-made/isocosm", "sha": "7e3befdfeb7d0d1b6439b6f47e5eabf110b74d08", "sub": ".", "opts": "-p isocosm-genet --bin isocosm-genet forest"}]
+    runs-on: macos-15
+    timeout-minutes: 70
+    env:
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.1 --profile minimal
+      - name: Select the candidate revisions for owned git dependencies
+        shell: bash
+        run: |
+          set -eu
+          mkdir -p "$RUNNER_TEMP/graphics-tools"
+          export SYSTEM_GIT="$(command -v git)"
+          echo "SYSTEM_GIT=$SYSTEM_GIT" >> "$GITHUB_ENV"
+          cat > "$RUNNER_TEMP/graphics-tools/git" <<'PYGIT'
+          #!/usr/bin/env python3
+          import os,sys
+          pins={'graphshell': {'armillary': '0bad2d7ec5609e0d97b1970f5764302cb4846a4c', 'bole': 'b9240e980245286b727cf6150e5c9b534e5af391', 'genet': 'be2728169c8d0abeb5ae79eb13742fe7573beb29', 'dramatis': '5a15a1f3a8cb2f97e000ae3237dd95f233325c16', 'mere': 'e330adb3ef4a10755f1dbb9a9821244c7b0a4940', 'gemot': '23021d06f57b564526e3b3161bed260d65edcd65', 'seiche': '46fc0061272378669ced7c3b463868611cd4cb09', 'wgpu-cue': 'ee41d51b970db4d6730474df3609b44ee61616a9', 'distillery': '48b10680a964959fb3e8354e94b9ac8612c49e34', 'inker': 'b1f011314f7ab9cc2747c68e0423dda9027caabf', 'vano': '298c22b7f1f5b67160e8294dfc8240a03234ef34', 'eidetic': '63741b5e25d9126cf7af9df77e8555a9f560c315', 'emblem': '5ee5ba5a1732c6a39200e7ac5a45108f9ea351ff', 'errand': '869ed02f3990d9aad2386e93d78b4690ea575978', 'wgpu-graft': 'db9d6bea71bd24a9208040a1f9d494e48a16527c', 'murm': '390217f0996015a57c438ae70ced92759a5dc94a', 'netrender': '7060634fb93c6df5b43c4971e03ccaef0b2b7feb', 'wgpu-scry': '2d896970a165041e645fb9f7b436d473bd883cd8', 'ssh-agent-lib': '85dd7a8f54648b30dcd201d701eaf8b4d9e7d29d', 'graphshell': '033e90b1397de7774210975029a62d3fd2e6bd47'}, 'isocosm': {'armillary': '0bad2d7ec5609e0d97b1970f5764302cb4846a4c', 'graphshell': '033e90b1397de7774210975029a62d3fd2e6bd47', 'genet': 'be2728169c8d0abeb5ae79eb13742fe7573beb29', 'dramatis': '5a15a1f3a8cb2f97e000ae3237dd95f233325c16', 'mere': 'e330adb3ef4a10755f1dbb9a9821244c7b0a4940', 'seiche': '46fc0061272378669ced7c3b463868611cd4cb09', 'eidetic': '63741b5e25d9126cf7af9df77e8555a9f560c315', 'emblem': '5ee5ba5a1732c6a39200e7ac5a45108f9ea351ff', 'gemot': '23021d06f57b564526e3b3161bed260d65edcd65', 'wgpu-graft': 'db9d6bea71bd24a9208040a1f9d494e48a16527c', 'inker': 'b1f011314f7ab9cc2747c68e0423dda9027caabf', 'murm': '390217f0996015a57c438ae70ced92759a5dc94a', 'netrender': '7060634fb93c6df5b43c4971e03ccaef0b2b7feb', 'didgeridoo': 'dcdd02397925d02a2d73ef678e420c994e3e81aa', 'taplo': '493430f7fcad92d3dad555397fc39250fe9f9998', 'wgpu-cue': 'ee41d51b970db4d6730474df3609b44ee61616a9', 'isocosm': '7e3befdfeb7d0d1b6439b6f47e5eabf110b74d08'}}["${{ matrix.name }}"]
+          args=sys.argv[1:]
+          if 'fetch' in args:
+              url=next((a for a in args if a.startswith('https://github.com/')), '')
+              repo=url.removesuffix('.git').split('/')[-1]
+              if repo in pins and any(x in url for x in ('/merely-made/', '/mark-ik/')):
+                  args=[('+'+pins[repo]+':'+a.split(':',1)[1]) if a.startswith('+refs/heads/main:') else a for a in args]
+          os.execv(os.environ['SYSTEM_GIT'], [os.environ['SYSTEM_GIT'], *args])
+          PYGIT
+          chmod +x "$RUNNER_TEMP/graphics-tools/git"
+          echo "$RUNNER_TEMP/graphics-tools" >> "$GITHUB_PATH"
+          python3 - <<'PYLOCK'
+          from pathlib import Path
+          import re
+          pins={'graphshell': {'armillary': '0bad2d7ec5609e0d97b1970f5764302cb4846a4c', 'bole': 'b9240e980245286b727cf6150e5c9b534e5af391', 'genet': 'be2728169c8d0abeb5ae79eb13742fe7573beb29', 'dramatis': '5a15a1f3a8cb2f97e000ae3237dd95f233325c16', 'mere': 'e330adb3ef4a10755f1dbb9a9821244c7b0a4940', 'gemot': '23021d06f57b564526e3b3161bed260d65edcd65', 'seiche': '46fc0061272378669ced7c3b463868611cd4cb09', 'wgpu-cue': 'ee41d51b970db4d6730474df3609b44ee61616a9', 'distillery': '48b10680a964959fb3e8354e94b9ac8612c49e34', 'inker': 'b1f011314f7ab9cc2747c68e0423dda9027caabf', 'vano': '298c22b7f1f5b67160e8294dfc8240a03234ef34', 'eidetic': '63741b5e25d9126cf7af9df77e8555a9f560c315', 'emblem': '5ee5ba5a1732c6a39200e7ac5a45108f9ea351ff', 'errand': '869ed02f3990d9aad2386e93d78b4690ea575978', 'wgpu-graft': 'db9d6bea71bd24a9208040a1f9d494e48a16527c', 'murm': '390217f0996015a57c438ae70ced92759a5dc94a', 'netrender': '7060634fb93c6df5b43c4971e03ccaef0b2b7feb', 'wgpu-scry': '2d896970a165041e645fb9f7b436d473bd883cd8', 'ssh-agent-lib': '85dd7a8f54648b30dcd201d701eaf8b4d9e7d29d', 'graphshell': '033e90b1397de7774210975029a62d3fd2e6bd47'}, 'isocosm': {'armillary': '0bad2d7ec5609e0d97b1970f5764302cb4846a4c', 'graphshell': '033e90b1397de7774210975029a62d3fd2e6bd47', 'genet': 'be2728169c8d0abeb5ae79eb13742fe7573beb29', 'dramatis': '5a15a1f3a8cb2f97e000ae3237dd95f233325c16', 'mere': 'e330adb3ef4a10755f1dbb9a9821244c7b0a4940', 'seiche': '46fc0061272378669ced7c3b463868611cd4cb09', 'eidetic': '63741b5e25d9126cf7af9df77e8555a9f560c315', 'emblem': '5ee5ba5a1732c6a39200e7ac5a45108f9ea351ff', 'gemot': '23021d06f57b564526e3b3161bed260d65edcd65', 'wgpu-graft': 'db9d6bea71bd24a9208040a1f9d494e48a16527c', 'inker': 'b1f011314f7ab9cc2747c68e0423dda9027caabf', 'murm': '390217f0996015a57c438ae70ced92759a5dc94a', 'netrender': '7060634fb93c6df5b43c4971e03ccaef0b2b7feb', 'didgeridoo': 'dcdd02397925d02a2d73ef678e420c994e3e81aa', 'taplo': '493430f7fcad92d3dad555397fc39250fe9f9998', 'wgpu-cue': 'ee41d51b970db4d6730474df3609b44ee61616a9', 'isocosm': '7e3befdfeb7d0d1b6439b6f47e5eabf110b74d08'}}["${{ matrix.name }}"]
+          for p in (Path('Cargo.lock'), Path('ports/hocket/Cargo.lock')):
+              if p.is_file():
+                  rx=r'(git\+https://github.com/(?:merely-made|mark-ik)/([^?#]+?)(?:\.git)?\?branch=main#)([a-f0-9]{40})'
+                  p.write_text(re.sub(rx, lambda m: m[1]+pins.get(m[2],m[3]), p.read_text()))
+          PYLOCK
+      - working-directory: ${{ matrix.sub }}
+        run: TMPDIR="$(mktemp -d /private/tmp/c.XXXXXX)" cargo +1.99.1 test --no-fail-fast ${{ matrix.opts }}
