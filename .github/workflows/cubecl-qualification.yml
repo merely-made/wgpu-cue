@@ -1,0 +1,48 @@
+name: Previous CubeCL device control
+on:
+  push:
+    branches: [qualify/cubecl-control-20261120]
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include: [{"name": "matmul", "repo": "merely-made/graphshell", "sha": "9e9533804037d9d21264bfd6b252a69435597df0", "sub": "host/support/patches/cubek-matmul"}]
+    runs-on: macos-15
+    timeout-minutes: 70
+    env:
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_INCREMENTAL: '0'
+      CARGO_NET_GIT_FETCH_WITH_CLI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.1 --profile minimal
+      - working-directory: ${{ matrix.sub }}
+        shell: bash
+        run: |
+          cargo +1.99.1 generate-lockfile
+          python3 - <<'PINS'
+          import tomllib,json,urllib.request
+          from pathlib import Path
+          lock=Path('Cargo.lock')
+          text=lock.read_text()
+          for pkg in tomllib.loads(text)['package']:
+              name=pkg['name']
+              if not name.startswith('cubecl') or pkg['version']!='0.11.4': continue
+              url='https://index.crates.io/'+name[:2]+'/'+name[2:4]+'/'+name
+              with urllib.request.urlopen(url) as response:
+                  old=next(row for row in map(json.loads,response) if row['vers']=='0.11.3')
+              text=text.replace('name = "'+name+'"\nversion = "0.11.4"', 'name = "'+name+'"\nversion = "0.11.3"').replace(pkg['checksum'],old['cksum']).replace('"'+name+' 0.11.4"', '"'+name+' 0.11.3"')
+          lock.write_text(text)
+          PINS
+          cargo +1.99.1 tree -i cubecl@0.11.3 --depth 0
+          cargo +1.99.1 test --locked --features cpu-reference cmma_tiled_weight_names_the_stage_across_m
