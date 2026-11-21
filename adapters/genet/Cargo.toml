@@ -15,5 +15,5 @@ wgpu-cue = { path = "../../crates/wgpu-cue" }
 document-session-api.workspace = true
 genet-documents = { git = "https://github.com/merely-made/genet.git", branch = "main", default-features = false, features = ["livery"] }
 genet-presenter = { git = "https://github.com/merely-made/genet.git", branch = "main" }
-netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = "=0.2.0" }
+netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = ">=0.2.0" }
 genet-host-api = { git = "https://github.com/merely-made/genet.git", branch = "main" }
