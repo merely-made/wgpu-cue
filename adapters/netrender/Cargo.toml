@@ -21,7 +21,7 @@ hybrid = ["scene-jobs", "netrender/vello-hybrid"]
 [dependencies]
 webcue = { version = "0.1", path = "../../crates/webcue" }
 wgpu-cue = { version = "0.1", path = "../../crates/wgpu-cue" }
-netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = "=0.1.2" }
+netrender = { git = "https://github.com/merely-made/netrender.git", branch = "main", version = "=0.2.0" }
 serde_json = { version = "=1.0.154", optional = true }
 
 serde = { version = "=1.0.229", features = ["derive"], optional = true }
