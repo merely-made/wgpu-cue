@@ -15,7 +15,7 @@ dx12-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:grafting", "dep:pollster",
 metal-handoff = ["hybrid-raster", "dep:wgpu-cue", "dep:genet-presenter", "dep:grafting"]
 
 [dependencies]
-flate2 = { version = "=1.1.10", optional = true }
+flate2 = { version = ">=1.1.10", optional = true }
 winit = { version = "=0.30.13", optional = true }
 raw-window-handle = { version = "0.6", optional = true }
 cue-genet = { path = "../../adapters/genet" }
@@ -25,10 +25,10 @@ serde_json = "=1.0.154"
 cue-netrender = { path = "../../adapters/netrender", optional = true }
 
 [build-dependencies]
-cc = "=1.9.0"
+cc = ">=1.9.0"
 
 [target.'cfg(target_os = "macos")'.dependencies]
-pollster = { version = "=1.0.1", optional = true }
+pollster = { version = ">=1.0.1", optional = true }
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
 genet-presenter = { git = "https://github.com/merely-made/genet.git", branch = "main", optional = true }
 grafting = { git = "https://github.com/merely-made/wgpu-graft.git", branch = "main", default-features = false, features = ["wgpu-30"], optional = true }
@@ -41,17 +41,17 @@ wayland-protocols = { version = "=0.32.13", features = ["client"], optional = tr
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
 grafting = { git = "https://github.com/merely-made/wgpu-graft.git", branch = "main", default-features = false, features = ["wgpu-30"], optional = true }
 libc = {version = "0.2", optional = true}
-pollster = {version = "=1.0.1", optional = true}
+pollster = {version = ">=1.0.1", optional = true}
 
 [dev-dependencies]
-pollster = "=1.0.1"
+pollster = ">=1.0.1"
 wgpu-cue = { path = "../../crates/wgpu-cue" }
 genet-presenter = { git = "https://github.com/merely-made/genet.git", branch = "main" }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 wgpu-cue = { path = "../../crates/wgpu-cue", optional = true }
 grafting = { git = "https://github.com/merely-made/wgpu-graft.git", branch = "main", default-features = false, features = ["wgpu-30"], optional = true }
-pollster = {version = "=1.0.1", optional = true}
+pollster = {version = ">=1.0.1", optional = true}
 windows = { version = "0.62", optional = true, features = ["Win32_Foundation", "Win32_Graphics_Direct3D12", "Win32_System_Threading", "Win32_Security", "Win32_System_Com", "Win32_Security_Cryptography", "Win32_Graphics_Dxgi", "Win32_Graphics_Dxgi_Common", "Win32_System_Performance"] }
 
 [[bin]]
